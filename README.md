@@ -64,16 +64,27 @@ Students will be put into 3 or 4 person groups to complete the project.\n
 The following is an anticipated timeline of how these stories should be completed in order to be finished by 4/16/20 at 6pm.
 
 7/21 Tuesday: User Registration (10-12), Deploy to Heroku (1)
+
 7/22 Wednesday: Navigation (2 - 9), Login/ Logout (13 - 16)
+
 7/23 Thursday: Items (17-18), User Profile (19 - 22)
+
 7/24 Friday: Shopping Cart and Checkout (23 - 26)
+
 7/25 Saturday: User Order Show Page, pt.1 (27 - 31)
+
 7/26 Sunday: User Order Show Page, pt.2 (32 - 33), Merchant Dashboard (34 - 37)
+
 7/27 Monday: Merchant Index Page (38 - 41)
+
 7/28 Tuesday: Merchant Items (42 - 48)
+
 7/29 Wednesday: Merchant Order Fulfillment (49 - 51)
+
 7/30 Thursday: User Management by Admins (52 - 54)
+
 7/30 Thursday: 6:00 PM MTN -> Project Due
+
 
 
 ## Not Everything can be FULLY Deleted
