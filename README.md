@@ -1,4 +1,4 @@
-# Monster Shop
+``# Monster Shop
 BE Mod 2 Week 4/5 Group Project
 
 ## Background and Description
@@ -63,16 +63,17 @@ Students will be put into 3 or 4 person groups to complete the project.\n
 ## Timeframe
 The following is an anticipated timeline of how these stories should be completed in order to be finished by 4/16/20 at 6pm.
 
-* Tuesday: Story 1 && Story 10 - Story 12
-* Wednesday: Story 2 - Story 9, Story 13 - Story 16
-* Thursday: Story 17 - Story 22
-* Friday: Story 23 - Story 26
-* Saturday: Story 27 - Story 31
-* Sunday: Story 32 - Story 37
-* Monday: Story 38 - Story 41
-* Tuesday: Story 42 - Story 48
-* Wednesday: Story 49 - Story 51
-* Thursday: Story 52 - 54
+7/21 Tuesday: User Registration (10-12), Deploy to Heroku (1)
+7/22 Wednesday: Navigation (2 - 9), Login/ Logout (13 - 16)
+7/23 Thursday: Items (17-18), User Profile (19 - 22)
+7/24 Friday: Shopping Cart and Checkout (23 - 26)
+7/25 Saturday: User Order Show Page, pt.1 (27 - 31)
+7/26 Sunday: User Order Show Page, pt.2 (32 - 33), Merchant Dashboard (34 - 37)
+7/27 Monday: Merchant Index Page (38 - 41)
+7/28 Tuesday: Merchant Items (42 - 48)
+7/29 Wednesday: Merchant Order Fulfillment (49 - 51)
+7/30 Thursday: User Management by Admins (52 - 54)
+7/30 Thursday: 6:00 PM MTN -> Project Due
 
 
 ## Not Everything can be FULLY Deleted
@@ -439,7 +440,7 @@ And I see a flash message telling me that email address is already in use
 This is what this app is all about: how a user can put things in a shopping cart and check out, creating an order in the process. We want to add functionality to the cart to increment and decrement the quantity within the cart.
 
 ### Visitors, Regular Users, and Merchant Employees only
-Merchant Employees can order items in addition to regular users. Admin can not order items. This should already be taken care of through the navigation restrictions you set in User Stories 5 & 9. 
+Merchant Employees can order items in addition to regular users. Admin can not order items. This should already be taken care of through the navigation restrictions you set in User Stories 5 & 9.
 
 ```
 [ ] done
@@ -570,7 +571,7 @@ User Story 30, User cancels an order
 
 As a registered user
 When I visit an order's show page
-I see a button or link to cancel the order 
+I see a button or link to cancel the order
 When I click the cancel button for an order, the following happens:
 - Each row in the "order items" table is given a status of "unfulfilled"
 - The order itself is given a status of "cancelled"
@@ -1100,4 +1101,3 @@ Instead I see a big red notice next to the item indicating I cannot fulfill this
 | **3: Passing** | Students complete all User Stories. No more than 2 Stories fail to correctly implement sad path and edge case functionality. | Students use the principles of MVC to effectively organize code. Students can defend any of their design decisions. Students limit access to authorized users. | ActiveRecord is used in a clear and effective way to read/write data using no Ruby to process data. | 100% coverage for models. 98% coverage for features. Tests are well written and meaningful. | Students have a README with thorough implementation instructions and description of content. |
 | **2: Passing with Concerns** | Students complete all but 1 - 3 User Stories | Students utilize MVC to organize code, but cannot defend some of their design decisions. Or some functionality is not limited to the appropriately authorized users. | Ruby is used to process data that could use ActiveRecord instead. | Feature test coverage between 90% and 98%, or model test coverage below 100%, or tests are not meaningfully written or have an unclear objective. | Students have a README but it is not thorough in describing the implementation or content of the project. |
 | **1: Failing** | Students fail to complete 4 or more User Stories | Students do not effectively organize code using MVC. Or students do not authorize users. | Ruby is used to process data more often than ActiveRecord | Below 90% coverage for either features or models. | Students did not create their own README. |
-
