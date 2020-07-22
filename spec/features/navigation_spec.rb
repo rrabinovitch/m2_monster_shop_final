@@ -23,7 +23,7 @@ RSpec.describe 'Site Navigation' do
       expect(current_path).to eq('/merchants')
 
       within 'nav' do
-        click_link 'Shopping Cart'
+        click_link 'Cart'
       end
       expect(current_path).to eq('/cart')
 
