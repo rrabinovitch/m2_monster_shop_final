@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "New User Registration Spec" do
   before :each do
-    # @items = create_list(:item, 5)
+    @user = build(:user)
   end
 
   describe "As a visitor" do
@@ -16,14 +16,14 @@ RSpec.describe "New User Registration Spec" do
 
         expect(User.all.count).to eq(0)
 
-        fill_in :name, with: "AJ"
-        fill_in :address, with: "Cool Street"
-        fill_in :city, with: "Denver"
-        fill_in :state, with: "CO"
-        fill_in :zip, with: 80239
-        fill_in :email, with: "my_email@email.com"
-        fill_in :password, with: "my_password"
-        fill_in :confirm_password, with: "my_password"
+        fill_in :name, with: @user.name
+        fill_in :address, with: @user.address
+        fill_in :city, with: @user.city
+        fill_in :state, with: @user.state
+        fill_in :zip, with: @user.zip
+        fill_in :email, with: @user.email
+        fill_in :password, with: @user.password
+        fill_in :confirm_password, with: @user.password
 
         click_button "Register as a New User"
 
