@@ -38,7 +38,6 @@ RSpec.describe 'User Login Spec' do
     describe 'I cannot log in with bad credentials' do
       it "Submitting invalid credentials redirects me to the login page and displays a flash message" do
         user = create(:user)
-
         visit '/login'
         fill_in :email, with: user.email
         fill_in :password, with: "this-is-wrong"

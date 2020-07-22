@@ -18,9 +18,11 @@ class SessionsController < ApplicationController
       elsif user.role == "admin"
         redirect_to '/admin/dashboard'
       end
+      # refactor if/else logic to use enum methods
     else
       flash[:error] = 'Wrong email or password entered - please try logging in again.'
       render :new
     end
+    # consider DRYer way to implement sad path logic
   end
 end
