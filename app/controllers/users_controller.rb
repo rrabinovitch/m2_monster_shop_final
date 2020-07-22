@@ -4,14 +4,15 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if passwords_match? && user.save
+    if user.valid? && passwords_match?
+      user.save
       flash[:success] = "You are now registered and logged in!"
       redirect_to "/profile"
     else
-      missing_params = user_params.select { |_, param| param.empty? }
-      missing_params = missing_params.keys.join(", ")
-      missing_params = "confirm password" if missing_params.empty?
-      flash[:failure] = "Please fill in the missing fields: #{missing_params}."
+      flash[:failure] = "All fields must be completed before submitting:"
+      flash[:missing_details] = summarize_missing_details(user)
+      flash[:mismatched_passwords] = "Passwords do not match" unless passwords_match?
+
       redirect_to "/register"
     end
   end
@@ -26,5 +27,11 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
+  end
+
+  def summarize_missing_details(user)
+    user.errors.messages.map do |type, message|
+      type.to_s.capitalize + " " + message.uniq.join
+    end.join("\n")
   end
 end
