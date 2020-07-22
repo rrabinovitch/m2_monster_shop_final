@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
     if user.role == "regular"
       redirect_to '/profile'
     elsif user.role == "merchant_employee"
-      redirect_to 'merchant/dashboard'
+      redirect_to '/merchant/dashboard'
     elsif user.role == "admin"
       redirect_to '/admin/dashboard'
     end
