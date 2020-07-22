@@ -46,5 +46,28 @@ RSpec.describe 'User Login Spec' do
         expect(page).to have_content('Wrong email or password entered - please try logging in again.')
       end
     end
+
+    describe 'Users who are logged in already are redirected' do
+      it "If I am a regular user, I am redirected to my profile page and I see a flash message that tells me I am already logged in" do
+        current_user = create(:user, role: 0)
+        visit '/login'
+        expect(current_path).to eq("/profile")
+        expect(page).to have_content("You are already logged in.")
+      end
+
+      it "If I am a merchant user, I am redirected to my merchant dashboard page and I see a flash message that tells me I am already logged in" do
+        current_user = create(:user, role: 1)
+        visit '/login'
+        expect(current_path).to eq("/merchant/dashboard")
+        expect(page).to have_content("You are already logged in.")
+      end
+
+      it "If I am an admin user, I am redirected to my admin dashboard page and I see a flash message that tells me I am already logged in" do
+        current_user = create(:user, role: 2)
+        visit '/login'
+        expect(current_path).to eq("/admin/dashboard")
+        expect(page).to have_content("You are already logged in.")
+      end
+    end
   end
 end
