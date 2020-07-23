@@ -15,10 +15,16 @@ RSpec.describe 'User can log out' do
 
       visit '/logout'
       expect(current_path).to eq('/')
-      expect(page).to have_content("You have been logged out.")
+      expect(page).to have_content("You have logged out.")
       within('.topnav') do
         expect(page).to have_content("Cart: 0")
       end
+
+      # add expectation to confirm that @current_user does not exist anymore
     end
   end
 end
+
+
+# log in button should not exist when someone's logged in - take care of this in view logic
+# if someone were to type in the login url path, they should be redirected like
