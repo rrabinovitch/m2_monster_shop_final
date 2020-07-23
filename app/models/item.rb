@@ -10,6 +10,7 @@ class Item <ApplicationRecord
                         :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
+  scope :active_items, -> {where(active?: true)}
   validates_numericality_of :price, greater_than: 0
 
 
