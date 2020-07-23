@@ -47,5 +47,51 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it 'item_quantity' do
+      @item1 = create(:item, merchant_id: @bike_shop.id)
+      order = create(:order)
+      order.item_orders.create(item: @item1, price: 5, quantity: 1)
+
+      expect(@item1.total_sold).to eq(1)
+    end
   end
-end
+
+  describe 'class methods' do
+    before(:each) do
+      @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
+      @item1 = create(:item, merchant_id: @bike_shop.id)
+      @item2 = create(:item, merchant_id: @bike_shop.id)
+      @item3 = create(:item, merchant_id: @bike_shop.id)
+      @item4 = create(:item, merchant_id: @bike_shop.id)
+      @item5 = create(:item, merchant_id: @bike_shop.id)
+      @item6 = create(:item, merchant_id: @bike_shop.id)
+      @item7 = create(:item, merchant_id: @bike_shop.id)
+      @item8 = create(:item, merchant_id: @bike_shop.id)
+      @item9 = create(:item, merchant_id: @bike_shop.id)
+      @item10 = create(:item, merchant_id: @bike_shop.id)
+
+      order = create(:order)
+
+      order.item_orders.create(item: @item1, price: 5, quantity: 1)
+      order.item_orders.create(item: @item2, price: 5, quantity: 2)
+      order.item_orders.create(item: @item3, price: 5, quantity: 3)
+      order.item_orders.create(item: @item4, price: 5, quantity: 4)
+      order.item_orders.create(item: @item5, price: 5, quantity: 5)
+      order.item_orders.create(item: @item6, price: 5, quantity: 6)
+      order.item_orders.create(item: @item7, price: 5, quantity: 7)
+      order.item_orders.create(item: @item8, price: 5, quantity: 8)
+      order.item_orders.create(item: @item9, price: 5, quantity: 9)
+      order.item_orders.create(item: @item10, price: 5, quantity: 10)
+    end
+
+    it '.least_popular' do
+      expect(Item.least_popular).to eq(["#{@item1.name}: #{@item1.total_sold}","#{@item2.name}: #{@item2.total_sold}","#{@item3.name}: #{@item3.total_sold}","#{@item4.name}: #{@item4.total_sold}","#{@item5.name}: #{@item5.total_sold}"])
+    end
+
+    it '.most_popular' do
+      expect(Item.most_popular).to eq(["#{@item10.name}: #{@item10.total_sold}","#{@item9.name}: #{@item9.total_sold}","#{@item8.name}: #{@item8.total_sold}","#{@item7.name}: #{@item7.total_sold}","#{@item6.name}: #{@item6.total_sold}"])
+    end
+    end
+  end
