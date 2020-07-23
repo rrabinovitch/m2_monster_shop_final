@@ -8,12 +8,12 @@
 <%= label_tag :state, "State" %>
 <%= text_field_tag :state %>
 <%= label_tag :zip, "ZIP Code" %>
-<%= text_field_tag :zip %>
+<%= number_field_tag :zip %>
 <%= label_tag :email, "Email address" %>
 <%= text_field_tag :email %>
 <%= label_tag :password, "Password" %>
-<%= text_field_tag :password %>
+<%= password_field_tag :password %>
 <%= label_tag :confirm_password, "Confirm Password" %>
-<%= text_field_tag :confirm_password %>
+<%= password_field_tag :confirm_password %>
 <%= submit_tag "Register as a New User" %>
 <% end %>
