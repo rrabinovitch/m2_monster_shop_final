@@ -55,6 +55,12 @@ RSpec.describe Cart do
         @ogre.id.to_s => 1,
         @giant.id.to_s => 1
         })
+
+      @cart.remove_item(@giant.id.to_s)
+
+      expect(@cart.contents).to eq({
+        @ogre.id.to_s => 1
+        })
     end
 
   end
