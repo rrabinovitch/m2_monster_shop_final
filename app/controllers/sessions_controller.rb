@@ -9,10 +9,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-    if user.nil?
-      flash[:error] = 'Wrong email or password entered - please try logging in again.'
-      render :new
-    elsif user.authenticate(params[:password]) # look into whether username/email can be authenticated similarly to password authentication
+    if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "You are now logged in!"
       if user.regular?
@@ -26,7 +23,6 @@ class SessionsController < ApplicationController
       flash[:error] = 'Wrong email or password entered - please try logging in again.'
       render :new
     end
-    # consider DRYer way to implement sad path logic
 
     # if user && user.authenticate(...)
     #  happy path code
