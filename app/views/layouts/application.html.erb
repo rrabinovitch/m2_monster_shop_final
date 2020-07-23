@@ -28,6 +28,12 @@
         <%= link_to "My Dashboard", "/merchant/dashboard" %>
         <%= link_to "Log Out", "/" %>
         <%= "Logged in as #{user.name}" %>
+      <% else %>
+        <%= link_to "Profile", "/profile" %>
+        <%= link_to "My Dashboard", "/admin/dashboard" %>
+        <%= link_to "All Users", "/admin/users" %>
+        <%= link_to "Log Out", "/" %>
+        <%= "Logged in as #{user.name}" %>
       <% end  %>
     </nav>
     <% flash.each do |name, msg| %>
