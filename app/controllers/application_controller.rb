@@ -7,4 +7,7 @@ class ApplicationController < ActionController::Base
     @cart ||= Cart.new(session[:cart] ||= Hash.new(0))
   end
 
+  def index
+  end 
+
 end
