@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new(session[:user_params])
-    session.delete(:user_params)
+    @user = User.new(session[:user_registration_params])
+    session.delete(:user_registration_params)
   end
 
   def create
@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       flash[:missing_details] = summarize_missing_details(user)
       flash[:mismatched_passwords] = "Passwords do not match" unless passwords_match?
 
-      session[:user_params] = user_params
+      session[:user_registration_params] = user_registration_params
       redirect_to register_path
     end
   end
@@ -30,6 +30,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
+  end
+
+  def user_registration_params
+    params.permit(:name, :address, :city, :state, :zip, :email)
   end
 
   def summarize_missing_details(user)
