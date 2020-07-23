@@ -5,7 +5,7 @@ RSpec.describe 'Site Navigation' do
   describe 'As a Visitor' do
     it "I see a nav bar with links to all pages" do
 
-      visit '/merchants'
+      visit '/'
 
       within 'nav' do
         click_link 'Home'
