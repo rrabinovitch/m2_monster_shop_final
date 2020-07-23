@@ -34,5 +34,17 @@ RSpec.describe 'User Login Spec' do
         expect(page).to have_content("You are now logged in!")
       end
     end
+
+    describe 'I cannot log in with bad credentials' do
+      it "Submitting invalid credentials redirects me to the login page and displays a flash message" do
+        user = create(:user)
+        visit '/login'
+        fill_in :email, with: user.email
+        fill_in :password, with: "this-is-wrong"
+        click_on 'Log In'
+        expect(current_path).to eq('/login')
+        expect(page).to have_content('Wrong email or password entered - please try logging in again.')
+      end
+    end
   end
 end
