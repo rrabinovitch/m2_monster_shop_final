@@ -16,4 +16,12 @@ class ApplicationController < ActionController::Base
   def index
   end
 
+  def require_authorized_user
+    render file: "/public/404" if unauthorized_user?
+  end
+
+  # This is same as line 10 `def user` - refactor later
+  def logged_in_user
+    @logged_in_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
 end
