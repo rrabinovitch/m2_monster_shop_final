@@ -34,5 +34,7 @@ Rails.application.routes.draw do
   get "/orders/:id", to: "orders#show"
 
   get "/", to: "application#index"
-  
+
+  get "/login", to: "sessions#new"
+
 end
