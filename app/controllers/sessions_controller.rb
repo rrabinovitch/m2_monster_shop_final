@@ -15,15 +15,13 @@ class SessionsController < ApplicationController
     elsif user.authenticate(params[:password]) # look into whether username/email can be authenticated similarly to password authentication
       session[:user_id] = user.id
       flash[:success] = "You are now logged in!"
-      if user.role == "regular"
-        # should be user.regular? etc for these conditional statements
+      if user.regular?
         redirect_to '/profile'
-      elsif user.role == "merchant_employee"
+      elsif user.merchant_employee?
         redirect_to '/merchant/dashboard'
-      elsif user.role == "admin"
+      elsif user.admin?
         redirect_to '/admin/dashboard'
       end
-      # refactor if/else logic to use enum methods
     else
       flash[:error] = 'Wrong email or password entered - please try logging in again.'
       render :new
