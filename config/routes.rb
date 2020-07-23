@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   get "/logout", to: "sessions#destroy"
+  # this is a GET verb bc the user story says the user *visits* the path, not clicks on it
 
   namespace :admin do
     get "/dashboard", to: "dashboard#index"

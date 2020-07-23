@@ -26,8 +26,12 @@ class SessionsController < ApplicationController
         redirect_to '/admin/dashboard'
       end
     else
-      flash[:error] = 'Wrong email or password entered - please try logging in again.'
+      flash[error] = 'Wrong email or password entered - please try logging in again.'
       render :new
     end
+  end
+
+  def destroy
+    redirect_to '/'
   end
 end
