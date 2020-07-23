@@ -35,10 +35,18 @@ Rails.application.routes.draw do
 
   get "/", to: "application#index"
 
-  get "/login", to: "sessions#new"
-
   get "/register", to: "users#new"
   post "/users", to: "users#create"
   get "/profile", to: "users#show"
 
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+
+  namespace :admin do
+    get "/dashboard", to: "dashboard#index"
+  end
+
+  namespace :merchant do
+    get "/dashboard", to: "dashboard#index"
+  end
 end
