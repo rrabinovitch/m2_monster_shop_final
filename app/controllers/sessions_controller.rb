@@ -1,10 +1,16 @@
 class SessionsController < ApplicationController
 
   def new
-    # if current_user.regular?
-    #   redirect_to ...
-    # elsif ...
-    # end
+    if current_user && current_user.regular?
+      redirect_to '/profile'
+      flash[:notice] = "You are already logged in."
+    elsif current_user && current_user.merchant_employee?
+      redirect_to '/merchant/dashboard'
+      flash[:notice] = "You are already logged in."
+    elsif current_user && current_user.admin?
+      redirect_to '/admin/dashboard'
+      flash[:notice] = "You are already logged in."
+    end
   end
 
   def create
@@ -23,11 +29,5 @@ class SessionsController < ApplicationController
       flash[:error] = 'Wrong email or password entered - please try logging in again.'
       render :new
     end
-
-    # if user && user.authenticate(...)
-    #  happy path code
-    # else
-    #  sad path code
-    # end
   end
 end
