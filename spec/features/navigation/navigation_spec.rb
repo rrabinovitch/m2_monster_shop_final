@@ -1,10 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Site Navigation' do
+  before :each do
+    @user = User.create(name: "Jane Doe",
+                        address: "123 Palm St",
+                        city: "Chicago",
+                        state: "IL",
+                        zip: 60623,
+                        email: "janedoe@email.com",
+                        password: "password",
+                        password_confirmation: "password")
+  end
 
   describe 'As a Visitor' do
     it "I see a nav bar with links to all pages" do
-
       visit '/'
 
       within 'nav' do
@@ -28,7 +37,7 @@ RSpec.describe 'Site Navigation' do
       expect(current_path).to eq('/cart')
 
       within 'nav' do
-        click_link 'Login'
+        click_link 'Log In'
       end
       expect(current_path).to eq('/login')
 
@@ -53,27 +62,16 @@ RSpec.describe 'Site Navigation' do
   end
 
   describe 'As a Regular User: I see the same links as a visitor' do
-    it "Plus a link to my profile page and a link to log out " do
-      visit "/"
+    it "Plus a link to my profile page and a link to log out, but no links to log in or register" do
 
-    end
-
-    xit "Minus a link to log in or register" do
-
-    end
-
-    xit "And I see a text that says I am logged in with my name" do
-
+      visit '/login'
+      fill_in :email, with: @user.email
+      fill_in :password, with: "password"
+      click_button 'Log In'
+      expect(current_path).to eq("/profile")
+      expect(page).to have_content("Logged in as #{@user.name}")
+      expect(page).to have_link("Log Out")
     end
   end
-#   As a default user
-# I see the same links as a visitor
-# Plus the following links
-#
-# a link to my profile page ("/profile")
-# a link to log out ("/logout")
-# Minus the following links
-#
-# I do not see a link to log in or register
-# I also see text that says "Logged in as Mike Dao" (or whatever my name is)
+
 end
