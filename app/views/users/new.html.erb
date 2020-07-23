@@ -1,0 +1,19 @@
+<%= form_tag "/users", method: :post, class: "new-user-form" do %>
+<%= label_tag :name, "Full Name" %>
+<%= text_field_tag :name, @user.name %>
+<%= label_tag :address, "Street Address" %>
+<%= text_field_tag :address, @user.address %>
+<%= label_tag :city, "City" %>
+<%= text_field_tag :city, @user.city %>
+<%= label_tag :state, "State" %>
+<%= text_field_tag :state, @user.state %>
+<%= label_tag :zip, "ZIP Code" %>
+<%= number_field_tag :zip, @user.zip %>
+<%= label_tag :email, "Email address" %>
+<%= text_field_tag :email %>
+<%= label_tag :password, "Password" %>
+<%= password_field_tag :password %>
+<%= label_tag :confirm_password, "Confirm Password" %>
+<%= password_field_tag :confirm_password %>
+<%= submit_tag "Register as a New User" %>
+<% end %>

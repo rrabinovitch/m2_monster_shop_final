@@ -34,4 +34,15 @@ FactoryBot.define do
     zip { 60000 }
   end
 
+  factory :user do
+    sequence(:name) { |n| "User #{n}" }
+    address { "Super Ruby Street" }
+    city { "Denver" }
+    state { "OH" }
+    zip { 10000 }
+    sequence(:email) { |n| "user#{n}@email.com"}
+    password { "password" }
+    role { 0 }
+  end
+
 end
