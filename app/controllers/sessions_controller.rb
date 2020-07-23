@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
 
   def new
+    # if current_user.regular?
+    #   redirect_to ...
+    # elsif ...
+    # end
   end
 
   def create
@@ -8,10 +12,11 @@ class SessionsController < ApplicationController
     if user.nil?
       flash[:error] = 'Wrong email or password entered - please try logging in again.'
       render :new
-    elsif user.authenticate(params[:password])
+    elsif user.authenticate(params[:password]) # look into whether username/email can be authenticated similarly to password authentication
       session[:user_id] = user.id
       flash[:success] = "You are now logged in!"
       if user.role == "regular"
+        # should be user.regular? etc for these conditional statements
         redirect_to '/profile'
       elsif user.role == "merchant_employee"
         redirect_to '/merchant/dashboard'
@@ -24,5 +29,11 @@ class SessionsController < ApplicationController
       render :new
     end
     # consider DRYer way to implement sad path logic
+
+    # if user && user.authenticate(...)
+    #  happy path code
+    # else
+    #  sad path code
+    # end
   end
 end
