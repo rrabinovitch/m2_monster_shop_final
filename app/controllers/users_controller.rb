@@ -6,18 +6,7 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.valid? && passwords_match?
-      user.save
-      flash[:success] = "You are now registered and logged in!"
-      redirect_to "/profile"
-    else
-      flash[:failure] = "All fields must be completed before submitting:"
-      flash[:missing_details] = summarize_missing_details(user)
-      flash[:mismatched_passwords] = "Passwords do not match" unless passwords_match?
-
-      session[:user_registration_params] = user_registration_params
-      redirect_to register_path
-    end
+    can_register?(user) ? register(user) : retry_registration(user)
   end
 
   def show
@@ -40,5 +29,24 @@ class UsersController < ApplicationController
     user.errors.messages.map do |type, message|
       type.to_s.capitalize + " " + message.uniq.join
     end.join("\n")
+  end
+
+  def can_register?(user)
+    user.valid? && passwords_match?
+  end
+
+  def register(user)
+    user.save
+    flash[:success] = "You are now registered and logged in!"
+    redirect_to "/profile"
+  end
+
+  def retry_registration(user)
+    flash[:failure] = "All fields must be completed before submitting:"
+    flash[:missing_details] = summarize_missing_details(user)
+    flash[:mismatched_passwords] = "Passwords do not match" unless passwords_match?
+
+    session[:user_registration_params] = user_registration_params
+    redirect_to register_path
   end
 end
