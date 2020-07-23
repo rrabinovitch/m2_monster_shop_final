@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    render file: "/public/404" unless logged_in_user
   end
 
   private
