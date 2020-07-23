@@ -26,6 +26,12 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
+  def remove_single_item
+    item = Item.find(params[:item_id])
+    cart.remove_item(item.id.to_s)
+    redirect_to '/cart'
+  end
+
   private
 
   def unauthorized_user?
