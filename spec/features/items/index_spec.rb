@@ -81,5 +81,12 @@ RSpec.describe "Items Index Page" do
       end
     end
 
+    it 'item images are links to the item show page' do
+      visit '/items'
+
+      find("##{@tire.id}").click
+      expect(current_path).to eq("/items/#{@tire.id}")
+    end
+
   end
 end
