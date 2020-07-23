@@ -12,6 +12,7 @@ class Cart
 
   def remove_item(item)
     @contents[item] -= 1
+    @contents.delete(item) if @contents[item].zero?
   end
 
   def total_items
