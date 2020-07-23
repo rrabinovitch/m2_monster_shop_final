@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   def new
+    @user = User.new(session[:user_params])
+    session.delete(:user_params)
   end
 
   def create
@@ -13,7 +15,8 @@ class UsersController < ApplicationController
       flash[:missing_details] = summarize_missing_details(user)
       flash[:mismatched_passwords] = "Passwords do not match" unless passwords_match?
 
-      redirect_to "/register"
+      session[:user_params] = user_params
+      redirect_to register_path
     end
   end
 
