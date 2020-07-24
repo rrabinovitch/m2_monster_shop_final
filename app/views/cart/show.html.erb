@@ -32,7 +32,7 @@
         <center>
           <p><%=quantity%></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
-          <p><%= button_to("Add 1 #{item.name}", "/cart/#{item.id}", method: :post) unless quantity == item.inventory %></p>
+          <p><%= button_to("Add 1 #{item.name}", "/cart/#{item.id}", method: :put) unless quantity == item.inventory %></p>
           <p><%= button_to("Remove 1 #{item.name}", "/cart/#{item.id}", method: :patch) %></p>
         </center>
         </td>
