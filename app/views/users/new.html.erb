@@ -1,4 +1,4 @@
-<h1 align="center">New User Registration</h1>
+<%= tag.h1 "New User Registration" %>
 <%= form_tag "/users", method: :post, class: "new-user-form" do %>
   <%= label_tag :name, "Full Name" %>
   <%= text_field_tag :name, @user.name %>
