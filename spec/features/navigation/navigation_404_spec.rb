@@ -38,7 +38,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit login_path
         fill_in :email, with: default_user.email
         fill_in :password, with: default_user.password
-        click_on 'Log In'
+        click_button 'Log In'
         expect(default_user.regular?).to be_truthy
       end
 
@@ -67,7 +67,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit login_path
         fill_in :email, with: merchant_employee.email
         fill_in :password, with: merchant_employee.password
-        click_on 'Log In'
+        click_button 'Log In'
         expect(merchant_employee.merchant_employee?).to be_truthy
       end
 
@@ -88,7 +88,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit login_path
         fill_in :email, with: admin_user.email
         fill_in :password, with: admin_user.password
-        click_on 'Log In'
+        click_button 'Log In'
         expect(admin_user.admin?).to be_truthy
       end
 
