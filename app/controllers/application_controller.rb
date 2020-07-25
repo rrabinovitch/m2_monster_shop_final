@@ -18,9 +18,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def index
-  end
-
   def require_authorized_user
     render file: "/public/404" if unauthorized_user?
   end
