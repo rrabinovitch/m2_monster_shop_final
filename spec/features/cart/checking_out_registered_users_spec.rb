@@ -44,7 +44,9 @@ RSpec.describe "Checking Out Registered Users Spec" do
     it "I am taken to my updated profile orders page" do
       expect(current_path).to eq("/profile/orders")
       expect(page).to have_content("Your order was created")
-      expect(page).to have_css("order-#{@order.id}")
+      within("section.order-#{@order.id}") do
+        expect(page).to have_content(@order.grandtotal)
+      end
     end
 
     it "My cart is now empty" do
