@@ -13,7 +13,10 @@ RSpec.describe 'User can log out' do
         expect(page).to have_content("Cart: 1")
       end
 
-      visit '/logout'
+      within('nav') do
+        click_on 'Log Out'
+      end
+
       expect(current_path).to eq('/')
       expect(page).to have_content("You have logged out.")
       within('.topnav') do
