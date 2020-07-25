@@ -13,6 +13,8 @@ RSpec.describe 'User can log out' do
         expect(page).to have_content("Cart: 1")
       end
 
+      expect(page).to_not have_content("Log In")
+      
       within('nav') do
         click_on 'Log Out'
       end
