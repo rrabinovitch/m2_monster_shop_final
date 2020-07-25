@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
 
   def summarize_missing_details(user)
-    user.errors.full_messages.uniq.join(",")
+    user.errors.full_messages.uniq
   end
 
   def can_register?(user)

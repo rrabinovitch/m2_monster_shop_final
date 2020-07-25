@@ -17,7 +17,7 @@
     </nav>
     <% flash.each do |name, msg| %>
       <% if name == "missing_details" %>
-        <% msg.split(",").each do |m| %>
+        <% msg.each do |m| %>
           <div class= "<%=name%>-flash">
             <p><%= m %></p>
           </div>
