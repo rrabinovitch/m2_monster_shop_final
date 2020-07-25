@@ -17,6 +17,16 @@ RSpec.describe "Checking Out Registered Users Spec" do
     expect(Order.all.count).to eq(0)
 
     click_on "Checkout"
+    expect(current_path).to eq("/orders/new")
+
+    fill_in :name, with: @user.name
+    fill_in :address, with: @user.address
+    fill_in :city, with: @user.city
+    fill_in :state, with: @user.state
+    fill_in :zip, with: @user.zip
+
+    click_on "Create Order"
+
     expect(Order.all.count).to eq(1)
 
     @order = Order.all.first
@@ -31,7 +41,7 @@ RSpec.describe "Checking Out Registered Users Spec" do
       expect(@user.orders).to include(@order)
     end
 
-    it "I am taken to my updated orders page '/profile/orders'" do
+    it "I am taken to my updated profile orders page" do
       expect(current_path).to eq("/profile/orders")
       expect(page).to have_content("Your order was created")
       expect(page).to have_css("order-#{@order.id}")
