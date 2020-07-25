@@ -27,6 +27,7 @@ FactoryBot.define do
   end
 
   factory :order do
+    user
     sequence(:name) { |n| "Order #{n}" }
     address { "33 Buyers Square" }
     city { "Chicago" }
