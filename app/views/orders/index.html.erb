@@ -1,0 +1,7 @@
+<main>
+  <% @orders.each do |order| %>
+  <section class=<%= "order-#{order.id}" %>>
+    <%= tag.p order.grandtotal %>
+  </section>
+  <% end %>
+</main>
