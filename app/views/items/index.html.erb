@@ -9,7 +9,9 @@
     <section class = "grid-item" id= 'item-<%=item.id%>'>
       <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
       <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <img src= <%= item.image %>>
+      <a href="/items/<%=item.id%>" id="<%=item.id%>">
+        <img  src= <%= item.image %>>
+      </a>
       <p> <%= item.description unless @merchant%> </p>
       <p>Price: <%=number_to_currency(item.price) %> </p>
       <p>Inventory: <%= item.inventory %> </p>
@@ -23,3 +25,33 @@
     </section>
     <% end %>
 </section>
+
+<section class="most_popular">
+<table style="width:30%">
+  <tr>
+    <th>Most Popular Items</th>
+    <th>Quantity Sold</th>
+  </tr>
+  <% @items.most_popular_list.each do |popular_item|%>
+    <tr>
+      <td><%= popular_item.name %></td>
+      <td><%= popular_item.total_sold %></td>
+    </tr>
+  <% end %>
+</table>
+</section>
+
+<section class="least_popular">
+  <table style="width:30%">
+    <tr>
+      <th>Least Popular Items</th>
+      <th>Quantity Sold</th>
+    </tr>
+    <% @items.least_popular_list.each do |popular_item|%>
+      <tr>
+        <td><%= popular_item.name %></td>
+        <td><%= popular_item.total_sold %></td>
+      </tr>
+    <% end %>
+  </table>
+  </section>

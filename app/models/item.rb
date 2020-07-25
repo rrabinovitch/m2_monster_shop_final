@@ -10,8 +10,11 @@ class Item <ApplicationRecord
                         :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
-  validates_numericality_of :price, greater_than: 0
+  scope :active_items, -> {where(active?: true)}
+  scope :join_with_item_orders, -> { joins(:item_orders) }
+  scope :group_by_quantity, -> { select("items.*, sum(quantity) as order_quantity").group(:id) }
 
+  validates_numericality_of :price, greater_than: 0
 
   def average_review
     reviews.average(:rating)
@@ -25,4 +28,15 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def total_sold
+    item_orders.sum(:quantity)
+  end
+
+  def self.most_popular_list
+    join_with_item_orders.group_by_quantity.order("order_quantity DESC").limit(5)
+  end
+
+  def self.least_popular_list
+    join_with_item_orders.group_by_quantity.order("order_quantity").limit(5)
+  end
 end
