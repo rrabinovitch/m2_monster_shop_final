@@ -7,11 +7,11 @@ RSpec.describe "When I visit my profile page as a registered user" do
 
     visit '/profile'
 
-    expect(page).to have_content(user.name)
-    expect(page).to have_content(user.address)
-    expect(page).to have_content(user.city)
-    expect(page).to have_content(user.state)
-    expect(page).to have_content(user.zip)
+    expect(page).to have_content("Name: #{user.name}")
+    expect(page).to have_content("Street Address: #{user.address}")
+    expect(page).to have_content("City: #{user.city}")
+    expect(page).to have_content("State: #{user.state}")
+    expect(page).to have_content("ZIP Code: #{user.zip}")
     expect(page).to have_link("Edit My Profile")
   end
 end
