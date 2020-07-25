@@ -9,22 +9,7 @@ class OrdersController <ApplicationController
 
   def create
     order = Order.new(order_params)
-    if order_params.values.none?(&:empty?) && logged_in_user
-      logged_in_user.orders << order
-      cart.items.each do |item,quantity|
-        order.item_orders.create({
-          item: item,
-          quantity: quantity,
-          price: item.price
-          })
-      end
-      session.delete(:cart)
-      flash[:success] = "Your order was created"
-      redirect_to "/profile/orders"
-    else
-      flash[:notice] = "Please complete address form to create an order."
-      render :new
-    end
+    can_create_order? ? create_new(order) : retry_order_creation
   end
 
   def index
@@ -35,5 +20,28 @@ class OrdersController <ApplicationController
 
   def order_params
     params.permit(:name, :address, :city, :state, :zip)
+  end
+
+  def can_create_order?
+    order_params.values.none?(&:empty?) && logged_in_user
+  end
+
+  def create_new(order)
+    logged_in_user.orders << order
+    cart.items.each do |item,quantity|
+      order.item_orders.create({
+        item: item,
+        quantity: quantity,
+        price: item.price
+        })
+    end
+    session.delete(:cart)
+    flash[:success] = "Your order was created"
+    redirect_to "/profile/orders"
+  end
+
+  def retry_order_creation
+    flash[:notice] = "Please complete address form to create an order."
+    render :new
   end
 end
