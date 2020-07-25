@@ -16,9 +16,17 @@
       <%= link_to "Register", "/register"%>
     </nav>
     <% flash.each do |name, msg| %>
-      <div class= "<%=name%>-flash">
-        <p><%= msg %></p>
-      </div>
+      <% if name == "missing_details" %>
+        <% msg.split(",").each do |m| %>
+          <div class= "<%=name%>-flash">
+            <p><%= m %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <div class= "<%=name%>-flash">
+          <p><%= msg %></p>
+        </div>
+      <% end %>
     <% end %>
     <%= yield %>
   </body>
