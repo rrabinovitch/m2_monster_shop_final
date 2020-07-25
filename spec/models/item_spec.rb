@@ -48,7 +48,7 @@ describe Item, type: :model do
       expect(@chain.no_orders?).to eq(false)
     end
 
-    it 'item_quantity' do
+    it 'total_sold' do
       @item1 = create(:item, merchant_id: @bike_shop.id)
       order = create(:order)
       order.item_orders.create(item: @item1, price: 5, quantity: 1)
@@ -86,12 +86,12 @@ describe Item, type: :model do
       order.item_orders.create(item: @item10, price: 5, quantity: 10)
     end
 
-    it '.least_popular' do
-      expect(Item.least_popular).to eq(["#{@item1.name}: #{@item1.total_sold}","#{@item2.name}: #{@item2.total_sold}","#{@item3.name}: #{@item3.total_sold}","#{@item4.name}: #{@item4.total_sold}","#{@item5.name}: #{@item5.total_sold}"])
+    it '.least_popular_list' do
+      expect(Item.least_popular_list).to eq([@item1, @item2, @item3, @item4, @item5])
     end
 
-    it '.most_popular' do
-      expect(Item.most_popular).to eq(["#{@item10.name}: #{@item10.total_sold}","#{@item9.name}: #{@item9.total_sold}","#{@item8.name}: #{@item8.total_sold}","#{@item7.name}: #{@item7.total_sold}","#{@item6.name}: #{@item6.total_sold}"])
+    it '.most_popular_list' do
+      expect(Item.most_popular_list).to eq([@item10, @item9, @item8, @item7, @item6])
     end
     end
   end
