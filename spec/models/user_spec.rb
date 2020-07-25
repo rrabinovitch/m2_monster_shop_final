@@ -13,6 +13,10 @@ RSpec.describe User do
     it { should validate_presence_of(:role) }
   end
 
+  describe "associations" do
+    it { should have_many :orders }
+  end
+
   describe "roles" do
     it "can be created as a default regular user" do
       user = create(:user)

@@ -8,6 +8,12 @@ class CartController < ApplicationController
     redirect_to "/items"
   end
 
+  def add_single_item
+    item = Item.find(params[:item_id])
+    cart.add_item(item.id.to_s)
+    redirect_to "/cart"
+  end
+
   def show
     @items = cart.items
   end
@@ -19,6 +25,12 @@ class CartController < ApplicationController
 
   def remove_item
     session[:cart].delete(params[:item_id])
+    redirect_to '/cart'
+  end
+
+  def remove_single_item
+    item = Item.find(params[:item_id])
+    cart.remove_item(item.id.to_s)
     redirect_to '/cart'
   end
 
