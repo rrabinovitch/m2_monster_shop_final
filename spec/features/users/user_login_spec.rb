@@ -9,7 +9,7 @@ RSpec.describe 'User Login Spec' do
         visit '/login'
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-        click_on 'Log In'
+        click_button 'Log In'
         expect(current_path).to eq("/profile")
         expect(page).to have_content("You are now logged in!")
       end
@@ -19,7 +19,7 @@ RSpec.describe 'User Login Spec' do
         visit '/login'
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-        click_on 'Log In'
+        click_button 'Log In'
         expect(current_path).to eq("/merchant/dashboard")
         expect(page).to have_content("You are now logged in!")
       end
@@ -29,7 +29,7 @@ RSpec.describe 'User Login Spec' do
         visit '/login'
         fill_in :email, with: user.email
         fill_in :password, with: user.password
-        click_on 'Log In'
+        click_button 'Log In'
         expect(current_path).to eq("/admin/dashboard")
         expect(page).to have_content("You are now logged in!")
       end
@@ -41,7 +41,7 @@ RSpec.describe 'User Login Spec' do
         visit '/login'
         fill_in :email, with: user.email
         fill_in :password, with: "this-is-wrong"
-        click_on 'Log In'
+        click_button 'Log In'
         expect(current_path).to eq('/login')
         expect(page).to have_content('Wrong email or password entered - please try logging in again.')
       end

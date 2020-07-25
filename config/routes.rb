@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "welcome#index"
 
@@ -41,8 +42,7 @@ Rails.application.routes.draw do
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
-  get "/logout", to: "sessions#destroy"
-  # this is a GET verb bc the user story says the user *visits* the path, not clicks on it
+  delete "/logout", to: "sessions#destroy"
 
   namespace :admin do
     get "/dashboard", to: "dashboard#index"
@@ -51,4 +51,7 @@ Rails.application.routes.draw do
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
   end
+
+  get "/admin", to: "admin/dashboard#index"
+  get "/merchant", to: "merchant/dashboard#index"
 end

@@ -1,4 +1,6 @@
 class CartController < ApplicationController
+  before_action :require_authorized_user
+
   def add_item
     item = Item.find(params[:item_id])
     cart.add_item(item.id.to_s)
@@ -20,5 +22,9 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
+  private
 
+  def unauthorized_user?
+    (logged_in_user && logged_in_user.admin?)
+  end
 end
