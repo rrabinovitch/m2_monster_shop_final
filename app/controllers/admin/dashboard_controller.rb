@@ -7,6 +7,6 @@ class Admin::DashboardController < ApplicationController
   private
 
   def unauthorized_user?
-    logged_in_user.nil? || logged_in_user.regular? || logged_in_user.merchant_employee?
+    current_user.nil? || current_user.regular? || current_user.merchant_employee?
   end
 end
