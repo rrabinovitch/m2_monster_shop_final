@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new(session[:user_registration_params])
-    session.delete(:user_registration_params)
+    @user = User.new(session.delete(:user_registration_params))
   end
 
   def create
@@ -22,13 +21,11 @@ class UsersController < ApplicationController
   end
 
   def user_registration_params
-    params.permit(:name, :address, :city, :state, :zip, :email)
+    params.permit(:name, :address, :city, :state, :zip)
   end
 
   def summarize_missing_details(user)
-    user.errors.messages.map do |type, message|
-      type.to_s.capitalize + " " + message.uniq.join
-    end.join("\n")
+    user.errors.full_messages.uniq.join(",")
   end
 
   def can_register?(user)
