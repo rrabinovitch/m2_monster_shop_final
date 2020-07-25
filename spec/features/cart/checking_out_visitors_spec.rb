@@ -30,7 +30,7 @@ RSpec.describe "Cart show" do
 
       fill_in :email, with: default_user.email
       fill_in :password, with: default_user.password
-      click_on 'Log In'
+      click_button 'Log In'
 
       visit cart_path
       expect(page).to_not have_css('.warning')

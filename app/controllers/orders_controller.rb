@@ -13,7 +13,7 @@ class OrdersController <ApplicationController
   end
 
   def index
-    @orders = logged_in_user.orders
+    @orders = current_user.orders
   end
 
   private
@@ -23,11 +23,11 @@ class OrdersController <ApplicationController
   end
 
   def can_create_order?
-    order_params.values.none?(&:empty?) && logged_in_user
+    order_params.values.none?(&:empty?) && current_user
   end
 
   def create_new(order)
-    logged_in_user.orders << order
+    current_user.orders << order
     cart.items.each do |item,quantity|
       order.item_orders.create({
         item: item,
