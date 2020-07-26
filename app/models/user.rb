@@ -11,4 +11,6 @@ class User < ApplicationRecord
   has_secure_password
 
   enum role: [:regular, :merchant_employee, :admin]
+
+  has_many :orders
 end

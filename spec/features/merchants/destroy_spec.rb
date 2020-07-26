@@ -35,6 +35,13 @@ RSpec.describe "As a visitor" do
       pencil = mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       pulltoy = brian.items.create(name: "Pulltoy", description: "It'll never fall apart!", price: 14, image: "https://www.valupets.com/media/catalog/product/cache/1/image/650x/040ec09b1e35df139433887a97daa66f/l/a/large_rubber_dog_pull_toy.jpg", inventory: 7)
 
+      bert = create(:user, name: "Bert")
+
+      visit login_path
+      fill_in :email, with: bert.email
+      fill_in :password, with: bert.password
+      click_button 'Log In'
+
 
       visit "/items/#{paper.id}"
       click_on "Add To Cart"
@@ -48,17 +55,11 @@ RSpec.describe "As a visitor" do
       visit "/cart"
       click_on "Checkout"
 
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
+      fill_in :name, with: bert.name
+      fill_in :address, with: bert.address
+      fill_in :city, with: bert.city
+      fill_in :state, with: bert.state
+      fill_in :zip, with: bert.zip
 
       click_button "Create Order"
 
