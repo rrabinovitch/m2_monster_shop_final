@@ -36,14 +36,36 @@ describe ItemOrder, type: :model do
   end
 
   describe 'instance methods' do
-    it 'subtotal' do
-      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      customer = create(:user)
-      order_1 = customer.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
+    before :each do
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @customer = create(:user)
+      @order_1 = @customer.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+    end
 
-      expect(item_order_1.subtotal).to eq(200)
+    it 'subtotal' do
+      expect(@item_order_1.subtotal).to eq(200)
+    end
+
+    it "fulfill" do
+      expect(@tire.inventory).to eq(12)
+      expect(@item_order_1.status).to eq("unfulfilled")
+
+      @item_order_1.fulfill
+      expect(@tire.inventory).to eq(10)
+      expect(@item_order_1.status).to eq("fulfilled")
+    end
+
+    it "unfulfill" do
+      expect(@tire.inventory).to eq(12)
+
+      @item_order_1.fulfill
+      expect(@tire.inventory).to eq(10)
+
+      @item_order_1.unfulfill
+      expect(@tire.inventory).to eq(12)
+      expect(@item_order_1.status).to eq("unfulfilled")
     end
   end
 
