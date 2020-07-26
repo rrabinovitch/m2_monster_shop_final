@@ -47,3 +47,5 @@
 <section id="datecreated">
   <p> <%= @order.created_at%></p>
 </section>
+
+<%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch %>

@@ -43,6 +43,10 @@ Rails.application.routes.draw do
   get "/profile", to: "users#show"
   get "/profile/orders", to: "orders#index"
 
+  # placeholder until story 29 is finished
+  get "/profile/orders/:id", to: "orders#show"
+  patch "/profile/orders/:id", to: "orders#update"
+
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
