@@ -21,6 +21,7 @@ class UsersController < ApplicationController
     current_user.update(user_update_params)
     redirect_to "/profile"
     flash[:success] = "Your profile data has been updated."
+    # working in test but not in server
   end
 
   private

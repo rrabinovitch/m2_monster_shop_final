@@ -34,6 +34,5 @@ RSpec.describe 'When I visit my profile page as a registered user' do
     expect(page).to have_content("City: #{user.city}")
     expect(page).to have_content("State: #{user.state}")
     expect(page).to have_content("ZIP Code: #{user.zip}")
-    save_and_open_page
   end
 end
