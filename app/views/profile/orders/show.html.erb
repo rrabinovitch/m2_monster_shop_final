@@ -17,8 +17,8 @@
   <li><%= item.name %></li>
   <li><%= item.description %></li>
   <li><%= item.image %></li>
-  <li> <%= ItemOrder.items_in_order_quantity(item, @order) %></li>
-  <li> <%= ItemOrder.item_order_subtotal(item, @order) %></li>
+  <li> <%= @order.item_orders.items_in_order_quantity(item) %></li>
+  <li> <%= @order.item_orders.item_order_subtotal(item) %></li>
 </ul>
 <% end %>
 </section>

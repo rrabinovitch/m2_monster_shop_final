@@ -73,8 +73,8 @@ RSpec.describe 'As a registered user' do
         expect(page).to have_content(@items1.first.name)
         expect(page).to have_content(@items1.first.description)
         expect(page).to have_content(@items1.first.image)
-        expect(page).to have_content(ItemOrder.items_in_order_quantity(@items1.first, @order1))
-        expect(page).to have_content(ItemOrder.item_order_subtotal(@items1.first, @order1))
+        expect(page).to have_content(@order1.item_orders.items_in_order_quantity(@items1.first))
+        expect(page).to have_content(@order1.item_orders.item_order_subtotal(@items1.first))
       end
     end
 
