@@ -63,7 +63,7 @@ RSpec.describe "User Orders Index Page Spec" do
       visit "/profile/orders"
       @orders.each do |order|
         within("section.order-#{order.id}") do
-          expect(page).to have_link("Order #{order.id}", href: "/orders/#{order.id}")
+          expect(page).to have_link("Order #{order.id}", href: "/profile/orders/#{order.id}")
           expect(page).to have_content("Created at: #{order.created_at}")
           expect(page).to have_content("Updated at: #{order.updated_at}")
           expect(page).to have_content("Status: #{order.status}")

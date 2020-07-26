@@ -69,4 +69,27 @@ describe ItemOrder, type: :model do
     end
   end
 
+  describe 'class methods' do
+    before :each do
+      @user = create(:user)
+      @item1 = create(:item)
+      @item2 = create(:item)
+      @order = create(:order)
+      @user.orders << @order
+      @item1.item_orders.create(order: @order, price: @item1.price, quantity: 2)
+      @item2.item_orders.create(order: @order, price: @item1.price, quantity: 5)
+    end
+
+    it '.select_items_in_order(order)' do
+      expect(ItemOrder.select_items_in_order(@item1)).to eq([@item1.item_orders.first])
+    end
+
+    it '.items_in_order_quantity' do
+      expect(ItemOrder.items_in_order_quantity(@item1)).to eq(2)
+    end
+
+    it '.item_order_subtotal' do
+      expect(ItemOrder.item_order_subtotal(@item1)).to eq(@item1.price * @order.item_orders.items_in_order_quantity(@item1))
+    end
+  end
 end

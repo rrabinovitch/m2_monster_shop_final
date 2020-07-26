@@ -19,4 +19,16 @@ class ItemOrder <ApplicationRecord
     item.restock(quantity)
     update(status: "unfulfilled")
   end
+
+  def self.select_items_in_order(item)
+    where({item_id: item.id})
+  end
+
+  def self.items_in_order_quantity(item)
+    select_items_in_order(item).sum(:quantity)
+  end
+
+  def self.item_order_subtotal(item)
+    items_in_order_quantity(item) * item.price
+  end
 end

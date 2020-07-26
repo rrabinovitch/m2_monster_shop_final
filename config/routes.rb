@@ -59,6 +59,10 @@ Rails.application.routes.draw do
     get "/dashboard", to: "dashboard#index"
   end
 
+  namespace :profile do
+    get "/orders/:order_id", to: "orders#show"
+  end
+
   get "/admin", to: "admin/dashboard#index"
   get "/merchant", to: "merchant/dashboard#index"
 end

@@ -2,7 +2,7 @@
   <%= tag.h1 "#{current_user.name}'s Orders" %>
   <% @orders.each do |order| %>
   <section class=<%= "order-#{order.id}" %>>
-    <%= tag.h2 link_to("Order #{order.id}", "/orders/#{order.id}") %>
+    <%= tag.h2 link_to("Order #{order.id}", "/profile/orders/#{order.id}") %>
     <%= tag.p "Created at: #{order.created_at}" %>
     <%= tag.p "Updated at: #{order.updated_at}" %>
     <%= tag.p "Status: #{order.status}" %>
