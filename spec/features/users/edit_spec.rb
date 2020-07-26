@@ -9,11 +9,11 @@ RSpec.describe 'When I visit my profile page as a registered user' do
 
     click_on "Edit My Profile"
     expect(current_path).to eq('/profile/edit')
-    expect(page).to have_content(user.name)
-    expect(page).to have_content(user.address)
-    expect(page).to have_content(user.city)
-    expect(page).to have_content(user.state)
-    expect(page).to have_content(user.zip)
+    expect(page).to have_selector("input[value='#{user.name}']")
+    expect(page).to have_selector("input[value='#{user.address}']")
+    expect(page).to have_selector("input[value='#{user.city}']")
+    expect(page).to have_selector("input[value='#{user.state}']")
+    expect(page).to have_selector("input[value='#{user.zip}']")
   end
 
   it "When I change any or all of my information and I submit the edit form, I am returned to my profile page, where I see my updated information and a flash message confirming the update" do
@@ -25,7 +25,7 @@ RSpec.describe 'When I visit my profile page as a registered user' do
 
     fill_in :address, with: updated_address
 
-    click_on 'Submit'
+    click_on 'Update Profile'
 
     expect(current_path).to eq('/profile')
     expect(page).to have_content("Your profile data has been updated.")
