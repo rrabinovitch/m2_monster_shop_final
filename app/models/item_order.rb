@@ -6,8 +6,17 @@ class ItemOrder <ApplicationRecord
 
   enum status: [:unfulfilled, :fulfilled]
 
-
   def subtotal
     price * quantity
+  end
+
+  def fulfill
+    item.sell(quantity)
+    update(status: "fulfilled")
+  end
+
+  def unfulfill
+    item.restock(quantity)
+    update(status: "unfulfilled")
   end
 end
