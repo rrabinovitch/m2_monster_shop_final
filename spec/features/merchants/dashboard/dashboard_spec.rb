@@ -36,7 +36,6 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_content(@merchant.state)
       expect(page).to have_content(@merchant.zip)
     end
-
     it 'I can also see a list of pending orders that include items sold by my merchant, including the order ID, order date, total quantity of my merchant items in the order, and the total value of my merchant items for that order' do
     end
 
