@@ -15,7 +15,12 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(current_user.id)
+  end
 
+  def update
+    current_user.update(user_update_params)
+    redirect_to "/profile"
+    flash[:success] = "Your profile data has been updated."
   end
 
   private
@@ -52,5 +57,9 @@ class UsersController < ApplicationController
 
     session[:user_registration_params] = user_registration_params
     redirect_to register_path
+  end
+
+  def user_update_params
+    params.permit(:name, :address, :city, :state, :zip, :email)
   end
 end
