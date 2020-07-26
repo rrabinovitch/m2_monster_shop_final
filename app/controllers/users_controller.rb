@@ -13,6 +13,11 @@ class UsersController < ApplicationController
     render file: "/public/404" unless current_user
   end
 
+  def edit
+    @user = User.find(current_user.id)
+    
+  end
+
   private
   def passwords_match?
     params[:password] == params[:confirm_password]
