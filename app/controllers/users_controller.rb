@@ -47,6 +47,7 @@ class UsersController < ApplicationController
 
   def register(user)
     user.save
+    session[:user_id] = user.id
     flash[:success] = "You are now registered and logged in!"
     redirect_to "/profile"
   end
