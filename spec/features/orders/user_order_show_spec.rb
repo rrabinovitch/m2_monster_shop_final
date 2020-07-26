@@ -73,10 +73,9 @@ RSpec.describe 'As a registered user' do
         expect(page).to have_content(@items1.first.name)
         expect(page).to have_content(@items1.first.description)
         expect(page).to have_content(@items1.first.image)
-        expect(page).to have_content(@items1.first.item_orders.items_in_order_quantity(@order1))
-        expect(page).to have_content(@items1.first.item_orders.item_order_subtotal(@order1))
+        expect(page).to have_content(ItemOrder.items_in_order_quantity(@items1.first, @order1))
+        expect(page).to have_content(ItemOrder.item_order_subtotal(@items1.first, @order1))
       end
-
     end
 
     it "also shows the total quantity of items in the order as well as the grand total of all items in that order" do
@@ -84,6 +83,5 @@ RSpec.describe 'As a registered user' do
       expect(page).to have_content("Total Items: #{@order1.items.sum('quantity')}")
       expect(page).to have_content("Grand Total: #{@order1.grandtotal}")
     end
-
   end
 end

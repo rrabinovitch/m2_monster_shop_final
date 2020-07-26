@@ -8,9 +8,8 @@
 
 <p>Total Items: <%= @order.items.sum('quantity') %><br>
   Grand Total: <%= @order.grandtotal %></p>
-  
-<h3>Items in this Order</h3>
 
+<h3>Items in this Order</h3>
 
 <% @order.items.each do |item| %>
 <section class=<%= "item-#{item.id}" %>>
@@ -18,8 +17,8 @@
   <li><%= item.name %></li>
   <li><%= item.description %></li>
   <li><%= item.image %></li>
-  <li> <%= item.item_orders.items_in_order_quantity(@order) %></li>
-  <li> <%= item.item_orders.item_order_subtotal(@order) %></li>
+  <li> <%= ItemOrder.items_in_order_quantity(item, @order) %></li>
+  <li> <%= ItemOrder.item_order_subtotal(item, @order) %></li>
 </ul>
 <% end %>
 </section>
