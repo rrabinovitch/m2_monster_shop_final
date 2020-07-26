@@ -46,10 +46,12 @@ RSpec.describe 'When I visit my profile page as a registered user' do
     visit '/profile/edit'
 
     fill_in :email, with: user_2.email
+    fill_in :password, with: user_1.password
+    save_and_open_page
     click_on 'Update Profile'
 
+    expect(page).to have_content("Email has already been taken")
     expect(current_path).to eq('/profile/edit')
-    expect(page).to have_content("Email has already been taken.")
 
   end
 

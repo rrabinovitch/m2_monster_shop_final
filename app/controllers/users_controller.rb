@@ -18,10 +18,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    current_user.update(user_update_params)
-    redirect_to "/profile"
-    flash[:success] = "Your profile data has been updated."
-    # working in test but not in server
+    current_user.update(user_params)
+    if current_user.save
+      redirect_to "/profile"
+      flash[:success] = "Your profile data has been updated."
+    else
+      flash[:missing_details] = current_user.errors.full_messages
+      redirect_to "/profile/edit"
+    end
+    # working in test but updated profile info does not appear when testing in server
   end
 
   private
@@ -61,7 +66,7 @@ class UsersController < ApplicationController
     redirect_to register_path
   end
 
-  def user_update_params
-    params.permit(:name, :address, :city, :state, :zip, :email)
-  end
+  # def user_update_params
+  #   params.permit(:name, :address, :city, :state, :zip, :email)
+  # end
 end
