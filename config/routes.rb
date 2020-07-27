@@ -41,6 +41,11 @@ Rails.application.routes.draw do
   get "/register", to: "users#new"
   post "/users", to: "users#create"
   get "/profile", to: "users#show"
+
+  get "/profile/edit", to: "users#edit"
+  patch "/profile", to: "users#update"
+  get "/profile/password/edit", to: "passwords#edit"
+  patch "/profile/password", to: "passwords#update"
   get "/profile/orders", to: "orders#index"
 
   get "/login", to: "sessions#new"
