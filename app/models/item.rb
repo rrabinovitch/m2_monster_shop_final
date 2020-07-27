@@ -33,12 +33,12 @@ class Item <ApplicationRecord
   end
 
   def sell(amount_of_items)
-    new_amount = self.inventory -= amount_of_items
+    new_amount = self.inventory - amount_of_items
     update(inventory: new_amount)
   end
 
   def restock(amount_of_items)
-    new_amount = self.inventory += amount_of_items
+    new_amount = self.inventory + amount_of_items
     update(inventory: new_amount)
   end
 
