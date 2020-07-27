@@ -26,7 +26,6 @@ class UsersController < ApplicationController
       flash[:missing_details] = current_user.errors.full_messages
       redirect_to "/profile/edit"
     end
-    # working in test but updated profile info does not appear when testing in server
   end
 
   private
