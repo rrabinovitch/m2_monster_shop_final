@@ -12,4 +12,8 @@ class Profile::OrdersController < ApplicationController
     redirect_to "/profile"
   end
 
+  def index
+    @orders = current_user.orders
+  end
+
 end

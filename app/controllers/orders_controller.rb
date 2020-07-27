@@ -12,10 +12,6 @@ class OrdersController <ApplicationController
     can_create_order? ? create_new(order) : retry_order_creation
   end
 
-  def index
-    @orders = current_user.orders
-  end
-
   private
 
   def order_params
