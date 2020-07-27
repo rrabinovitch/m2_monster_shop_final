@@ -19,4 +19,14 @@ class ItemOrder <ApplicationRecord
   def self.item_order_subtotal(item)
     items_in_order_quantity(item) * item.price
   end
+
+  def self.all_subtotal
+    sum{ |item_order| item_order.subtotal }
+  end
+
+  def self.pending_orders
+    joins(:order).select('orders.*').where(orders: {status: "0"}).distinct
+  end
+
+
 end

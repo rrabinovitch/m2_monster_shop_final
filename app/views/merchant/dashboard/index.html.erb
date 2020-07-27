@@ -7,3 +7,11 @@
   <li>State: <%= @merchant_employee.merchant.state %></li>
   <li>Zip: <%= @merchant_employee.merchant.zip %></li>
 </ul>
+
+<h3>Pending Orders for <%= @merchant_employee.merchant.name %></h3>
+<% @merchant_employee.merchant.item_orders.pending_orders.each do |order| %>
+  ID: <%= order.id %><br>
+  Date: <%= order.created_at %><br>
+  Quantity of Merchant Items: <%= Order.find(order.id).merchant_items(@merchant_employee.merchant).sum(:quantity) %><br>
+  Total Value of Merchant Items: <%= Order.find(order.id).merchant_items(@merchant_employee.merchant).all_subtotal  %><br>
+<% end %>

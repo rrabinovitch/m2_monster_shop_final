@@ -59,5 +59,9 @@ describe Order, type: :model do
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
+
+    it 'merchant_items' do
+      expect(@order_1.merchant_items(@meg).first).to eq(@order_1.item_orders.first)
+    end
   end
 end

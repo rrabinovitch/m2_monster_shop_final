@@ -47,5 +47,9 @@ describe ItemOrder, type: :model do
     it '.item_order_subtotal' do
       expect(ItemOrder.item_order_subtotal(@item1)).to eq(@item1.price * @order.item_orders.items_in_order_quantity(@item1))
     end
+
+    it '.all_subtotal' do
+      expect(ItemOrder.all_subtotal).to eq(700.0)
+    end
   end
 end

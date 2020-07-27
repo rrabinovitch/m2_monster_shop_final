@@ -10,4 +10,8 @@ class Order <ApplicationRecord
   def grandtotal
     item_orders.sum('price * quantity')
   end
+
+  def merchant_items(merchant)
+    item_orders.where({item_id: merchant.item_orders.pluck(:item_id)})
+  end
 end
