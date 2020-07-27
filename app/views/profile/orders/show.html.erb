@@ -1,0 +1,24 @@
+<h1> Order ID: <%= @order.id %> for <%= @order.name %><h1>
+
+<p>
+  Order Date: <%= @order.created_at %>
+  Last Updated: <%= @order.updated_at %>
+  Status: <%= @order.status %>
+</p>
+
+<p>Total Items: <%= @order.items.sum('quantity') %><br>
+  Grand Total: <%= @order.grandtotal %></p>
+
+<h3>Items in this Order</h3>
+
+<% @order.items.each do |item| %>
+<section class=<%= "item-#{item.id}" %>>
+<ul>
+  <li><%= item.name %></li>
+  <li><%= item.description %></li>
+  <li><%= item.image %></li>
+  <li> <%= @order.item_orders.items_in_order_quantity(item) %></li>
+  <li> <%= @order.item_orders.item_order_subtotal(item) %></li>
+</ul>
+<% end %>
+</section>
