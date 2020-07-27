@@ -32,6 +32,16 @@ class Item <ApplicationRecord
     item_orders.sum(:quantity)
   end
 
+  def sell(amount_of_items)
+    new_amount = self.inventory -= amount_of_items
+    update(inventory: new_amount)
+  end
+
+  def restock(amount_of_items)
+    new_amount = self.inventory += amount_of_items
+    update(inventory: new_amount)
+  end
+
   def self.most_popular_list
     join_with_item_orders.group_by_quantity.order("order_quantity DESC").limit(5)
   end

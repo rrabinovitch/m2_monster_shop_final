@@ -10,4 +10,11 @@ class Order <ApplicationRecord
   def grandtotal
     item_orders.sum('price * quantity')
   end
+
+  def cancel
+    self.item_orders.each do |item_order|
+      item_order.unfulfill if item_order.fulfilled?
+    end
+    self.update(status: "cancelled")
+  end
 end

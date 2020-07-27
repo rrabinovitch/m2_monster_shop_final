@@ -54,10 +54,28 @@ describe Order, type: :model do
       @order_1 = @customer.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
       @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @fullfilled_pull_toys = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
+
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
+    end
+
+    it 'cancel when no item_orders fulfilled' do
+      @order_1.cancel
+      expect(@order_1.status).to eq("cancelled")
+    end
+
+    it 'cancel when some item_orders fulfilled' do
+      expect(@pull_toy.inventory).to eq(32)
+
+      @fullfilled_pull_toys.fulfill
+      expect(@pull_toy.inventory).to eq(29)
+
+      @order_1.cancel
+      expect(@order_1.status).to eq("cancelled")
+      expect(@fullfilled_pull_toys.status).to eq("unfulfilled")
+      expect(@pull_toy.inventory).to eq(32)
     end
   end
 end

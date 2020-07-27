@@ -22,3 +22,5 @@
 </ul>
 <% end %>
 </section>
+
+<%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch %>
