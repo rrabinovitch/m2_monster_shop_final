@@ -11,7 +11,6 @@ RSpec.describe "As an admin" do
         fill_in :password, with: @admin_user.password
         click_button 'Log In'
 
-
         visit "/merchants"
 
         expect(@admin_user.admin?).to be_truthy
