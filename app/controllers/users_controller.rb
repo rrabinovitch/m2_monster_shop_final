@@ -9,8 +9,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(current_user.id)
     render file: "/public/404" unless current_user
+    @user = current_user
   end
 
   def edit
