@@ -44,15 +44,22 @@ RSpec.describe 'As a merchant employee' do
 
     it 'I can also see a list of pending orders that include items sold by my merchant, including the order ID, order date, total quantity of my merchant items in the order, and the total value of my merchant items for that order' do
       visit "/merchant/dashboard"
+
       expect(page).to have_content(@order1.id)
-      expect(page).to have_content(@order2.id)
-      expect(page).to_not have_content(@order3.id)
       expect(page).to have_content("Quantity of Merchant Items: 9")
       expect(page).to have_content("Total Value of Merchant Items: 205")
+
+      expect(page).to have_content(@order2.id)
+      expect(page).to_not have_content(@order3.id)
 
     end
 
     it 'the order ID is a link to the merhant order show page' do
+      visit "/merchant/dashboard"
+
+      expect(page).to have_link(@order1.id)
+      click_link(@order1.id)
+      expect(current_path).to eq("/merchant/orders/#{@order1.id}")
 
     end
   end
