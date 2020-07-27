@@ -10,6 +10,22 @@ class UsersController < ApplicationController
 
   def show
     render file: "/public/404" unless current_user
+    @user = current_user
+  end
+
+  def edit
+    @user = current_user
+  end
+
+  def update
+    current_user.update(user_params)
+    if current_user.save
+      redirect_to "/profile"
+      flash[:success] = "Your profile data has been updated."
+    else
+      flash[:missing_details] = current_user.errors.full_messages
+      redirect_to "/profile/edit"
+    end
   end
 
   private
