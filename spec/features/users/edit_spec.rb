@@ -46,7 +46,6 @@ RSpec.describe 'When I visit my profile page as a registered user' do
     visit '/profile/edit'
 
     fill_in :email, with: user_2.email
-    fill_in :password, with: user_1.password
     click_on 'Update Profile'
 
     expect(page).to have_content("Email has already been taken")
@@ -83,4 +82,19 @@ RSpec.describe 'When I visit my profile page as a registered user' do
     expect(page).to have_content("Passwords do not match.")
     expect(current_path).to eq('/profile/password/edit')
   end
+
+  it "I can't update password to an empty string" do
+    user = create(:user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit '/profile/password/edit'
+
+    fill_in :password, with: ""
+    fill_in :confirm_password, with: ""
+    click_on "Save New Password"
+
+    expect(page).to have_content("Password and/or confirm password field cannot be empty.")
+    expect(current_path).to eq('/profile/password/edit')
+  end
+
 end
