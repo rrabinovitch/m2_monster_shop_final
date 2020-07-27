@@ -80,7 +80,7 @@ RSpec.describe 'When I visit my profile page as a registered user' do
     fill_in :confirm_password, with: "not_the_password"
     click_on "Save New Password"
 
-    expect(page).to have_content("Passwords do not match")
+    expect(page).to have_content("Passwords do not match.")
     expect(current_path).to eq('/profile/password/edit')
   end
 end

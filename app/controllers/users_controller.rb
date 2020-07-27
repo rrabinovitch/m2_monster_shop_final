@@ -65,8 +65,4 @@ class UsersController < ApplicationController
     session[:user_registration_params] = user_registration_params
     redirect_to register_path
   end
-
-  # def user_update_params
-  #   params.permit(:name, :address, :city, :state, :zip, :email)
-  # end
 end
