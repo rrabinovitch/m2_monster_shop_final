@@ -1,4 +1,9 @@
-<h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+<% if current_user.role == "admin" %>
+  <h1><%= link_to @merchant.name, "/admin/merchants/#{@merchant.id}" %></h1>
+<% else %>
+  <h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+<% end %>
+
 <p class="address"><%= @merchant.address %></p>
 <p class="address"><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
 
