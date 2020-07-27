@@ -1,4 +1,4 @@
-class PasswordsController < ApplicationController
+class Profile::PasswordsController < ApplicationController
   def edit
   end
 
