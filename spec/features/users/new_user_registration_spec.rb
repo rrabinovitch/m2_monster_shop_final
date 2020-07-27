@@ -32,6 +32,7 @@ RSpec.describe "New User Registration Spec" do
         expect(current_path).to eq("/profile")
 
         expect(page).to have_content("You are now registered and logged in!")
+        expect(page).to_not have_content("The page you were looking for doesn't exist.")
       end
     end
   end
