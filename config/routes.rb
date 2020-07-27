@@ -43,10 +43,6 @@ Rails.application.routes.draw do
   get "/profile", to: "users#show"
   get "/profile/orders", to: "orders#index"
 
-  # placeholder until story 29 is finished
-  get "/profile/orders/:id", to: "orders#show"
-  patch "/profile/orders/:id", to: "orders#update"
-
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
@@ -61,6 +57,7 @@ Rails.application.routes.draw do
 
   namespace :profile do
     get "/orders/:order_id", to: "orders#show"
+    patch "/orders/:order_id", to: "orders#update"
   end
 
   get "/admin", to: "admin/dashboard#index"
