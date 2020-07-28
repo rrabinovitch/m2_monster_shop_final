@@ -25,4 +25,12 @@ class Merchant <ApplicationRecord
     item_orders.distinct.joins(:order).pluck(:city)
   end
 
+  def change_status
+    if self.enabled?
+      self.update(enabled?: "false")
+    else
+      self.update(enabled?: "true")
+    end
+  end
+
 end
