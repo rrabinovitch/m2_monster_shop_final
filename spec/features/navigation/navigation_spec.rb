@@ -10,6 +10,7 @@ RSpec.describe 'Site Navigation' do
                         email: "janedoe@email.com",
                         password: "password",
                         password_confirmation: "password")
+    @merchant_1 = create(:merchant)
     @merchant = User.create(name: "Megan Stang",
                                  address: "456 Cool St",
                                  city: "Denver",
@@ -18,7 +19,8 @@ RSpec.describe 'Site Navigation' do
                                  email: "megstang@email.com",
                                  password: "password",
                                  password_confirmation: "password",
-                                 role: 1)
+                                 role: 1,
+                                  merchant_id: @merchant_1.id)
     @admin = User.create(name: "Michael Scott",
                                  address: "126 Kellum Court",
                                  city: "Scranton",
