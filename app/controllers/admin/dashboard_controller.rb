@@ -2,6 +2,7 @@ class Admin::DashboardController < ApplicationController
   before_action :require_authorized_user
 
   def index
+    @orders = Order.all
   end
 
   private
