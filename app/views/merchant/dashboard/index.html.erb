@@ -8,6 +8,8 @@
   <li>Zip: <%= @merchant_employee.merchant.zip %></li>
 </ul>
 
+<p> <%= link_to "Merchant Items", "/merchant/items" %></p>
+
 <h3>Pending Orders for <%= @merchant_employee.merchant.name %></h3>
 
 <% @merchant_employee.merchant.item_orders.pending_orders.each do |order| %>
