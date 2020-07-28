@@ -14,16 +14,4 @@ class User < ApplicationRecord
 
   has_many :orders
   belongs_to :merchant, optional: true
-
-  def admin?
-    role == "admin"
-  end
-
-  def regular?
-    role == "regular"
-  end
-
-  def merchant_employee?
-    role == "merchant_employee"
-  end 
 end
