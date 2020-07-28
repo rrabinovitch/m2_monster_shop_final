@@ -17,4 +17,12 @@ class Order <ApplicationRecord
     end
     self.update(status: "cancelled")
   end
+
+  def can_pack?
+    item_orders.all?(&:fulfilled?)
+  end
+
+  def pack
+    self.update(status: "packaged") if can_pack?
+  end
 end
