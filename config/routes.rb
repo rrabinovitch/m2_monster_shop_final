@@ -50,10 +50,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "/dashboard", to: "dashboard#index"
+    get "/", to: "dashboard#index"
+    # decide which of ^ these to use if extra time
   end
 
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
+    get "/", to: "dashboard#index"
+    # decide which of ^ these to use if extra time
   end
 
   namespace :profile do
@@ -64,7 +68,4 @@ Rails.application.routes.draw do
     patch "/password", to: "passwords#update"
     get "/password/edit", to: "passwords#edit"
   end
-
-  get "/admin", to: "admin/dashboard#index"
-  get "/merchant", to: "merchant/dashboard#index"
 end
