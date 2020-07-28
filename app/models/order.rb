@@ -5,7 +5,7 @@ class Order <ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
 
-  enum status: [:pending, :packaged, :shipped, :cancelled]
+  enum status: [:packaged, :pending, :shipped, :cancelled]
 
   def grandtotal
     item_orders.sum('price * quantity')
@@ -19,6 +19,6 @@ class Order <ApplicationRecord
   end
 
   def self.sort_by_status
-    binding.pry
+    # binding.pry
   end
 end

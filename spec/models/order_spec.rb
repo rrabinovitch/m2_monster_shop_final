@@ -17,16 +17,16 @@ describe Order, type: :model do
   end
 
   describe "status" do
-    it "can be pending" do
-      order = create(:order, status: 0)
-      expect(order.status).to eq("pending")
-      expect(order.pending?).to be_truthy
-    end
-
     it "can be packaged" do
-      order = create(:order, status: 1)
+      order = create(:order, status: 0)
       expect(order.status).to eq("packaged")
       expect(order.packaged?).to be_truthy
+    end
+
+    it "can be pending" do
+      order = create(:order, status: 1)
+      expect(order.status).to eq("pending")
+      expect(order.pending?).to be_truthy
     end
 
     it "can be shipped" do
