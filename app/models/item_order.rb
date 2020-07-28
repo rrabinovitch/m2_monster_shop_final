@@ -1,11 +1,24 @@
 class ItemOrder <ApplicationRecord
-  validates_presence_of :item_id, :order_id, :price, :quantity
+  validates_presence_of :item_id, :order_id, :price, :quantity, :status
 
   belongs_to :item
   belongs_to :order
 
+  enum status: [:unfulfilled, :fulfilled]
+
   def subtotal
     price * quantity
+  end
+
+  def fulfill
+    item.sell(quantity)
+    update(status: "fulfilled")
+    order.pack if order.can_pack?
+  end
+
+  def unfulfill
+    item.restock(quantity)
+    update(status: "unfulfilled")
   end
 
   def self.select_items_in_order(item)
