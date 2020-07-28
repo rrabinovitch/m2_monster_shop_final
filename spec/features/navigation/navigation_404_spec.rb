@@ -9,7 +9,7 @@ RSpec.describe "Navigation 404 Spec" do
   describe "Visitor Navigation Restrictions" do
     describe "As a visitor, I see a 404 error when I try to access" do
       it "/merchant" do
-        visit merchant_path
+        visit "/merchant"
         expect(page).to have_content(@error_404)
 
         visit merchant_dashboard_path
@@ -17,7 +17,7 @@ RSpec.describe "Navigation 404 Spec" do
       end
 
       it "/admin" do
-        visit admin_path
+        visit "/admin"
         expect(page).to have_content(@error_404)
 
         visit admin_dashboard_path
@@ -43,7 +43,7 @@ RSpec.describe "Navigation 404 Spec" do
       end
 
       it "/merchant" do
-        visit merchant_path
+        visit "/merchant"
         expect(page).to have_content(@error_404)
 
         visit merchant_dashboard_path
@@ -51,7 +51,7 @@ RSpec.describe "Navigation 404 Spec" do
       end
 
       it "/admin" do
-        visit admin_path
+        visit "/admin"
         expect(page).to have_content(@error_404)
 
         visit admin_dashboard_path
@@ -63,7 +63,8 @@ RSpec.describe "Navigation 404 Spec" do
   describe "Merchant Navigation Restrictions" do
     describe "As a merchant employee, I see a 404 error when I try to access" do
       before :each do
-        merchant_employee = create(:user, role: 1)
+        merchant = create(:merchant)
+        merchant_employee = create(:user, role: 1, merchant: merchant)
         visit login_path
         fill_in :email, with: merchant_employee.email
         fill_in :password, with: merchant_employee.password
@@ -72,7 +73,7 @@ RSpec.describe "Navigation 404 Spec" do
       end
 
       it "/admin" do
-        visit admin_path
+        visit "/admin"
         expect(page).to have_content(@error_404)
 
         visit admin_dashboard_path
@@ -93,7 +94,7 @@ RSpec.describe "Navigation 404 Spec" do
       end
 
       it "/merchant" do
-        visit merchant_path
+        visit "/merchant"
         expect(page).to have_content(@error_404)
 
         visit merchant_dashboard_path

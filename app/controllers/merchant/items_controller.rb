@@ -1,8 +1,8 @@
-class Merchant::DashboardController < ApplicationController
+class Merchant::ItemsController < ApplicationController
   before_action :require_authorized_user
 
   def index
-  @merchant_employee = current_user
+    @merchant_employee = User.find(current_user.id)
   end
 
   private
