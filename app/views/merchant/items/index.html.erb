@@ -7,7 +7,14 @@
     <li>Description: <%= item.description %></li>
     <li>Price: <%= item.price %></li>
     <li>Image: <%= item.image %></li>
-    <li>Available for sale? <%= item.active? %></li>
+    <li>Status?
+      <% if item.active? %>
+        <%= "Active" %><br>
+        <%= link_to "Deactivate", "/merchant/items/#{item.id}/toggle_active", method: :patch %>
+      <% else %>
+        <%= "Not active" %>
+        <%= link_to "Activate", "/merchant/items/#{item.id}/toggle_active", method: :patch %>
+      <% end %></li>
     <li>Inventory Count: <%= item.inventory %></li>
   </ul>
   </section>
