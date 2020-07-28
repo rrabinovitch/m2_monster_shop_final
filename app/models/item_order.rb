@@ -13,6 +13,7 @@ class ItemOrder <ApplicationRecord
   def fulfill
     item.sell(quantity)
     update(status: "fulfilled")
+    order.pack if order.can_pack?
   end
 
   def unfulfill
