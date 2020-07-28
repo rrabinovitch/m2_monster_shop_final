@@ -54,5 +54,16 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Denver")
       expect(@meg.distinct_cities).to include("Hershey")
     end
+
+    it "change_status" do
+      expect(@meg.enabled?).to be_truthy
+
+      @meg.change_status
+      expect(@meg.enabled?).to be_falsey
+
+      @meg.change_status
+      expect(@meg.enabled?).to be_truthy
+    end
+
   end
 end
