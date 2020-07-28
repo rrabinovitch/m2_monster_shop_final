@@ -77,5 +77,24 @@ describe Order, type: :model do
       expect(@fullfilled_pull_toys.status).to eq("unfulfilled")
       expect(@pull_toy.inventory).to eq(32)
     end
+
+    it "only package when all item orders fulfilled" do
+      expect(@order_1.item_orders.size).to eq(2)
+      expect(@order_1.status).to eq("pending")
+
+      @order_1.item_orders.first.fulfill
+      expect(@order_1.item_orders.all?(&:fulfilled?)).to be_falsey
+      expect(@order_1.can_pack?).to be_falsey
+
+      @order_1.pack
+      expect(@order_1.status).to eq("pending")
+
+      @order_1.item_orders.last.fulfill
+      expect(@order_1.item_orders.all?(&:fulfilled?)).to be_truthy
+      expect(@order_1.can_pack?).to be_truthy
+
+      @order_1.pack
+      expect(@order_1.status).to eq("packaged")
+    end
   end
 end
