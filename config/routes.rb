@@ -51,13 +51,13 @@ Rails.application.routes.draw do
   namespace :admin do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
-    # decide which of ^ these to use if extra time
+    # remove "/dashboard" route if extra time
   end
 
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
-    # decide which of ^ these to use if extra time
+    # remove "/dashboard" route if extra time
   end
 
   namespace :profile do
