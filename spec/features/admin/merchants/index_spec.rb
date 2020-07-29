@@ -30,7 +30,6 @@ RSpec.describe "Admin's Merchant Index Page"  do
       expect(page).to have_link("DISABLE")
     end
     expect(page).to have_content("You have now enabled #{@brian.name}")
-    save_and_open_page
   end
 
   it "After clicking 'disable'/'enable' on a merchant, the merchant's items are deactivated/activated" do
