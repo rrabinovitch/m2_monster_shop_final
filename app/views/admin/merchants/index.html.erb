@@ -1,0 +1,13 @@
+<h1 align = "center">Merchants</h1>
+<section class = "grid-container">
+  <% @merchants.each do |merchant|%>
+    <section class = "grid-item <%= "merchant-#{merchant.id}" %>">
+      <h2><%=link_to merchant.name, "/merchants/#{merchant.id}"%></h2>
+      <% if merchant.enabled? %>
+      <%= link_to "DISABLE", "/admin/merchants/#{merchant.id}", method: :patch %>
+      <% else %>
+      <%= link_to "ENABLE", "/admin/merchants/#{merchant.id}", method: :patch %>
+      <% end %>
+    </section>
+  <% end %>
+</section>
