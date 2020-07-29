@@ -1,33 +1,9 @@
 <h1>All Orders in System</h1>
-<h2 class="packaged">Packaged Orders</h2>
-  <% @orders.packaged.each do |order| %>
+  <% @orders.sort_by_status.each do |order| %>
     <section id="order-<%=order.id%>">
       <h3>Order #<%= order.id %></h3>
       <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
       <p>Order placed on: <%= order.created_at %></p>
+      <p>Order status: <%= order.status %></p>
     </section>
   <% end %>
-<h2 class="pending">Pending Orders</h2>
-<% @orders.pending.each do |order| %>
-  <section id="order-<%=order.id%>">
-    <h3>Order #<%= order.id %></h3>
-    <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
-    <p>Order placed on: <%= order.created_at %></p>
-  </section>
-<% end %>
-<h2 class="shipped">Shipped Orders</h2>
-<% @orders.shipped.each do |order| %>
-  <section id="order-<%=order.id%>">
-    <h3>Order #<%= order.id %></h3>
-    <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
-    <p>Order placed on: <%= order.created_at %></p>
-  </section>
-<% end %>
-<h2 class="cancelled">Cancelled Orders</h2>
-<% @orders.cancelled.each do |order| %>
-  <section id="order-<%=order.id%>">
-    <h3>Order #<%= order.id %></h3>
-    <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
-    <p>Order placed on: <%= order.created_at %></p>
-  </section>
-<% end %>

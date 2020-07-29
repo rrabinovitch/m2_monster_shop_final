@@ -54,11 +54,22 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
   end
 
   it "The displayed orders are sorted by status: packaged (enum: 1) > pending (enum: 0) > shipped (enum: 2) > cancelled (enum: 3)" do
-    save_and_open_page
-    binding.pry
-    expect(page.all('h3')[0]).to have_content(@order_4.id)
-    expect(page.all('h3')[1]).to have_content(@order_1.id)
+    expect(page.all('h3')[0]).to have_content(@order_1.id)
+    expect(page.all('h3')[1]).to have_content(@order_4.id)
     expect(page.all('h3')[2]).to have_content(@order_2.id)
     expect(page.all('h3')[3]).to have_content(@order_3.id)
   end
 end
+
+
+#story 33
+#all the above set up
+#then searching for the 'ship' button next to each packaged order
+  #button appears based on conditional logic in dashboard#index view
+#patch method that connects the button to OrdersController#update action
+  # @order = Order.find(params[:id])
+  # @order.update(status: "packaged")
+  # private params.permit(:status)
+  # params will reference order id
+
+  # alternatively: button_to "Package Order", html_options = 
