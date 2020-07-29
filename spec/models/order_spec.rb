@@ -104,6 +104,9 @@ describe Order, type: :model do
       expect(@order_1.status).to eq("cancelled")
       expect(@fullfilled_pull_toys.status).to eq("unfulfilled")
       expect(@pull_toy.inventory).to eq(32)
+
+    it 'merchant_items' do
+      expect(@order_1.merchant_items(@meg).first).to eq(@order_1.item_orders.first)
     end
   end
 end

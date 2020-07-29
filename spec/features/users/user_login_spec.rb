@@ -15,7 +15,7 @@ RSpec.describe 'User Login Spec' do
       end
 
       it 'If I am a merchant user, I am redirected to my merchant dashbpard page. A flash message will confirm I am logged in' do
-        user = create(:user, role: 1)
+        user = create(:user, role: 1, merchant: create(:merchant))
         visit '/login'
         fill_in :email, with: user.email
         fill_in :password, with: user.password
@@ -58,7 +58,7 @@ RSpec.describe 'User Login Spec' do
       end
 
       it "If I am a merchant user, I am redirected to my merchant dashboard page and I see a flash message that tells me I am already logged in" do
-        user = create(:user, role: 1)
+        user = create(:user, role: 1, merchant: create(:merchant))
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
         visit '/login'

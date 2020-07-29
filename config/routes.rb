@@ -54,12 +54,15 @@ Rails.application.routes.draw do
     # remove "/dashboard" route if extra time
     get "/users/:id", to: "users#show"
     patch "/:id", to: "orders#update"
+    get "/merchants/:merchant_id", to: "merchants#show"
   end
 
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
     # remove "/dashboard" route if extra time
+    get "/orders/:order_id", to: "orders#show"
+    get "/items", to: "items#index"
   end
 
   namespace :profile do

@@ -20,5 +20,8 @@ class Order <ApplicationRecord
 
   def self.sort_by_status
     order(:status)
+
+  def merchant_items(merchant)
+    item_orders.where({item_id: merchant.item_orders.pluck(:item_id)})
   end
 end
