@@ -52,7 +52,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
-    # remove "/dashboard" route if extra time
+    get "/users", to: "users#index"
     get "/users/:id", to: "users#show"
     patch "/:id", to: "orders#update"
     get "/merchants", to: "merchants#index"
@@ -63,7 +63,6 @@ Rails.application.routes.draw do
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
-    # remove "/dashboard" route if extra time
     get "/orders/:order_id", to: "orders#show"
     get "/items", to: "items#index"
   end
