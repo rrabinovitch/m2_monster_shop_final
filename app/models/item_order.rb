@@ -21,6 +21,10 @@ class ItemOrder <ApplicationRecord
     update(status: "unfulfilled")
   end
 
+  def can_fulfill?
+    item.inventory >= self.quantity
+  end
+
   def self.select_items_in_order(item)
     where({item_id: item.id})
   end

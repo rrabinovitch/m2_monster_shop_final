@@ -35,6 +35,13 @@
         <td><img class="item-thumbnail" src="<%= item_order.item.image %>" alt="Photo of <%= item_order.item.name %>" /></td>
         <td><p><%= number_to_currency(item_order.price)%></p></td>
         <td><p><%= item_order.quantity%></p></td>
+        <% if item_order.unfulfilled? && item_order.can_fulfill?%>
+          <%= tag.td button_to("Fulfill Items", "/orders/#{@order.id}", method: :patch, params: {item_order_id: item_order.id})%>
+        <% elsif item_order.fulfilled? %>
+          <td><p>- FULFILLED</p></td>
+        <% else %>
+          <td><p>You cannot fulfill this item due to lack of inventory</p></td>
+        <% end %>
       </section>
     </tr>
   <% end %>
