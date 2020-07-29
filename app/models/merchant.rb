@@ -33,4 +33,14 @@ class Merchant <ApplicationRecord
     end
   end
 
+  def change_active_status
+    items.each do |item|
+      if item.active?
+        item.update(active?: "false")
+      else
+        item.update(active?: "true")
+      end
+    end
+  end
+
 end
