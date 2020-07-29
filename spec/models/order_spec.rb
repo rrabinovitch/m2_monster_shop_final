@@ -44,7 +44,6 @@ describe Order, type: :model do
 
   describe 'class methods' do
     it ".sort_by_status" do
-      #figure out what set up is actually needed here
       @merchant1 = create(:merchant)
       @gizmos = create(:item, merchant: @merchant1, name: "Gizmos", price: 10, inventory: 10)
 
@@ -53,20 +52,15 @@ describe Order, type: :model do
 
       @customer_1 = create(:user)
       @order_1 = create(:order, user: @customer_1, status: 0) #packaged
-      @order_1.item_orders.create(item: @gizmos, price: @gizmos.price, quantity: 3, status: 0)
-      @order_1.item_orders.create(item: @doodads, price: @doodads.price, quantity: 2, status: 1)
 
       @customer_2 = create(:user)
       @order_2 = create(:order, user: @customer_2, status: 2) #shipped
-      @order_2.item_orders.create(item: @gizmos, price: @gizmos.price, quantity: 1, status: 1)
 
       @customer_3 = create(:user)
       @order_3 = create(:order, user: @customer_3, status: 3) #cancelled
-      @order_3.item_orders.create(item: @doodads, price: @doodads.price, quantity: 2, status: 0)
 
       @customer_4 = create(:user)
       @order_4 = create(:order, user: @customer_4, status: 1) #pending
-      @order_4.item_orders.create(item: @doodads, price: @doodads.price, quantity: 2, status: 0)
 
       expected_sorting = [@order_1, @order_4, @order_2, @order_3]
       actual_sorting = Order.sort_by_status
