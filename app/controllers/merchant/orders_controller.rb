@@ -1,8 +1,7 @@
-class Merchant::DashboardController < ApplicationController
+class Merchant::OrdersController < ApplicationController
   before_action :require_authorized_user
 
-  def index
-  @merchant_employee = current_user
+  def show
   end
 
   private

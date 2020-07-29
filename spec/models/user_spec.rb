@@ -15,6 +15,7 @@ RSpec.describe User do
 
   describe "associations" do
     it { should have_many :orders }
+    it { should belong_to(:merchant).optional }
   end
 
   describe "roles" do
