@@ -10,6 +10,7 @@ RSpec.describe "Admin user index page" do
 
   it "There is a users link in my nav that routes me to a users index page" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit "/"
     within('nav') do
       click_on "All Users"
       expect(current_path).to eq("/admin/users")
