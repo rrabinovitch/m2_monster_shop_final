@@ -68,7 +68,7 @@ describe Merchant, type: :model do
     it "change_active_status" do
       expect(@meg.items.all?(&:active?)).to be_truthy
 
-      @meg.change_active
+      @meg.change_active_status
 
       expect(@meg.items.all?(&:active?)).to be_falsey
     end
