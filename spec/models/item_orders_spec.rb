@@ -48,6 +48,20 @@ describe ItemOrder, type: :model do
       expect(@item_order_1.subtotal).to eq(200)
     end
 
+    it "can_fulfill?" do
+      order1 = create(:order)
+      item1 = create(:item, inventory: 10)
+
+      item_order1 = order1.item_orders.create(item: item1, price: item1.price, quantity: 1)
+      expect(item_order1.can_fulfill?).to be_truthy
+
+      item_order2 = order1.item_orders.create(item: item1, price: item1.price, quantity: item1.inventory)
+      expect(item_order2.can_fulfill?).to be_truthy
+
+      item_order3 = order1.item_orders.create(item: item1, price: item1.price, quantity: (item1.inventory + 1))
+      expect(item_order3.can_fulfill?).to be_falsey
+    end
+
     it "fulfill" do
       expect(@tire.inventory).to eq(12)
       expect(@item_order_1.status).to eq("unfulfilled")
