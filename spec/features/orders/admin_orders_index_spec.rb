@@ -35,7 +35,6 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
       expect(page).to have_content("Order ##{@order_1.id}")
       expect(page).to have_content("Customer: #{@order_1.user.name}")
       expect(page).to have_content("Order placed on: #{@order_1.created_at}")
-      # come back to edit view logic so that date doesn't present as the raw data - maybe an order class method?
     end
     expect(page).to have_css("#order-#{@order_2.id}")
     expect(page).to have_css("#order-#{@order_3.id}")
