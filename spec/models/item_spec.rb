@@ -56,6 +56,7 @@ describe Item, type: :model do
 
       expect(@item1.total_sold).to eq(1)
     end
+
   end
 
   describe 'class methods' do
@@ -94,5 +95,5 @@ describe Item, type: :model do
     it '.most_popular_list' do
       expect(Item.most_popular_list).to eq([@item10, @item9, @item8, @item7, @item6])
     end
-    end
   end
+end
