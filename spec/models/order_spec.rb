@@ -70,6 +70,7 @@ describe Order, type: :model do
       end
     end
   end
+  
   describe 'instance methods' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -89,6 +90,10 @@ describe Order, type: :model do
       expect(@order_1.grandtotal).to eq(230)
     end
 
+    it 'merchant_items' do
+      expect(@order_1.merchant_items(@meg).first).to eq(@order_1.item_orders.first)
+    end
+
     it 'cancel when no item_orders fulfilled' do
       @order_1.cancel
       expect(@order_1.status).to eq("cancelled")
@@ -104,9 +109,29 @@ describe Order, type: :model do
       expect(@order_1.status).to eq("cancelled")
       expect(@fullfilled_pull_toys.status).to eq("unfulfilled")
       expect(@pull_toy.inventory).to eq(32)
+    end
 
     it 'merchant_items' do
       expect(@order_1.merchant_items(@meg).first).to eq(@order_1.item_orders.first)
+    end
+
+    it "only package when all item orders fulfilled" do
+      expect(@order_1.item_orders.size).to eq(2)
+      expect(@order_1.status).to eq("pending")
+
+      @order_1.item_orders.first.fulfill
+      expect(@order_1.item_orders.all?(&:fulfilled?)).to be_falsey
+      expect(@order_1.can_pack?).to be_falsey
+
+      @order_1.pack
+      expect(@order_1.status).to eq("pending")
+
+      @order_1.item_orders.last.fulfill
+      expect(@order_1.item_orders.all?(&:fulfilled?)).to be_truthy
+      expect(@order_1.can_pack?).to be_truthy
+
+      @order_1.pack
+      expect(@order_1.status).to eq("packaged")
     end
   end
 end

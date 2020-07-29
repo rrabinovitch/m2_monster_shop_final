@@ -13,11 +13,16 @@ class ItemOrder <ApplicationRecord
   def fulfill
     item.sell(quantity)
     update(status: "fulfilled")
+    order.pack if order.can_pack?
   end
 
   def unfulfill
     item.restock(quantity)
     update(status: "unfulfilled")
+  end
+
+  def can_fulfill?
+    item.inventory >= self.quantity
   end
 
   def self.select_items_in_order(item)

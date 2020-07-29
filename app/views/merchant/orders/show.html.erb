@@ -1,0 +1,49 @@
+<section class = "shipping-address">
+  <h1 align = "center">Shipping Info</h1>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Zip</th>
+    </tr>
+    <tr>
+      <td><p><%= @order.name %> </p></td>
+      <td><p><%= @order.address %> </p></td>
+      <td><p><%= @order.city %> </p></td>
+      <td><p><%= @order.state %> </p></td>
+      <td><p><%= @order.zip %> </p></td>
+    </tr>
+  </table>
+</section>
+
+<h1 align = "center">Order Info</h1>
+<center>
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Image</th>
+      <th>Price</th>
+      <th>Quantity</th>
+    </tr>
+
+  <% @order.merchant_items(current_merchant).each do |item_order|%>
+    <tr>
+      <section id = "item-<%=item_order.item_id%>">
+        <td><p><%= link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
+        <td><img class="item-thumbnail" src="<%= item_order.item.image %>" alt="Photo of <%= item_order.item.name %>" /></td>
+        <td><p><%= number_to_currency(item_order.price)%></p></td>
+        <td><p><%= item_order.quantity%></p></td>
+        <% if item_order.unfulfilled? && item_order.can_fulfill?%>
+          <%= tag.td button_to("Fulfill Items", "/orders/#{@order.id}", method: :patch, params: {item_order_id: item_order.id})%>
+        <% elsif item_order.fulfilled? %>
+          <td><p>- FULFILLED</p></td>
+        <% else %>
+          <td><p>You cannot fulfill this item due to lack of inventory</p></td>
+        <% end %>
+      </section>
+    </tr>
+  <% end %>
+
+</table>
