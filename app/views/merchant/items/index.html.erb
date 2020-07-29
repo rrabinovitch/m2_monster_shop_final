@@ -18,6 +18,7 @@
     <li>Inventory Count: <%= item.inventory %></li>
     <% if item.item_orders.empty? %>
      <%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
+     <%= link_to "Edit", "/merchant/items/#{item.id}/edit" %>
     <% end %>
   </ul>
   </section>
