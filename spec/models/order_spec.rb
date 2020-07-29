@@ -51,16 +51,16 @@ describe Order, type: :model do
       @doodads = create(:item, merchant: @merchant2, name: "Doo Dads", price: 12, inventory: 5)
 
       @customer_1 = create(:user)
-      @order_1 = create(:order, user: @customer_1, status: 0) #packaged
+      @order_1 = create(:order, user: @customer_1, status: 0)
 
       @customer_2 = create(:user)
-      @order_2 = create(:order, user: @customer_2, status: 2) #shipped
+      @order_2 = create(:order, user: @customer_2, status: 2)
 
       @customer_3 = create(:user)
-      @order_3 = create(:order, user: @customer_3, status: 3) #cancelled
+      @order_3 = create(:order, user: @customer_3, status: 3)
 
       @customer_4 = create(:user)
-      @order_4 = create(:order, user: @customer_4, status: 1) #pending
+      @order_4 = create(:order, user: @customer_4, status: 1)
 
       expected_sorting = [@order_1, @order_4, @order_2, @order_3]
       actual_sorting = Order.sort_by_status
