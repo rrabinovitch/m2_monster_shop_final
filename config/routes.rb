@@ -63,6 +63,8 @@ Rails.application.routes.draw do
     get "/items", to: "items#index"
     match "/items/:item_id/toggle_active", :to => "items#toggle_active", :as => 'merchant_item_active', :via => :patch
     delete "/items/:item_id", to: "items#destroy"
+    get "/items/new", to: "items#new"
+    post "/items", to: "items#create"
 
     #resources :items
   end
