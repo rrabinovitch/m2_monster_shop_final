@@ -9,11 +9,15 @@ class Merchant::ItemsController < ApplicationController
     @item = Item.new(session.delete(:item_params))
   end
 
+  def edit
+    @item = Item.find(params[:item_id])
+  end
+
   def create
     merchant = Merchant.find(current_user.merchant.id)
     @item = merchant.items.create(item_params)
     if @item.save
-      flash[:success] = "Added #{@item.name} to item list"
+      flash[:success] = "Item has been updated"
       redirect_to "/merchant/items"
     else
       flash[:failure] = "All fields must be completed before submitting:"
@@ -25,6 +29,14 @@ class Merchant::ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:item_id])
+    @item.update(item_params)
+    if @item.save
+      flash[:success] = "Item has been updated"
+      redirect_to "/merchant/items"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :edit
+    end
   end
 
   def toggle_active
