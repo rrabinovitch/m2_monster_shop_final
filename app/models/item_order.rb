@@ -42,7 +42,7 @@ class ItemOrder <ApplicationRecord
   end
 
   def self.pending_orders
-    joins(:order).select('orders.*').where(orders: {status: "0"}).distinct
+    joins(:order).select('orders.*').where(orders: {status: "1"}).distinct
   end
 
 
