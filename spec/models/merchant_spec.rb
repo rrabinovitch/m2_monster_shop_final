@@ -7,6 +7,8 @@ describe Merchant, type: :model do
     it { should validate_presence_of :city }
     it { should validate_presence_of :state }
     it { should validate_presence_of :zip }
+    it { should validate_inclusion_of(:enabled?).in_array([true,false]) }
+
   end
 
   describe "relationships" do
@@ -52,6 +54,24 @@ describe Merchant, type: :model do
 
       expect(@meg.distinct_cities).to include("Denver")
       expect(@meg.distinct_cities).to include("Hershey")
+    end
+
+    it "change_status" do
+      expect(@meg.enabled?).to be_truthy
+
+      @meg.change_status
+      expect(@meg.enabled?).to be_falsey
+
+      @meg.change_status
+      expect(@meg.enabled?).to be_truthy
+    end
+
+    it "change_active_status" do
+      expect(@meg.items.all?(&:active?)).to be_truthy
+
+      @meg.change_active_status
+
+      expect(@meg.items.all?(&:active?)).to be_falsey
     end
 
   end
