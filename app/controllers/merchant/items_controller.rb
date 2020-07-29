@@ -22,6 +22,14 @@ class Merchant::ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    item = Item.find(params[:item_id])
+    Review.where(item_id: item.id).destroy_all
+    item.destroy
+    flash[:success] = "#{item.name} has been deleted."
+    redirect_to "/merchant/items"
+  end
+
   private
 
   def unauthorized_user?

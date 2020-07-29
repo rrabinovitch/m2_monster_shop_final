@@ -16,6 +16,9 @@
         <%= link_to "Activate", "/merchant/items/#{item.id}/toggle_active", method: :patch %>
       <% end %></li>
     <li>Inventory Count: <%= item.inventory %></li>
+    <% if item.item_orders.empty? %>
+     <%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
+    <% end %>
   </ul>
   </section>
 <% end %>
