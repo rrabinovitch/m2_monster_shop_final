@@ -18,7 +18,7 @@ class Order <ApplicationRecord
     self.update(status: "cancelled")
   end
 
-  def method_name
-
+  def self.sort_by_status
+    order(:status)
   end
 end
