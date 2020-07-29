@@ -25,17 +25,12 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
     @customer_4 = create(:user)
     @order_4 = create(:order, user: @customer_4, status: 1)
     @order_4.item_orders.create(item: @doodads, price: @doodads.price, quantity: 2, status: 0)
-
-    visit login_path
-    fill_in :email, with: @admin.email
-    fill_in :password, with: @admin.password
-    click_button 'Log In'
-
-    visit "/admin"
   end
 
   it "I see all orders in the system. And for each order,
       I see the user who placed the order, the order id, and the date the order was created" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit "/admin"
     within("#order-#{@order_1.id}") do
       expect(page).to have_content("Order ##{@order_1.id}")
       expect(page).to have_content("Customer: #{@order_1.user.name}")
@@ -48,6 +43,8 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
   end
 
   it "For each order, the the info on the associated user links to the admin view of the user profile" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit "/admin"
     within("#order-#{@order_1.id}") do
       click_on "#{@order_1.user.name}"
     end
@@ -55,6 +52,8 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
   end
 
   it "The displayed orders are sorted by status: packaged > pending > shipped > cancelled)" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit "/admin"
     expect(page.all('h3')[0]).to have_content(@order_1.id)
     expect(page.all('h3')[1]).to have_content(@order_4.id)
     expect(page.all('h3')[2]).to have_content(@order_2.id)
@@ -62,6 +61,8 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
   end
 
   it "I can click on a 'ship' button next to an order that is packaged, which changes that order's status to 'shipped'" do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    visit "/admin"
     within("#order-#{@order_2.id}") do
       expect(page).to_not have_button("Ship")
     end
@@ -73,39 +74,19 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
   end
 
   it "After a packaged order's 'ship' button is clicked, the customer can no longer 'cancel' the order." do
-    within("nav") do
-      click_on 'Log Out'
-    end
-    visit login_path
-    fill_in :email, with: @customer_1.email
-    fill_in :password, with: @customer_1.password
-    click_button 'Log In'
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@customer_1)
 
     visit "/profile/orders/#{@order_1.id}"
     expect(page).to have_button("Cancel Order")
 
-    within("nav") do
-      click_on 'Log Out'
-    end
-    visit login_path
-    fill_in :email, with: @admin.email
-    fill_in :password, with: @admin.password
-    click_button 'Log In'
-
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
     visit "/admin"
 
     within("#order-#{@order_1.id}") do
       click_button "Ship"
     end
 
-    within("nav") do
-      click_on 'Log Out'
-    end
-    visit login_path
-    fill_in :email, with: @customer_1.email
-    fill_in :password, with: @customer_1.password
-    click_button 'Log In'
-
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@customer_1)
     visit "/profile/orders/#{@order_1.id}"
     expect(page).to_not have_button("Cancel Order")
   end
