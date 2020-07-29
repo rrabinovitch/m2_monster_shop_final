@@ -71,23 +71,42 @@ RSpec.describe 'As an admin user, when I visit my admin dashboard' do
       expect(page).to have_content("shipped")
     end
   end
-  #
-  # it "After a packaged order's 'ship' button is clicked, the customer can no longer 'cancel' the order." do
-  #   within("#nav") do
-  #     click_on 'Log Out'
-  #   end
-  #   visit login_path
-  #   fill_in :email, with: @customer_1.email
-  #   fill_in :password, with: @customer_1.password
-  #   click_button 'Log In'
-  #
-  #   visit "/profile"
-  # end
+
+  it "After a packaged order's 'ship' button is clicked, the customer can no longer 'cancel' the order." do
+    within("nav") do
+      click_on 'Log Out'
+    end
+    visit login_path
+    fill_in :email, with: @customer_1.email
+    fill_in :password, with: @customer_1.password
+    click_button 'Log In'
+
+    visit "/profile/orders/#{@order_1.id}"
+    expect(page).to have_button("Cancel Order")
+
+    within("nav") do
+      click_on 'Log Out'
+    end
+    visit login_path
+    fill_in :email, with: @admin.email
+    fill_in :password, with: @admin.password
+    click_button 'Log In'
+
+    visit "/admin"
+
+    within("#order-#{@order_1.id}") do
+      click_button "Ship"
+    end
+
+    within("nav") do
+      click_on 'Log Out'
+    end
+    visit login_path
+    fill_in :email, with: @customer_1.email
+    fill_in :password, with: @customer_1.password
+    click_button 'Log In'
+
+    visit "/profile/orders/#{@order_1.id}"
+    expect(page).to_not have_button("Cancel Order")
+  end
 end
-
-
-#patch method that connects the button to OrdersController#update action
-  # @order = Order.find(params[:id])
-  # @order.update(status: "packaged")
-  # private params.permit(:status)
-  # params will reference order id

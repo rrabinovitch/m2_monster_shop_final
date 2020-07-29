@@ -23,4 +23,6 @@
 <% end %>
 </section>
 
-<%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch %>
+<% if !@order.shipped? %>
+  <%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch %>
+<% end %>
