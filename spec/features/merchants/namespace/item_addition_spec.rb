@@ -67,24 +67,28 @@ RSpec.describe 'As a merchant employee' do
 
       name = "Chamois Buttr"
       price = 18
-      description = "No more chaffin'!"
+      description = "No more chaffin!"
       image_url = "https://images-na.ssl-images-amazon.com/images/I/51HMpDXItgL._SX569_.jpg"
       inventory = 25
 
     #  fill_in :name, with: "name"
       fill_in :price, with: price
-      fill_in :description, with: description
+    #  fill_in :description, with: description
       fill_in :image, with: image_url
       fill_in :inventory, with: inventory
 
       click_button "Create Item"
 
-      expect(current_path).to eq("/merchant/items/new")
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_selector '.failure-flash'
       expect(page).to have_content("All fields must be completed before submitting:")
       expect(page).to have_content("Name can't be blank")
-      expect(page).to have_content(price)
-
-
+      expect(page).to have_content("Description can't be blank")
+      expect(page).to_not have_selector("input[value='#{name}']")
+      expect(page).to_not have_selector("input[value='#{description}']")
+      expect(page).to have_selector("input[value='#{price}']")
+      expect(page).to have_selector("input[value='#{image_url}']")
+      expect(page).to have_selector("input[value='#{inventory}']")
     end
   end
 end
