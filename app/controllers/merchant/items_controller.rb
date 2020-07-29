@@ -6,18 +6,19 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def new
-    merchant_employee = User.find(current_user.id)
-    @merchant = Merchant.find(merchant_employee.merchant.id)
+    @item = Item.new(session.delete(:item_params))
   end
 
   def create
-    @merchant = Merchant.find(current_user.merchant.id)
-    item = @merchant.items.create(item_params)
-    if item.save
-      flash[:success] = "Added #{item.name} to item list"
+    merchant = Merchant.find(current_user.merchant.id)
+    @item = merchant.items.create(item_params)
+    if @item.save
+      flash[:success] = "Added #{@item.name} to item list"
       redirect_to "/merchant/items"
     else
-      flash[:error] = item.errors.full_messages.to_sentence
+      flash[:failure] = "All fields must be completed before submitting:"
+      flash[:error] = @item.errors.full_messages.to_sentence
+      session[:params] = item_params
       render :new
     end
   end

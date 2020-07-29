@@ -1,4 +1,4 @@
-<h1>Create New Item For <%= @merchant.name %></h1>
+<h1>Create New Item For <%= current_user.merchant.name %></h1>
 
 <center>
   <%= form_tag "/merchant/items", method: :post do %>
@@ -9,7 +9,7 @@
     <%= text_field_tag :description %>
 
     <%= label_tag :price %>
-    <%= text_field_tag :price %>
+    <%= text_field_tag :price, @item.price %>
 
     <%= label_tag :image %>
     <%= text_field_tag :image %>
