@@ -12,8 +12,11 @@ class OrdersController <ApplicationController
     can_create_order? ? create_new(order) : retry_order_creation
   end
 
-  def index
-    @orders = current_user.orders
+  def update
+    item_order = ItemOrder.find(params[:item_order_id])
+    item_order.fulfill
+    flash[:fulfilled] = "You have fulfilled #{item_order.quantity} of #{item_order.item.name}"
+    redirect_to request.referer
   end
 
   private
