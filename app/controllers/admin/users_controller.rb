@@ -1,8 +1,8 @@
-class Admin::DashboardController < ApplicationController
+class Admin::UsersController < ApplicationController
   before_action :require_authorized_user
 
-  def index
-    @orders = Order.all
+  def show
+    @user = User.find(params[:id])
   end
 
   private

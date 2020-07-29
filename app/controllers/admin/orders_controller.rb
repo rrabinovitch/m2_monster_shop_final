@@ -1,8 +1,10 @@
-class Admin::DashboardController < ApplicationController
+class Admin::OrdersController < ApplicationController
   before_action :require_authorized_user
 
-  def index
-    @orders = Order.all
+  def update
+    @order = Order.find(params[:id])
+    @order.update(status: "shipped")
+    redirect_to '/admin'
   end
 
   private

@@ -17,16 +17,16 @@ describe Order, type: :model do
   end
 
   describe "status" do
-    it "can be pending" do
-      order = create(:order, status: 0)
-      expect(order.status).to eq("pending")
-      expect(order.pending?).to be_truthy
-    end
-
     it "can be packaged" do
-      order = create(:order, status: 1)
+      order = create(:order, status: 0)
       expect(order.status).to eq("packaged")
       expect(order.packaged?).to be_truthy
+    end
+
+    it "can be pending" do
+      order = create(:order, status: 1)
+      expect(order.status).to eq("pending")
+      expect(order.pending?).to be_truthy
     end
 
     it "can be shipped" do
@@ -42,6 +42,35 @@ describe Order, type: :model do
     end
   end
 
+  describe 'class methods' do
+    it ".sort_by_status" do
+      @merchant1 = create(:merchant)
+      @gizmos = create(:item, merchant: @merchant1, name: "Gizmos", price: 10, inventory: 10)
+
+      @merchant2 = create(:merchant)
+      @doodads = create(:item, merchant: @merchant2, name: "Doo Dads", price: 12, inventory: 5)
+
+      @customer_1 = create(:user)
+      @order_1 = create(:order, user: @customer_1, status: 0)
+
+      @customer_2 = create(:user)
+      @order_2 = create(:order, user: @customer_2, status: 2)
+
+      @customer_3 = create(:user)
+      @order_3 = create(:order, user: @customer_3, status: 3)
+
+      @customer_4 = create(:user)
+      @order_4 = create(:order, user: @customer_4, status: 1)
+
+      expected_sorting = [@order_1, @order_4, @order_2, @order_3]
+      actual_sorting = Order.sort_by_status
+
+      expected_sorting.each_with_index do |order, i|
+        expect(order).to eq(actual_sorting[i])
+      end
+    end
+  end
+  
   describe 'instance methods' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -80,6 +109,10 @@ describe Order, type: :model do
       expect(@order_1.status).to eq("cancelled")
       expect(@fullfilled_pull_toys.status).to eq("unfulfilled")
       expect(@pull_toy.inventory).to eq(32)
+    end
+
+    it 'merchant_items' do
+      expect(@order_1.merchant_items(@meg).first).to eq(@order_1.item_orders.first)
     end
 
     it "only package when all item orders fulfilled" do

@@ -51,6 +51,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "/dashboard", to: "dashboard#index"
+    get "/", to: "dashboard#index"
+    # remove "/dashboard" route if extra time
+    get "/users/:id", to: "users#show"
+    patch "/:id", to: "orders#update"
     get "/merchants", to: "merchants#index"
     patch "/merchants/:merchant_id", to: "merchants#update"
     get "/merchants/:merchant_id", to: "merchants#show"
@@ -58,6 +62,8 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
+    get "/", to: "dashboard#index"
+    # remove "/dashboard" route if extra time
     get "/orders/:order_id", to: "orders#show"
     get "/items", to: "items#index"
   end
@@ -70,7 +76,4 @@ Rails.application.routes.draw do
     patch "/password", to: "passwords#update"
     get "/password/edit", to: "passwords#edit"
   end
-
-  get "/admin", to: "admin/dashboard#index"
-  get "/merchant", to: "merchant/dashboard#index"
 end
