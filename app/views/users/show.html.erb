@@ -1,10 +1,7 @@
 <h1>Profile Page</h1>
 <h2>Name: <%= @user.name %></h2>
-<h2>Street Address: <%= @user.address %></h2>
-<h2>City: <%= @user.city %></h2>
-<h2>State: <%= @user.state %></h2>
-<h2>ZIP Code: <%= @user.zip %></h2>
-<h2>Email Address: <%= @user.email %></h2>
+<%= render partial: '/partials/user_show', locals: {user: @user} %>
+
 <%= link_to "Edit My Profile", "/profile/edit" %>
 <%= link_to "Change My Password", "/profile/password/edit" %>
 <%= link_to "View All Orders", "/profile/orders" %>
