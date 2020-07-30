@@ -1,6 +1,6 @@
 # Monster Shop: BE Mod 2 Week 4/5 Group Project
 
-## [Production Site (Heroku)](https://mod2-monster-shop.herokuapp.com/)
+## [Heroku Production Site](https://mod2-monster-shop.herokuapp.com/)
 
 ## Project Team
 
@@ -18,7 +18,7 @@
 
 This project offered our team a chance to implement and strengthen the knowledge and skills we've acquired so far this quarter (including MVC structure and conventions, routing, restful conventions, testing using RSpec and Capybara, etc.); and in particular, this was a chance to deepen our comfort with ActiveRecord calls, implement namespacing, authentication, and authorization for the first time.
 
-The schema design that describes the database resources involved in this project and their relationships with each other can be found [here](link).
+The schema design that describes the database resources involved in this project and their relationships with each other can be found [here](https://github.com/ajtran303/monster_shop_2005/blob/readme/erd.pdf).
 
 ## Learning Goals
 
