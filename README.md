@@ -1,7 +1,4 @@
-# Monster Shop
-BE Mod 2 Week 4/5 Group Project
-
-Final project has a well written README with pictures, schema design, code snippets.
+# Monster Shop: BE Mod 2 Week 4/5 Group Project
 
 ## [Production Site (Heroku)](https://mod2-monster-shop.herokuapp.com/)
 
@@ -20,6 +17,8 @@ Final project has a well written README with pictures, schema design, code snipp
 "Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
 
 This project offered our team a chance to implement and strengthen the knowledge and skills we've acquired so far this quarter (including MVC structure and conventions, routing, restful conventions, testing using RSpec and Capybara, etc.); and in particular, this was a chance to deepen our comfort with ActiveRecord calls, implement namespacing, authentication, and authorization for the first time.
+
+The schema design that describes the database resources involved in this project and their relationships with each other can be found [here](link).
 
 ## Learning Goals
 
@@ -65,14 +64,46 @@ This project offered our team a chance to implement and strengthen the knowledge
 1. Visitor - this type of user is anonymously browsing our site and is not logged in
 2. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
 3. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
-4. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
+4. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work\n\n
+User authentication and the authorization for different user roles to access different views and actions was developed using `bcrypt` and namespacing. For example, this controller is responsible for the actions that allow for the rendering of an admin user's dashboard. `:require_authorized_user` restricts access by regular users and merchant employees, and the `Admin::DashboardController` namespacing allows for the view to be accessed via an admin-specific path.
+```ruby
+class Admin::DashboardController < ApplicationController
+  before_action :require_authorized_user
+
+  def index
+    @orders = Order.all
+  end
+
+  private
+
+  def unauthorized_user?
+    current_user.nil? || current_user.regular? || current_user.merchant_employee?
+  end
+end
+```
 
 ## Order Status
 
 1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
 2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
-4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled
+4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled\n\n
+Enums were used for not only the user role attribute/column, but also to assign order status values. This allowed for use of methods that are made available via the implementation of enums. The following snippet demonstrates the use of an enum method within the presentation conditional logic found in the admin view of the orders index (AKA the admin dashboard):
+```
+<h1>All Orders in System</h1>
+  <% @orders.sort_by_status.each do |order| %>
+    <section id="order-<%=order.id%>">
+      <h3>Order #<%= order.id %></h3>
+      <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
+      <p>Order placed on: <%= order.created_at %></p>
+      <p>Order status: <%= order.status %></p>
+      <% if order.packaged? %>
+        <%= button_to "Ship", "admin/#{order.id}", method: :patch %>
+      <% end %>
+    </section>
+  <% end %>
+```
+
 
 ## Timeframe
 The following is an anticipated timeline of how these stories should be completed in order to be finished by 4/16/20 at 6pm.
