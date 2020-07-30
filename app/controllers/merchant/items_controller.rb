@@ -67,6 +67,9 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def item_params
+    if params[:image].empty?
+      params[:image] = "https://www.webfx.com/blog/images/cdn.designinstruct.com/files/582-how-to-image-placeholders/generic-image-placeholder.png"
+    end
     params.permit(:name,:description,:price,:inventory,:image)
   end
 end

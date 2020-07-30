@@ -125,7 +125,6 @@ describe Order, type: :model do
 
       @order_1.pack
       expect(@order_1.status).to eq("pending")
-
       @item_order_2.fulfill
       expect(@order_1.item_orders.all?(&:fulfilled?)).to be_truthy
       expect(@order_1.can_pack?).to be_truthy
