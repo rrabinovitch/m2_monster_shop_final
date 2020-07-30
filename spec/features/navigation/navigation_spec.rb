@@ -121,6 +121,7 @@ RSpec.describe 'Site Navigation' do
       expect(page).to have_link("My Dashboard")
       expect(page).to have_link("All Users")
       expect(page).to have_link("Log Out")
+      expect(page).to have_link("All Merchants", href: "/admin/merchants")
       expect(page).to_not have_link("Log In")
       expect(page).to_not have_link("Register")
       expect(page).to_not have_link("Cart")
