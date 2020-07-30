@@ -72,6 +72,10 @@ describe Merchant, type: :model do
       @meg.change_active_status
 
       expect(@meg.items.all?(&:active?)).to be_falsey
+
+      @meg.change_active_status
+
+      expect(@meg.items.all?(&:active?)).to be_truthy
     end
 
   end

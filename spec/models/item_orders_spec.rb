@@ -109,5 +109,9 @@ describe ItemOrder, type: :model do
     it '.all_subtotal' do
       expect(ItemOrder.all_subtotal).to eq(700.0)
     end
+
+    it '.pending_orders' do
+      expect(ItemOrder.pending_orders).to eq(ItemOrder.joins(:order).select('orders.*').where(orders: {status: "1"}).distinct)
+    end
   end
 end

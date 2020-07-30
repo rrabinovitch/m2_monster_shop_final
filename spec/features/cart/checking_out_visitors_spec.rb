@@ -15,6 +15,16 @@ RSpec.describe "Cart show" do
         expect(page).to have_link("Register", href: "/register")
         expect(page).to have_link("Log In", href: "/login")
       end
+      click_on "Checkout"
+
+      fill_in :name, with: "Rose"
+      fill_in :address, with: "Cool Street"
+      fill_in :city, with: "Rubyville"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: 111111
+
+      click_button "Create Order"
+      expect(page).to have_content("Please login or register in order to checkout.")
     end
   end
 
