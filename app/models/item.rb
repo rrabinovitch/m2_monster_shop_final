@@ -9,6 +9,9 @@ class Item <ApplicationRecord
                         :price,
                         :image,
                         :inventory
+
+  validates :price, :numericality => { :greater_than => 0}
+  validates :inventory, :numericality => { :greater_than_or_equal_to => 0}
   validates_inclusion_of :active?, :in => [true, false]
   scope :active_items, -> {where(active?: true)}
   scope :join_with_item_orders, -> { joins(:item_orders) }
