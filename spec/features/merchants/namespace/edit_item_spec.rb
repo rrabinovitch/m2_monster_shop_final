@@ -115,5 +115,28 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_selector("input[value='#{inventory}']")
     end
 
+    it "If the image field is left blank on the item edit form, the image will default to a placeholder image" do
+
+      @item_image = create(:item, merchant_id: @merchant.id, image: "image_url")
+      visit "/merchant/items/#{@item_image.id}/edit"
+      default_image = "https://www.webfx.com/blog/images/cdn.designinstruct.com/files/582-how-to-image-placeholders/generic-image-placeholder.png"
+
+      name = "Chamois Buttr"
+      price = 18
+      description = "No more chaffin!"
+      inventory = 25
+
+      fill_in :name, with: name
+      fill_in :price, with: price
+      fill_in :description, with: description
+      fill_in :inventory, with: inventory
+      fill_in :image, with: ""
+      click_button "Update Item"
+    updated_item = Item.last
+
+      expect(current_path).to eq("/merchant/items")
+      expect(updated_item.image).to eq(default_image)
+    end
+
   end
 end

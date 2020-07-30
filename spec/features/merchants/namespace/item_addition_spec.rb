@@ -91,5 +91,31 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_selector("input[value='#{image_url}']")
       expect(page).to have_selector("input[value='#{inventory}']")
     end
+
+    it "If an image is not provided in the form, a default placement image will be provided " do
+      click_on "Add Item"
+      expect(current_path).to eq("/merchant/items/new")
+
+      name = "Chamois Buttr"
+      price = 18
+      description = "No more chaffin!"
+      #image_url = "https://images-na.ssl-images-amazon.com/images/I/51HMpDXItgL._SX569_.jpg"
+      inventory = 25
+      default_image = "https://www.webfx.com/blog/images/cdn.designinstruct.com/files/582-how-to-image-placeholders/generic-image-placeholder.png"
+
+      fill_in :name, with: name
+      fill_in :price, with: price
+      fill_in :description, with: description
+    #  fill_in :image, with: image_url
+      fill_in :inventory, with: inventory
+
+      click_button "Create Item"
+
+      expect(current_path).to eq("/merchant/items")
+
+      new_item = Item.last
+      expect(new_item.image).to eq(default_image)
+    end
+
   end
 end

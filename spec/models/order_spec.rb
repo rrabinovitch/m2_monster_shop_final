@@ -70,7 +70,7 @@ describe Order, type: :model do
       end
     end
   end
-  
+
   describe 'instance methods' do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -125,7 +125,6 @@ describe Order, type: :model do
 
       @order_1.pack
       expect(@order_1.status).to eq("pending")
-
       @order_1.item_orders.last.fulfill
       expect(@order_1.item_orders.all?(&:fulfilled?)).to be_truthy
       expect(@order_1.can_pack?).to be_truthy
