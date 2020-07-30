@@ -13,10 +13,11 @@ RSpec.describe "Admin user index page" do
     visit "/"
     within('nav') do
       click_on "All Users"
-      expect(current_path).to eq("/admin/users")
     end
+    expect(current_path).to eq("/admin/users")
     expect(page).to have_content(@regular_user.name)
     expect(page).to have_content(@merchant_employee.name)
+    expect(page).to have_content(@admin.name)
   end
 
   it "Only admin users can access this users index page" do
@@ -32,9 +33,7 @@ RSpec.describe "Admin user index page" do
       which displays the user's registration date and the type of user" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
     visit "/admin/users"
-    within("#user-#{@regular_user}") do
-      click_on "#{@regular_user.name}"
-    end
+    click_on "#{@regular_user.name}"
     expect(current_path).to eq("/admin/users/#{@regular_user.id}")
     expect(page).to have_content("User type: #{@regular_user.role}")
     expect(page).to have_content("Registered on: #{@regular_user.created_on}")
