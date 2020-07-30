@@ -37,9 +37,9 @@ irb > User.create(name: "Brian's employee 2", address: "123 Palm St", city: "Chi
 The keyboard command to exit `irb` is `ctrl + c`
 ### Log in as an admin or employees:
 admin - janedoe@email.com - password
-meg1 - meg1@email.com - password
-brian1 - brian1@email.com - password
-brian2 - brian2@email.com - password
+meg1 (merchant employee) - meg1@email.com - password
+brian1 (merchant employee) - brian1@email.com - password
+brian2 (merchant employee) - brian2@email.com - password
 Log in as the appropriate user to use the feature described in a particular story.
 
 ## Background and Description
