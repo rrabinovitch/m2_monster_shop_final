@@ -17,7 +17,7 @@ class Merchant::ItemsController < ApplicationController
     merchant = Merchant.find(current_user.merchant.id)
     @item = merchant.items.create(item_params)
     if @item.save
-      flash[:success] = "Item has been updated"
+      flash[:success] = "Added #{@item.name} to item list"
       redirect_to "/merchant/items"
     else
       flash[:failure] = "All fields must be completed before submitting:"

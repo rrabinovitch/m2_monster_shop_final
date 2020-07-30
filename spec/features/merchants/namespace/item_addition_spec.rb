@@ -52,6 +52,7 @@ RSpec.describe 'As a merchant employee' do
       expect(Item.last.active?).to be(true)
 
       expect(page).to have_content("Added #{new_item.name} to item list")
+
       within("#item-#{new_item.id}") do
         expect(page).to have_content("Name: #{new_item.name}")
         expect(page).to have_content("Description: #{new_item.description}")
