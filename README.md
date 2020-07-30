@@ -10,7 +10,37 @@
 * [Ruthie Rabinovitch](https://github.com/rrabinovitch)
 
 ## Implementation Instructions
-* to be added in
+This project was built with `ruby 2.5.3` and `Rails 5.1.7`.
+Use your favorite environment managers to sort that out!
+### Start the server on the command line:
+```bash
+$ git clone git@github.com:ajtran303/monster_shop_2005.git
+$ cd monster_shop_2005
+$ rails db:{drop,create,migrate,seed}
+$ rails s
+```
+### In your browser, go to: `localhost:3000`
+Now you're ready to rock and shop! Register as a new user, shop, and checkout!
+### Adding different user roles in the command line
+Certain features of the Monster Shop site require logging in as an `admin` or `merchant_employee`.
+Create those users in the Rails Console:
+#### In your terminal, run: `$ rails c`
+```ruby
+# create an admin
+irb > User.create(name: "Admin", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "janedoe@email.com", password: "password", password_confirmation: "password", role: 2)
+# create an employee for Meg's shop
+irb > User.create(name: "Meg's employee", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "meg1@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 1)
+# create employees for Brians's shop
+irb > User.create(name: "Brian's employee 1", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "brian1@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 2)
+irb > User.create(name: "Brian's employee 2", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "brian2@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 2)
+```
+The keyboard command to exit `irb` is `ctrl + c`
+### Log in as an admin or employees:
+admin - janedoe@email.com - password
+meg1 - meg1@email.com - password
+brian1 - brian1@email.com - password
+brian2 - brian2@email.com - password
+Log in as the appropriate user to use the feature described in a particular story.
 
 ## Background and Description
 
