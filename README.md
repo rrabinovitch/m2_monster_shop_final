@@ -94,7 +94,8 @@ The schema design that describes the database resources involved in this project
 1. Visitor - this type of user is anonymously browsing our site and is not logged in
 2. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
 3. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
-4. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work\n\n
+4. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
+
 User authentication and the authorization for different user roles to access different views and actions was developed using `bcrypt` and namespacing. For example, this controller is responsible for the actions that allow for the rendering of an admin user's dashboard. `:require_authorized_user` restricts access by regular users and merchant employees, and the `Admin::DashboardController` namespacing allows for the view to be accessed via an admin-specific path.
 ```ruby
 class Admin::DashboardController < ApplicationController
@@ -111,13 +112,18 @@ class Admin::DashboardController < ApplicationController
   end
 end
 ```
+An admin user's dashboard is rendered like this, when accessed by an admin user:
+![admin dashboard](https://user-images.githubusercontent.com/62635544/88979822-a63e4600-d27f-11ea-950e-05c93711ee08.png)
+But when an unauthorized user tries to access this admin-specific path, a 404 error message is displayed:
+![404 error message view](https://user-images.githubusercontent.com/62635544/88979690-69724f00-d27f-11ea-8428-87ed0b95523b.png)
 
 ## Order Status
 
 1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
 2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
-4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled\n\n
+4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled
+
 Enums were used for not only the user role attribute/column, but also to assign order status values. This allowed for use of methods that are made available via the implementation of enums. The following snippet demonstrates the use of an enum method within the presentation conditional logic found in the admin view of the orders index (AKA the admin dashboard):
 ```html
 <h1>All Orders in System</h1>
@@ -133,7 +139,8 @@ Enums were used for not only the user role attribute/column, but also to assign 
     </section>
   <% end %>
 ```
-
+A user's view of their placed orders, displaying each order's status based on the enum value assigned to each order's status attribute:
+![order status](https://user-images.githubusercontent.com/62635544/88979800-9d4d7480-d27f-11ea-96b5-3c0dfe2e9178.png)
 
 ## Timeframe
 The following is an anticipated timeline of how these stories should be completed in order to be finished by 4/16/20 at 6pm.
