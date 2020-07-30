@@ -7,7 +7,6 @@ class Item <ApplicationRecord
   validates_presence_of :name,
                         :description,
                         :price,
-                        :image,
                         :inventory
 
   validates :price, :numericality => { :greater_than => 0}
