@@ -1,6 +1,10 @@
 class Admin::UsersController < ApplicationController
   before_action :require_authorized_user
 
+  def index
+    @users = User.all
+  end
+
   def show
     @user = User.find(params[:id])
   end
