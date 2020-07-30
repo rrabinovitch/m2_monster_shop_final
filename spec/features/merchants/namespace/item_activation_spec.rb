@@ -25,7 +25,7 @@ RSpec.describe 'As a merchant employee' do
         expect(page).to have_content(@item1.name)
         expect(page).to have_content(@item1.description)
         expect(page).to have_content(@item1.price)
-        expect(page).to have_content(@item1.image)
+        expect(page).to have_css("img[src*='#{@item1.image}']")
         expect(page).to have_content("Active")
         expect(page).to have_content(@item1.inventory)
       end
@@ -39,7 +39,7 @@ RSpec.describe 'As a merchant employee' do
       expect(current_path).to eq("/merchant/items")
       expect(page).to have_content("#{@item1.name} is no longer for sale.")
       within("#item-#{@item1.id}") do
-        expect(page).to have_content("Not active")
+        expect(page).to have_content("Inactive")
       end
     end
 

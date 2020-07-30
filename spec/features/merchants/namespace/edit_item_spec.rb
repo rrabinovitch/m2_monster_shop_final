@@ -48,10 +48,10 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_content("Item has been updated")
 
       within("#item-#{@item1.id}") do
-        expect(page).to have_content("Name: #{name}")
-        expect(page).to have_content("Description: #{description}")
-        expect(page).to have_content("Price: #{price}")
-        expect(page).to have_content("Image: #{image_url}")
+        expect(page).to have_content("#{name}")
+        expect(page).to have_content("#{description}")
+        expect(page).to have_content("#{price}")
+        expect(page).to have_css("img[src*='#{image_url}']")
         expect(page).to have_content("Active")
       end
     end
