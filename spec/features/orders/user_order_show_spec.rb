@@ -61,7 +61,7 @@ RSpec.describe 'As a registered user' do
 
     it "shows all order information, including order ID, order date, date of last update, current status" do
       visit "/profile/orders/#{@order1.id}"
-      expect(page).to have_content("Order ID: #{@order1.id}")
+      expect(page).to have_content("Info for Order # #{@order1.id}")
       expect(page).to have_content("Order Date: #{@order1.created_at}")
       expect(page).to have_content("Last Updated: #{@order1.updated_at}")
       expect(page).to have_content("Status: #{@order1.status}")
@@ -69,10 +69,11 @@ RSpec.describe 'As a registered user' do
 
     it "also shows each item in the order, including item name, description, thumbnail image, quantity, price and subtotal" do
       visit "/profile/orders/#{@order1.id}"
-      within("section.item-#{@items1.first.id}") do
+      within("section#item-#{@items1.first.id}") do
         expect(page).to have_content(@items1.first.name)
         expect(page).to have_content(@items1.first.description)
-        expect(page).to have_content(@items1.first.image)
+        expect(page).to have_css("img[src*='#{@items1.first.image}']")
+        expect(page).to have_css("img[alt='Thumbnail Of: #{@items1.first.name}']")
         expect(page).to have_content(@order1.item_orders.items_in_order_quantity(@items1.first))
         expect(page).to have_content(@order1.item_orders.item_order_subtotal(@items1.first))
       end
@@ -81,7 +82,7 @@ RSpec.describe 'As a registered user' do
     it "also shows the total quantity of items in the order as well as the grand total of all items in that order" do
       visit "/profile/orders/#{@order1.id}"
       expect(page).to have_content("Total Items: #{@order1.items.sum('quantity')}")
-      expect(page).to have_content("Grand Total: #{@order1.grandtotal}")
+      expect(page).to have_content("Grand Total: $500.00")
     end
   end
 end

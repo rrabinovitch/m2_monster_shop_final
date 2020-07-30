@@ -1,28 +1,39 @@
-<h1> Order ID: <%= @order.id %> for <%= @order.name %><h1>
+<h1 align = "center">Info for Order # <%= @order.id %> </h1>
+<h2 align = "center">Status: <%= @order.status %> </h2>
+<center>
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+    </tr>
+  <% @order.item_orders.each do |item_order|%>
+    <tr>
+    <section id = "item-<%=item_order.item_id%>">
+        <td>
+          <p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p>
+          <img src="<%= item_order.item.image %>" height="100" alt="Thumbnail Of: <%=item_order.item.name %>"/>
+        </td>
+        <td><p><%= item_order.item.description %></p></td>
+        <td><p><%= number_to_currency(item_order.price)%></p></td>
+        <td><p><%= item_order.quantity%></p></td>
+        <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
+      </section>
+    </tr>
+  <% end %>
+</table>
 
-<p>
-  Order Date: <%= @order.created_at %>
-  Last Updated: <%= @order.updated_at %>
-  Status: <%= @order.status %>
-</p>
-
-<p>Total Items: <%= @order.items.sum('quantity') %><br>
-  Grand Total: <%= @order.grandtotal %></p>
-
-<h3>Items in this Order</h3>
-
-<% @order.items.each do |item| %>
-<section class=<%= "item-#{item.id}" %>>
-<ul>
-  <li><%= item.name %></li>
-  <li><%= item.description %></li>
-  <li><%= item.image %></li>
-  <li> <%= @order.item_orders.items_in_order_quantity(item) %></li>
-  <li> <%= @order.item_orders.item_order_subtotal(item) %></li>
-</ul>
-<% end %>
+<section id="grandtotal">
+  <p>Total Items: <%= @order.items.sum('quantity') %></p>
+  <p>Grand Total: <%=number_to_currency(@order.grandtotal)%></p>
+</section>
+<section id="orderdates">
+  <p>Order Date: <%= @order.created_at%></p>
+  <p>Last Updated: <%= @order.updated_at%></p>
 </section>
 
-<% if !@order.shipped? %>
+<% unless @order.shipped? %>
   <%= button_to "Cancel Order", "/profile/orders/#{@order.id}", method: :patch %>
 <% end %>

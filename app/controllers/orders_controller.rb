@@ -44,7 +44,11 @@ class OrdersController <ApplicationController
   end
 
   def retry_order_creation
-    flash[:notice] = "Please complete address form to create an order."
+    if current_user
+      flash[:notice] = "Please complete address form to create an order."
+    else
+      flash[:notice] = "Please login or register in order to checkout."
+    end 
     render :new
   end
 end
