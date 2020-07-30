@@ -1,11 +1,23 @@
-``# Monster Shop
+# Monster Shop
 BE Mod 2 Week 4/5 Group Project
+
+Final project has a well written README with pictures, schema design, code snippets, contributors names linked to their github profile, heroku link, and implementation instructions.
+
+## [Production Site (Heroku)](https://mod2-monster-shop.herokuapp.com/)
+
+## Project Team
+
+[Judith Pillado](https://github.com/judithpillado)
+[Lito White](https://github.com/ljwhite)
+[AJ Tran](https://github.com/ajtran303)
+[Ruthie Rabinovitch](https://github.com/rrabinovitch)
+
+## Implementation Instructions
+* to be added in
 
 ## Background and Description
 
 "Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
-
-Students will be put into 3 or 4 person groups to complete the project.\n
 
 ## Learning Goals
 
