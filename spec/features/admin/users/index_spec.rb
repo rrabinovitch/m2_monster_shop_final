@@ -35,8 +35,5 @@ RSpec.describe "Admin user index page" do
     visit "/admin/users"
     click_on "#{@regular_user.name}"
     expect(current_path).to eq("/admin/users/#{@regular_user.id}")
-    expect(page).to have_content("Viewing #{@regular_user.name}'s User Profile")
-    expect(page).to have_content("User type: #{@regular_user.role}")
-    expect(page).to have_content("Registered on: #{@regular_user.created_at}")
   end
 end
