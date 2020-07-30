@@ -4,10 +4,10 @@
 
 ## Project Team
 
-[Judith Pillado](https://github.com/judithpillado)
-[Lito White](https://github.com/ljwhite)
-[AJ Tran](https://github.com/ajtran303)
-[Ruthie Rabinovitch](https://github.com/rrabinovitch)
+* [Judith Pillado](https://github.com/judithpillado)
+* [Lito White](https://github.com/ljwhite)
+* [AJ Tran](https://github.com/ajtran303)
+* [Ruthie Rabinovitch](https://github.com/rrabinovitch)
 
 ## Implementation Instructions
 * to be added in
@@ -89,7 +89,7 @@ end
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
 4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled\n\n
 Enums were used for not only the user role attribute/column, but also to assign order status values. This allowed for use of methods that are made available via the implementation of enums. The following snippet demonstrates the use of an enum method within the presentation conditional logic found in the admin view of the orders index (AKA the admin dashboard):
-```
+```html
 <h1>All Orders in System</h1>
   <% @orders.sort_by_status.each do |order| %>
     <section id="order-<%=order.id%>">
