@@ -82,8 +82,8 @@ describe Order, type: :model do
       @customer = create(:user)
       @order_1 = @customer.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @fullfilled_pull_toys = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @item_order_2 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
 
     it 'grandtotal' do
@@ -102,12 +102,12 @@ describe Order, type: :model do
     it 'cancel when some item_orders fulfilled' do
       expect(@pull_toy.inventory).to eq(32)
 
-      @fullfilled_pull_toys.fulfill
+      @item_order_2.fulfill
       expect(@pull_toy.inventory).to eq(29)
 
       @order_1.cancel
       expect(@order_1.status).to eq("cancelled")
-      expect(@fullfilled_pull_toys.status).to eq("unfulfilled")
+      expect(@item_order_2.status).to eq("unfulfilled")
       expect(@pull_toy.inventory).to eq(32)
     end
 
@@ -119,13 +119,13 @@ describe Order, type: :model do
       expect(@order_1.item_orders.size).to eq(2)
       expect(@order_1.status).to eq("pending")
 
-      @order_1.item_orders.first.fulfill
+      @item_order_1.fulfill
       expect(@order_1.item_orders.all?(&:fulfilled?)).to be_falsey
       expect(@order_1.can_pack?).to be_falsey
 
       @order_1.pack
       expect(@order_1.status).to eq("pending")
-      @order_1.item_orders.last.fulfill
+      @item_order_2.fulfill
       expect(@order_1.item_orders.all?(&:fulfilled?)).to be_truthy
       expect(@order_1.can_pack?).to be_truthy
 
