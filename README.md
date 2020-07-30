@@ -1,11 +1,54 @@
-``# Monster Shop
-BE Mod 2 Week 4/5 Group Project
+# Monster Shop: BE Mod 2 Week 4/5 Group Project
+
+## [Heroku Production Site](https://mod2-monster-shop.herokuapp.com/)
+
+## Project Team
+
+* [Judith Pillado](https://github.com/judithpillado)
+* [Lito White](https://github.com/ljwhite)
+* [AJ Tran](https://github.com/ajtran303)
+* [Ruthie Rabinovitch](https://github.com/rrabinovitch)
+
+## Implementation Instructions
+This project was built with `ruby 2.5.3` and `Rails 5.1.7`.
+Use your favorite environment managers to sort that out!
+### Start the server on the command line:
+```bash
+$ git clone git@github.com:ajtran303/monster_shop_2005.git
+$ cd monster_shop_2005
+$ rails db:{drop,create,migrate,seed}
+$ rails s
+```
+### In your browser, go to: `localhost:3000`
+Now you're ready to rock and shop! Register as a new user, shop, and checkout!
+### Adding different user roles in the command line
+Certain features of the Monster Shop site require logging in as an `admin` or `merchant_employee`.
+Create those users in the Rails Console:
+#### In your terminal, run: `$ rails c`
+```ruby
+# create an admin
+irb > User.create(name: "Admin", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "janedoe@email.com", password: "password", password_confirmation: "password", role: 2)
+# create an employee for Meg's shop
+irb > User.create(name: "Meg's employee", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "meg1@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 1)
+# create employees for Brians's shop
+irb > User.create(name: "Brian's employee 1", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "brian1@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 2)
+irb > User.create(name: "Brian's employee 2", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "brian2@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 2)
+```
+The keyboard command to exit `irb` is `ctrl + c`
+### Log in as an admin or employees:
+admin - janedoe@email.com - password
+meg1 (merchant employee) - meg1@email.com - password
+brian1 (merchant employee) - brian1@email.com - password
+brian2 (merchant employee) - brian2@email.com - password
+Log in as the appropriate user to use the feature described in a particular story.
 
 ## Background and Description
 
 "Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
 
-Students will be put into 3 or 4 person groups to complete the project.\n
+This project offered our team a chance to implement and strengthen the knowledge and skills we've acquired so far this quarter (including MVC structure and conventions, routing, restful conventions, testing using RSpec and Capybara, etc.); and in particular, this was a chance to deepen our comfort with ActiveRecord calls, implement namespacing, authentication, and authorization for the first time.
+
+The schema design that describes the database resources involved in this project and their relationships with each other can be found [here](https://github.com/ajtran303/monster_shop_2005/blob/readme/erd.pdf).
 
 ## Learning Goals
 
@@ -53,12 +96,51 @@ Students will be put into 3 or 4 person groups to complete the project.\n
 3. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
 4. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
 
+User authentication and the authorization for different user roles to access different views and actions was developed using `bcrypt` and namespacing. For example, this controller is responsible for the actions that allow for the rendering of an admin user's dashboard. `:require_authorized_user` restricts access by regular users and merchant employees, and the `Admin::DashboardController` namespacing allows for the view to be accessed via an admin-specific path.
+```ruby
+class Admin::DashboardController < ApplicationController
+  before_action :require_authorized_user
+
+  def index
+    @orders = Order.all
+  end
+
+  private
+
+  def unauthorized_user?
+    current_user.nil? || current_user.regular? || current_user.merchant_employee?
+  end
+end
+```
+An admin user's dashboard is rendered like this, when accessed by an admin user:
+![admin dashboard](https://user-images.githubusercontent.com/62635544/88979822-a63e4600-d27f-11ea-950e-05c93711ee08.png)
+But when an unauthorized user tries to access this admin-specific path, a 404 error message is displayed:
+![404 error message view](https://user-images.githubusercontent.com/62635544/88979690-69724f00-d27f-11ea-8428-87ed0b95523b.png)
+
 ## Order Status
 
 1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
 2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
 4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled
+
+Enums were used for not only the user role attribute/column, but also to assign order status values. This allowed for use of methods that are made available via the implementation of enums. The following snippet demonstrates the use of an enum method within the presentation conditional logic found in the admin view of the orders index (AKA the admin dashboard):
+```html
+<h1>All Orders in System</h1>
+  <% @orders.sort_by_status.each do |order| %>
+    <section id="order-<%=order.id%>">
+      <h3>Order #<%= order.id %></h3>
+      <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
+      <p>Order placed on: <%= order.created_at %></p>
+      <p>Order status: <%= order.status %></p>
+      <% if order.packaged? %>
+        <%= button_to "Ship", "admin/#{order.id}", method: :patch %>
+      <% end %>
+    </section>
+  <% end %>
+```
+A user's view of their placed orders, displaying each order's status based on the enum value assigned to each order's status attribute:
+![order status](https://user-images.githubusercontent.com/62635544/88979800-9d4d7480-d27f-11ea-96b5-3c0dfe2e9178.png)
 
 ## Timeframe
 The following is an anticipated timeline of how these stories should be completed in order to be finished by 4/16/20 at 6pm.
