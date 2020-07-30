@@ -1,27 +1,27 @@
 <h1>List of Merchant Items</h1>
 
-<% @merchant_employee.merchant.items.each do |item| %>
-<section id="item-<%= item.id %>">
-  <ul>
-    <li>Name: <%= item.name %></li>
-    <li>Description: <%= item.description %></li>
-    <li>Price: <%= item.price %></li>
-    <li>Image: <%= item.image %></li>
-    <li>Status?
-      <% if item.active? %>
-        <%= "Active" %><br>
-        <%= link_to "Deactivate", "/merchant/items/#{item.id}/toggle_active", method: :patch %>
-      <% else %>
-        <%= "Not active" %>
-        <%= link_to "Activate", "/merchant/items/#{item.id}/toggle_active", method: :patch %>
-      <% end %></li>
-    <li>Inventory Count: <%= item.inventory %></li>
-    <% if item.item_orders.empty? %>
-     <%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
-     <%= link_to "Edit", "/merchant/items/#{item.id}/edit" %>
-    <% end %>
-  </ul>
-  </section>
-<% end %>
+<h2 align="center"><%= link_to "Add Item", "/merchant/items/new", method: :get %></h2>
 
-<%= link_to "Add Item", "/merchant/items/new", method: :get %>
+<section class="grid-container">
+  <% @merchant_employee.merchant.items.each do |item| %>
+    <section class = "grid-item" id= 'item-<%=item.id%>'>
+      <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
+      <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
+      <a href="/items/<%=item.id%>" id="<%=item.id%>">
+        <img  src= <%= item.image %>>
+      </a>
+      <p> <%= item.description unless @merchant%> </p>
+      <p>Price: <%=number_to_currency(item.price) %> </p>
+      <p>Inventory: <%= item.inventory %> </p>
+      <% if item.active? %>
+        <p>Active <%= link_to "Deactivate", "/merchant/items/#{item.id}/toggle_active", method: :patch %></p>
+      <% else %>
+        <p>Inactive <%= link_to "Activate", "/merchant/items/#{item.id}/toggle_active", method: :patch %></p>
+      <% end %>
+      <% if item.item_orders.empty? %>
+       <%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
+       <%= link_to "Edit", "/merchant/items/#{item.id}/edit" %>
+      <% end %>
+    </section>
+    <% end %>
+</section>
