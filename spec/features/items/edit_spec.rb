@@ -66,7 +66,7 @@ RSpec.describe "As a Visitor" do
         click_button "Update Item"
 
         expect(page).to have_content("Name can't be blank")
-        expect(page).to have_content("Image can't be blank")
+        expect(page).to_not have_content("Image can't be blank")
         expect(page).to have_button("Update Item")
       end
     end
