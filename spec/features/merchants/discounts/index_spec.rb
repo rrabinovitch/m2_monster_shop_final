@@ -4,6 +4,8 @@ RSpec.describe "As a merchant employee" do
   before :each do
     @merchant = create(:merchant)
     @merchant_employee = create(:user, role: 1, merchant: @merchant)
+    @discount_1 = @merchant.discounts.create(percentage: 25, minimum_item_quantity: 10)
+    @discount_1 = @merchant.discounts.create(percentage: 30, minimum_item_quantity: 15)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
     visit merchant_path
   end
@@ -14,8 +16,9 @@ RSpec.describe "As a merchant employee" do
 
   it "When I click this link, I see a list of my shop's discounts, including each discount's percentage and quantity requirements." do
     click_on "Bulk Discounts"
-    # expect(page).to have_content() # discount #1 percentage and quantity requirements
-    # expect(page).to have_content() # discount #2 percentage and quantity requirements
+    expect(current_path).to eq(merchant_discounts_path)
+    expect(page).to have_content("25% off 10 or more items")
+    expect(page).to have_content("30% off 15 or more items")
   end
 
   it "The discounts index also has a link to create a new discount." do

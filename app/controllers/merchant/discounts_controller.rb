@@ -11,8 +11,14 @@ class Merchant::DiscountsController < ApplicationController
 
   def create
     merchant = Merchant.find(current_user.merchant.id)
-    merchant.discounts.create(discount_params)
-    redirect_to merchant_discounts_path
+    discount = merchant.discounts.create(discount_params)
+    if discount.save
+      flash[:success] = "A new bulk discount has been created for #{merchant.name}"
+      redirect_to merchant_discounts_path
+    else
+      flash[:error] = "All form fields must be filled in order to create a discount."
+      redirect_to new_merchant_discount_path
+    end
   end
 
   private
