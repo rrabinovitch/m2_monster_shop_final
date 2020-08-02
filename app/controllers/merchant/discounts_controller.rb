@@ -5,6 +5,10 @@ class Merchant::DiscountsController < ApplicationController
     @merchant_employee = current_user
   end
 
+  def new
+
+  end
+
   private
 
   def unauthorized_user?
