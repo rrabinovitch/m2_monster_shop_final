@@ -16,6 +16,7 @@ RSpec.describe "As a merchant employee" do
 
   it "When I click this link, I see a list of my shop's discounts, including each discount's percentage and quantity requirements." do
     click_on "Bulk Discounts"
+    expect(current_path).to eq(merchant_discounts_path)
     expect(page).to have_content("25% off 10 or more items")
     expect(page).to have_content("30% off 15 or more items")
   end
