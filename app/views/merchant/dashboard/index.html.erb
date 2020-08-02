@@ -9,11 +9,11 @@
 </ul>
 
 <p> <%= link_to "Merchant Items", "/merchant/items" %></p>
+<p> <%= link_to "Bulk Discounts", "/merchant/discounts" %></p>
 
 <h3>Pending Orders for <%= @merchant_employee.merchant.name %></h3>
 
 <% @merchant_employee.merchant.item_orders.pending_orders.each do |order| %>
-
   <p>
     ID: <%=link_to order.id, "/merchant/orders/#{order.id}" %><br>
     Date: <%= order.created_at %><br>

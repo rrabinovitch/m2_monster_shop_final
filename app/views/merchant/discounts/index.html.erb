@@ -1,0 +1,9 @@
+<h1><%= current_user.merchant.name %> Bulk Discounts</h1>
+
+<ul>
+  <% @discounts.each do |discount| %>
+    <li><%= "#{discount.percentage}% off #{discount.minimum_item_quantity} or more items" %></li>
+  <% end %>
+</ul>
+
+<%= link_to "New Bulk Discount", "/merchant/discounts/new" %>
