@@ -12,6 +12,7 @@ class Merchant::DiscountsController < ApplicationController
   def create
     merchant = Merchant.find(current_user.merchant.id)
     merchant.discounts.create(discount_params)
+    flash[:success] = "A new bulk discount has been created for #{merchant.name}"
     redirect_to merchant_discounts_path
   end
 

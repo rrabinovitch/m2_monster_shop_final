@@ -14,7 +14,7 @@ RSpec.describe "As a merchant employee" do
   end
 
   it "I am taken to a form where I am prompted to input a discount percentage and a minimum item quantity to create a discount.
-      When I submit the form, I am returned to the discounts index page, where I see the new discount's information listed." do
+      When I submit the form, I am returned to the discounts index page, where I see the new discount's information listed and a success flash message." do
     visit merchant_discounts_path
     click_on "New Bulk Discount"
     fill_in "Percentage", with: 25
@@ -22,6 +22,6 @@ RSpec.describe "As a merchant employee" do
     click_on "Create Discount"
     expect(current_path).to eq(merchant_discounts_path)
     expect(page).to have_content("25% off 10 or more items")
-    save_and_open_page
+    expect(page).to have_content("A new bulk discount has been created for #{@merchant.name}")
   end
 end
