@@ -8,18 +8,20 @@ RSpec.describe "As a merchant employee" do
   end
 
   it "When I visit my shop's discounts index page, I can click a link to create a new discount." do
-    visit "/merchant/discounts"
+    visit merchant_discounts_path
     click_on "New Bulk Discount"
-    expect(current_path).to eq("/merchant/discounts/new")
+    expect(current_path).to eq(new_merchant_discount_path)
   end
 
   it "I am taken to a form where I am prompted to input a discount percentage and a minimum item quantity to create a discount.
       When I submit the form, I am returned to the discounts index page, where I see the new discount's information listed." do
-    visit "/merchant/discounts"
+    visit merchant_discounts_path
     click_on "New Bulk Discount"
     fill_in "Percentage", with: 25
     fill_in "Minimum item quantity", with: 10
     click_on "Create Discount"
+    expect(current_path).to eq(merchant_discounts_path)
     expect(page).to have_content("25% off 10 or more items")
+    save_and_open_page
   end
 end
