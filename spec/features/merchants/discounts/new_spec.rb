@@ -15,10 +15,10 @@ RSpec.describe "As a merchant employee" do
 
   it "I am taken to a form where I am prompted to input a discount percentage and a minimum item quantity to create a discount.
       When I submit the form, I am returned to the discounts index page, where I see the new discount's information listed." do
+    visit "/merchant/discounts"
     click_on "New Bulk Discount"
-    expect(page).to have_link("New Bulk Discount")
-    fill_in :percentage, with: 25
-    fill_in :minimum_item_quantity, with: 10
+    fill_in "Percentage", with: 25
+    fill_in "Minimum item quantity", with: 10
     click_on "Create Discount"
     expect(page).to have_content("25% off 10 or more items")
   end
