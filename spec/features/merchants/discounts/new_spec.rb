@@ -24,4 +24,13 @@ RSpec.describe "As a merchant employee" do
     expect(page).to have_content("25% off 10 or more items")
     expect(page).to have_content("A new bulk discount has been created for #{@merchant.name}")
   end
+
+  it "If I try to create a discount without filling out all the required fields, I see a flash message prompting me to re-fill the form." do
+    visit merchant_discounts_path
+    click_on "New Bulk Discount"
+    fill_in "Percentage", with: 25
+    click_on "Create Discount"
+    expect(page).to have_content("All form fields must be filled in order to create a discount.")
+    expect(current_path).to eq(new_merchant_discount_path)
+  end
 end
