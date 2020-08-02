@@ -2,7 +2,7 @@ class Merchant::DashboardController < ApplicationController
   before_action :require_authorized_user
 
   def index
-  @merchant_employee = current_user
+    @merchant_employee = current_user
   end
 
   private

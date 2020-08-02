@@ -2,7 +2,7 @@ class Merchant::DiscountsController < ApplicationController
   before_action :require_authorized_user
 
   def index
-
+    @merchant_employee = current_user
   end
 
   private
