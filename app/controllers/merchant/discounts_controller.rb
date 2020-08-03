@@ -28,7 +28,10 @@ class Merchant::DiscountsController < ApplicationController
   def update
     discount = Discount.find(params[:id])
     discount.update(discount_params)
-    redirect_to merchant_discounts_path
+    if discount.save
+      flash[:success] = "Discount successfully updated"
+      redirect_to merchant_discounts_path
+    end
   end
 
   private

@@ -34,6 +34,7 @@ RSpec.describe "As a merchant employee" do
     fill_in "Percentage", with: 40
     click_on "Update Discount"
     expect(current_path).to eq(merchant_discounts_path)
+    expect(page).to have_content("Discount successfully updated")
     expect(page).to have_content("40% off 10 or more items")
   end
 
