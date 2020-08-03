@@ -3,6 +3,7 @@
   <section id='discount-<%=discount.id%>'>
     <p><%= "#{discount.percentage}% off #{discount.minimum_item_quantity} or more items" %></p>
     <p><%= link_to "Edit", "/merchant/discounts/#{discount.id}/edit" %></p>
+    <p><%= button_to "Delete", "/merchant/discounts/#{discount.id}", method: :delete %></p>
   </section>
 <% end %>
 
