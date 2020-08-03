@@ -37,6 +37,12 @@ class Merchant::DiscountsController < ApplicationController
     end
   end
 
+  def destroy
+    Discount.destroy(params[:id])
+    flash[:success] = "Discount has been deleted"
+    redirect_to merchant_discounts_path
+  end
+
   private
 
   def unauthorized_user?
