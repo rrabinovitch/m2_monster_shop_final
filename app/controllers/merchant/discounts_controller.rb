@@ -21,6 +21,22 @@ class Merchant::DiscountsController < ApplicationController
     end
   end
 
+  def edit
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    discount = Discount.find(params[:id])
+    discount.update(discount_params)
+    if discount.save
+      flash[:success] = "Discount successfully updated"
+      redirect_to merchant_discounts_path
+    else
+      flash[:error] = "All form fields must be filled in order to update a discount."
+      redirect_to edit_merchant_discount_path(discount)
+    end
+  end
+
   private
 
   def unauthorized_user?
