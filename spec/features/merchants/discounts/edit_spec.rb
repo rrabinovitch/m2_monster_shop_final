@@ -44,6 +44,6 @@ RSpec.describe "As a merchant employee" do
     fill_in "Percentage", with: ""
     click_on "Update Discount"
     expect(page).to have_content("All form fields must be filled in order to update a discount.")
-    expect(current_path).to eq("/merchant/discount/#{@discount_1.id}/edit")
+    expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
   end
 end
