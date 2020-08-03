@@ -24,14 +24,13 @@ RSpec.describe "As a merchant employee" do
       click_link "Edit"
     end
     expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}/edit")
-    save_and_open_page
     expect(page).to have_selector("input[value='#{@discount_1.percentage}']")
     expect(page).to have_selector("input[value='#{@discount_1.minimum_item_quantity}']")
   end
 
   it "When I fill out the edit discount form successfully, I am returned to the discounts index page where I see the updated info for that discount displayed,
       as well as a flash message indiciating it was successfully updated." do
-    visit "/merchant/discount/#{@discount_1.id}/edit"
+    visit "/merchant/discounts/#{@discount_1.id}/edit"
     fill_in "Percentage", with: 40
     click_on "Update Discount"
     expect(current_path).to eq(merchant_discounts_path)
@@ -40,7 +39,7 @@ RSpec.describe "As a merchant employee" do
 
   it "When I fill out the edit discount form and have left a field empty, I remain on the discount edit form page,
       and I see a flash message prompting me to re-fill the form." do
-    visit "/merchant/discount/#{@discount_1.id}/edit"
+    visit "/merchant/discounts/#{@discount_1.id}/edit"
     fill_in "Percentage", with: ""
     click_on "Update Discount"
     expect(page).to have_content("All form fields must be filled in order to update a discount.")
