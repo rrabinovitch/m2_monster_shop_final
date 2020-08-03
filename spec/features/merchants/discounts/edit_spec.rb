@@ -10,18 +10,18 @@ RSpec.describe "As a merchant employee" do
     visit merchant_discounts_path
   end
 
-  it "When I visit my shop's discount index page, I see an 'edit' button next to each discount." do
-    within("#discount-#{@discount_1.id}") do
-      expect(page).to have_button("Edit")
+  it "When I visit my shop's discount index page, I see an 'edit' link next to each discount." do
+    within "#discount-#{@discount_1.id}" do
+      expect(page).to have_link("Edit")
     end
-    within("#discount-#{@discount_2.id}") do
-      expect(page).to have_button("Edit")
+    within "#discount-#{@discount_2.id}" do
+      expect(page).to have_link("Edit")
     end
   end
 
-  it "When I click on a discount's edit button, I am taken to a form that is pre-populated with that discount's info." do
+  it "When I click on a discount's edit link, I am taken to a form that is pre-populated with that discount's info." do
     within("#discount-#{@discount_1.id}") do
-      click_button "Edit"
+      click_link "Edit"
     end
     expect(current_path).to eq("/merchant/discounts/#{@discount_1}/edit")
     expect(page).to have_content(@discount_1.percentage)
