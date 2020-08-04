@@ -12,7 +12,10 @@ RSpec.describe "As a regular user" do
     @item_5 = create(:item, merchant: @merchant_1)
     @item_5 = create(:item, merchant: @merchant_1)
     @item_6 = create(:item, merchant: @merchant_2)
-    @discount = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 5)
+    @discount_1 = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 5)
+    @discount_2 = @merchant_1.discounts.create(percentage: 30, minimum_item_quantity: 5)
+    @discount_3 = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 10)
+    @discount_4 = @merchant_1.discounts.create(percentage: 20, minimum_item_quantity: 15)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
 
@@ -91,5 +94,37 @@ RSpec.describe "As a regular user" do
       expect(page).to have_content("$375")
     end
     expect(page).to have_content("Grand Total: $375")
+  end
+
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my car: same minimum item quantity, different percentage" do
+    cart = Cart.new({"#{@item_1.id}" => 5})
+    allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
+    visit cart_path
+    within("#cart-item-#{@item_1.id}") do
+      expect(page).to have_content("$350")
+    end
+    expect(page).to have_content("Total: $350")
+
+    visit orders_new_path
+    fill_in :name, with: @user.name
+    fill_in :address, with: @user.address
+    fill_in :city, with: @user.city
+    fill_in :state, with: @user.state
+    fill_in :zip, with: @user.zip
+    click_on "Create Order"
+    order = Order.last
+    visit "/profile/orders/#{order.id}"
+    within("#item-#{@item_1.id}") do
+      expect(page).to have_content("$350")
+    end
+    expect(page).to have_content("Grand Total: $350")
+  end
+
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my car: different minimum item quantity, same percentage" do
+
+  end
+
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my car: different minimum item quantity, different percentage" do
+
   end
 end
