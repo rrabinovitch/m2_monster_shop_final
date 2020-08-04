@@ -118,7 +118,7 @@ RSpec.describe "As a regular user" do
     expect(page).to have_content("Grand Total: $700")
   end
 
-  xit "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, same percentage.
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, same percentage.
       Even though, both discounts would result in same final cost." do
     @discount_3 = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 10)
     cart = Cart.new({"#{@item_1.id}" => 10})
@@ -144,17 +144,15 @@ RSpec.describe "As a regular user" do
     expect(page).to have_content("Grand Total: $750")
   end
 
-  xit "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, different percentage" do
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, different percentage" do
     @discount_4 = @merchant_1.discounts.create(percentage: 20, minimum_item_quantity: 15)
-    # discount_1 => 1500
-    # discount_4 => 1600
     cart = Cart.new({"#{@item_1.id}" => 20})
     allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
     visit cart_path
     within("#cart-item-#{@item_1.id}") do
-      expect(page).to have_content("$750")
+      expect(page).to have_content("$1,500")
     end
-    expect(page).to have_content("Total: $750")
+    expect(page).to have_content("Total: $1,500")
 
     visit orders_new_path
     fill_in :name, with: @user.name
@@ -166,8 +164,8 @@ RSpec.describe "As a regular user" do
     order = Order.last
     visit "/profile/orders/#{order.id}"
     within("#item-#{@item_1.id}") do
-      expect(page).to have_content("$750")
+      expect(page).to have_content("$1,500")
     end
-    expect(page).to have_content("Grand Total: $750")
+    expect(page).to have_content("Grand Total: $1,500")
   end
 end
