@@ -16,7 +16,6 @@ class ItemOrder <ApplicationRecord
         price * quantity
       end
     end
-    # price * quantity
   end
 
   def fulfill

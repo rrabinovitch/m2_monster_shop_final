@@ -21,9 +21,7 @@ class Order <ApplicationRecord
       end
     end
     grandtotal
-    # binding.pry
-    # item_orders.sum('price * quantity')
-    # figure out a way for lines 14 and 19 to be calculated in those cases without needig to iterate
+    # figure out a way for lines 14 and 19 to be calculated in those cases without needing to iterate
   end
 
   def cancel
