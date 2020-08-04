@@ -86,8 +86,6 @@ RSpec.describe("Order Creation") do
         expect(page).to have_content("1")
         expect(page).to have_content("$2")
       end
-      # save_and_open_page
-      # binding.pry
 
       within "#grandtotal" do
         expect(page).to have_content("Total: $142")
