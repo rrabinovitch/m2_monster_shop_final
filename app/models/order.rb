@@ -8,7 +8,21 @@ class Order <ApplicationRecord
   enum status: [:packaged, :pending, :shipped, :cancelled]
 
   def grandtotal
-    item_orders.sum('price * quantity')
+    grandtotal = 0
+    item_orders.each do |item_order|
+      if item_order.item.merchant.discounts.empty?
+        grandtotal += item_orders.sum('price * quantity')
+      else
+        if item_order.quantity >= item_order.item.merchant.discounts.first.minimum_item_quantity
+          grandtotal += (item_order.price * item_order.quantity) * ((100 - item_order.item.merchant.discounts.first.percentage.to_f)/100)
+        else
+          grandtotal += item_orders.sum('price * quantity')
+        end
+      end
+    end
+    grandtotal
+    # binding.pry
+    # item_orders.sum('price * quantity')
   end
 
   def cancel

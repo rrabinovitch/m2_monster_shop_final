@@ -71,6 +71,7 @@ RSpec.describe "As a regular user" do
     click_on "Create Order"
     order = Order.last
     visit "/profile/orders/#{order.id}"
+    save_and_open_page
     within("#item-#{@item_1.id}") do
       expect(page).to have_content("$375")
     end
