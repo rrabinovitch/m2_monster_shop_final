@@ -58,4 +58,22 @@ RSpec.describe "As a regular user" do
     end
     expect(page).to have_content("Total: $500")
   end
+
+  it "After I've placed an order to which a discount has been applied, the discount is reflected on that order show page." do
+    cart = Cart.new({"#{@item_1.id}" => 5})
+    allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
+    visit orders_new_path
+    fill_in :name, with: @user.name
+    fill_in :address, with: @user.address
+    fill_in :city, with: @user.city
+    fill_in :state, with: @user.state
+    fill_in :zip, with: @user.zip
+    click_on "Create Order"
+    order = Order.last
+    visit "/profile/orders/#{order.id}"
+    within("#item-#{@item_1.id}") do
+      expect(page).to have_content("$375")
+    end
+    expect(page).to have_content("Grand Total: $375")
+  end
 end
