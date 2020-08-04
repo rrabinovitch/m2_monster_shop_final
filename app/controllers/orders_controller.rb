@@ -48,7 +48,7 @@ class OrdersController <ApplicationController
       flash[:notice] = "Please complete address form to create an order."
     else
       flash[:notice] = "Please login or register in order to checkout."
-    end 
+    end
     render :new
   end
 end

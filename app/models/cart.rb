@@ -28,7 +28,13 @@ class Cart
   end
 
   def subtotal(item)
-    item.price * @contents[item.id.to_s]
+    quantity = @contents[item.id.to_s]
+    discount = item.merchant.discounts.first
+    if !item.merchant.discounts.empty? && quantity >= discount.minimum_item_quantity
+      (item.price * quantity) * ((100 - discount.percentage.to_f) / 100)
+    else
+      item.price * quantity
+    end
   end
 
   def total
@@ -37,19 +43,19 @@ class Cart
     end
   end
 
-  def discounted_total
-    discounted_total = 0
-    items.each do |item, quantity|
-      if item.merchant.discounts.empty?
-        discounted_total += (item.price * quantity)
-      else
-        if quantity >= item.merchant.discounts.first.minimum_item_quantity
-          discounted_total += (item.price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
-        else
-          discounted_total += (item.price * quantity)
-        end
-      end
-    end
-    discounted_total
-  end
+  # def discounted_total
+  #   discounted_total = 0
+  #   items.each do |item, quantity|
+  #     if item.merchant.discounts.empty?
+  #       discounted_total += (item.price * quantity)
+  #     else
+  #       if quantity >= item.merchant.discounts.first.minimum_item_quantity
+  #         discounted_total += (item.price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
+  #       else
+  #         discounted_total += (item.price * quantity)
+  #       end
+  #     end
+  #   end
+  #   discounted_total
+  # end
 end
