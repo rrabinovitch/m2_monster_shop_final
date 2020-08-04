@@ -11,8 +11,7 @@ RSpec.describe 'As a merchant employee' do
       click_button 'Log In'
 
       @merchant2 = create(:merchant)
-
-
+      
       @item1 = create(:item, merchant_id: @merchant.id)
       @item2 = create(:item, merchant_id: @merchant.id)
       @item3 = create(:item, merchant_id: @merchant.id)
@@ -29,8 +28,8 @@ RSpec.describe 'As a merchant employee' do
       @order2.item_orders.create(item: @item1, price: 5, quantity: 1)
       @order3.item_orders.create(item: @item4, price: 1, quantity: 1)
       @order4.item_orders.create(item: @item1, price: 5, quantity: 1)
-
     end
+
     it 'I see the name and address of the merchant I work for' do
       visit "/merchant/dashboard"
 
@@ -46,11 +45,9 @@ RSpec.describe 'As a merchant employee' do
 
       expect(page).to have_content(@order1.id)
       expect(page).to have_content("Quantity of Merchant Items: 9")
-      expect(page).to have_content("Total Value of Merchant Items: 205")
 
       expect(page).to have_content(@order2.id)
       expect(page).to_not have_content(@order3.id)
-
     end
 
     it 'the order ID is a link to the merhant order show page' do
@@ -59,7 +56,6 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_link(@order1.id)
       click_link(@order1.id)
       expect(current_path).to eq("/merchant/orders/#{@order1.id}")
-
     end
   end
 end

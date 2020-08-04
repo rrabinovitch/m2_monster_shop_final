@@ -7,15 +7,21 @@ class ItemOrder <ApplicationRecord
   enum status: [:unfulfilled, :fulfilled]
 
   def subtotal
-    if item.merchant.discounts.empty?
-      price * quantity
-    else
-      if quantity >= item.merchant.discounts.first.minimum_item_quantity
-        (price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
-      else
-        price * quantity
-      end
-    end
+    price * quantity if best_discount_rate.nil?
+    apply_discount
+  end
+
+  def available_discounts
+    item.merchant.discounts.where('minimum_item_quantity <= ?', quantity)
+  end
+
+  def best_discount_rate
+    available_discounts.maximum(:percentage)
+  end
+
+  def apply_discount
+    discount_calculation = (100 - best_discount_rate.to_f)/100
+    (item.price * quantity) * discount_calculation
   end
 
   def fulfill
@@ -52,6 +58,4 @@ class ItemOrder <ApplicationRecord
   def self.pending_orders
     joins(:order).select('orders.*').where(orders: {status: "1"}).distinct
   end
-
-
 end

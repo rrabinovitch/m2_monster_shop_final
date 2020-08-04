@@ -28,47 +28,28 @@ class Cart
   end
 
   def subtotal(item)
-    quantity = @contents[item.id.to_s]
-    discount = item.merchant.discounts.first
-    if !item.merchant.discounts.empty? && quantity >= discount.minimum_item_quantity
-      (item.price * quantity) * ((100 - discount.percentage.to_f) / 100)
-    else
-      item.price * quantity
-    end
+    item.price * @contents[item.id.to_s] if best_discount_rate(item).nil?
+    apply_discount(item)
   end
 
   def total
-      total = 0
-      items.each do |item, quantity|
-        if item.merchant.discounts.empty?
-          total += (item.price * quantity)
-        else
-          if quantity >= item.merchant.discounts.first.minimum_item_quantity
-            total += (item.price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
-          else
-            total += (item.price * quantity)
-          end
-        end
-      end
-      total
-    # @contents.sum do |item_id,quantity|
-    #   Item.find(item_id).price * quantity
-    # end
+    items.sum do |item, _quantity|
+      subtotal(item)
+    end
   end
 
-  # def discounted_total
-  #   discounted_total = 0
-  #   items.each do |item, quantity|
-  #     if item.merchant.discounts.empty?
-  #       discounted_total += (item.price * quantity)
-  #     else
-  #       if quantity >= item.merchant.discounts.first.minimum_item_quantity
-  #         discounted_total += (item.price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
-  #       else
-  #         discounted_total += (item.price * quantity)
-  #       end
-  #     end
-  #   end
-  #   discounted_total
-  # end
+  def available_discounts(item)
+    quantity = @contents[item.id.to_s]
+    item.merchant.discounts.where('minimum_item_quantity <= ?', quantity)
+  end
+
+  def best_discount_rate(item)
+    available_discounts(item).maximum(:percentage)
+  end
+
+  def apply_discount(item)
+    quantity = @contents[item.id.to_s]
+    discount_calculation = (100 - best_discount_rate(item).to_f)/100
+    (item.price * quantity) * discount_calculation
+  end
 end

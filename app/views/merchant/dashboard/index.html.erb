@@ -18,6 +18,5 @@
     ID: <%=link_to order.id, "/merchant/orders/#{order.id}" %><br>
     Date: <%= order.created_at %><br>
     Quantity of Merchant Items: <%= Order.find(order.id).merchant_items(@merchant_employee.merchant).sum(:quantity) %><br>
-    Total Value of Merchant Items: <%= Order.find(order.id).merchant_items(@merchant_employee.merchant).all_subtotal  %><br>
   </p>
 <% end %>
