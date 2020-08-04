@@ -4,11 +4,11 @@ RSpec.describe "As a regular user" do
   before :each do
     @user = create(:user)
     @merchant = create(:merchant)
-    @item_1 = create(:item)
-    @item_2 = create(:item)
-    @item_3 = create(:item)
-    @item_4 = create(:item)
-    @item_5 = create(:item)
+    @item_1 = create(:item, merchant: @merchant)
+    @item_2 = create(:item, merchant: @merchant)
+    @item_3 = create(:item, merchant: @merchant)
+    @item_4 = create(:item, merchant: @merchant)
+    @item_5 = create(:item, merchant: @merchant)
     @discount = @merchant.discounts.create(percentage: 25, minimum_item_quantity: 5)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
