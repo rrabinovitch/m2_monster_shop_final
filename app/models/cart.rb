@@ -38,19 +38,19 @@ class Cart
   end
 
   def total
-      total = 0
-      items.each do |item, quantity|
-        if item.merchant.discounts.empty?
-          total += (item.price * quantity)
+    total = 0
+    items.each do |item, quantity|
+      if item.merchant.discounts.empty?
+        total += (item.price * quantity)
+      else
+        if quantity >= item.merchant.discounts.first.minimum_item_quantity
+          total += (item.price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
         else
-          if quantity >= item.merchant.discounts.first.minimum_item_quantity
-            total += (item.price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
-          else
-            total += (item.price * quantity)
-          end
+          total += (item.price * quantity)
         end
       end
-      total
+    end
+    total
     # @contents.sum do |item_id,quantity|
     #   Item.find(item_id).price * quantity
     # end
