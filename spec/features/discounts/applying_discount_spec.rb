@@ -115,7 +115,7 @@ RSpec.describe "As a regular user" do
     within("#item-#{@item_1.id}") do
       expect(page).to have_content("$700")
     end
-    # expect(page).to have_content("Grand Total: $700")
+    expect(page).to have_content("Grand Total: $700")
   end
 
   xit "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, same percentage.
