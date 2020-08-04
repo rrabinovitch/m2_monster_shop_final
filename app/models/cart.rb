@@ -33,7 +33,7 @@ class Cart
   end
 
   def total
-    total = items.sum do |item, _quantity|
+    items.sum do |item, _quantity|
       subtotal(item)
     end
   end
