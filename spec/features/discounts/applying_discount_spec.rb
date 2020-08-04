@@ -5,17 +5,14 @@ RSpec.describe "As a regular user" do
     @user = create(:user)
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
-    @item_1 = create(:item, merchant: @merchant_1)
-    @item_2 = create(:item, merchant: @merchant_1)
-    @item_3 = create(:item, merchant: @merchant_1)
-    @item_4 = create(:item, merchant: @merchant_1)
-    @item_5 = create(:item, merchant: @merchant_1)
-    @item_5 = create(:item, merchant: @merchant_1)
-    @item_6 = create(:item, merchant: @merchant_2)
+    @item_1 = create(:item, inventory: 25, merchant: @merchant_1)
+    @item_2 = create(:item, inventory: 25, merchant: @merchant_1)
+    @item_3 = create(:item, inventory: 25, merchant: @merchant_1)
+    @item_4 = create(:item, inventory: 25, merchant: @merchant_1)
+    @item_5 = create(:item, inventory: 25, merchant: @merchant_1)
+    @item_5 = create(:item, inventory: 25, merchant: @merchant_1)
+    @item_6 = create(:item, inventory: 25, merchant: @merchant_2)
     @discount_1 = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 5)
-    @discount_2 = @merchant_1.discounts.create(percentage: 30, minimum_item_quantity: 5)
-    @discount_3 = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 10)
-    @discount_4 = @merchant_1.discounts.create(percentage: 20, minimum_item_quantity: 15)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
 
@@ -96,14 +93,15 @@ RSpec.describe "As a regular user" do
     expect(page).to have_content("Grand Total: $375")
   end
 
-  it "If a merchant offers multiple discounts, the greater discount will be applied to my car: same minimum item quantity, different percentage" do
-    cart = Cart.new({"#{@item_1.id}" => 5})
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my cart: same minimum item quantity, different percentage" do
+    @discount_2 = @merchant_1.discounts.create(percentage: 30, minimum_item_quantity: 5)
+    cart = Cart.new({"#{@item_1.id}" => 10})
     allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
     visit cart_path
     within("#cart-item-#{@item_1.id}") do
-      expect(page).to have_content("$350")
+      expect(page).to have_content("$700")
     end
-    expect(page).to have_content("Total: $350")
+    expect(page).to have_content("Total: $700")
 
     visit orders_new_path
     fill_in :name, with: @user.name
@@ -115,16 +113,61 @@ RSpec.describe "As a regular user" do
     order = Order.last
     visit "/profile/orders/#{order.id}"
     within("#item-#{@item_1.id}") do
-      expect(page).to have_content("$350")
+      expect(page).to have_content("$700")
     end
-    expect(page).to have_content("Grand Total: $350")
+    expect(page).to have_content("Grand Total: $700")
   end
 
-  it "If a merchant offers multiple discounts, the greater discount will be applied to my car: different minimum item quantity, same percentage" do
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, same percentage.
+      Even though, both discounts would result in same final cost." do
+    @discount_3 = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 10)
+    cart = Cart.new({"#{@item_1.id}" => 10})
+    allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
+    visit cart_path
+    within("#cart-item-#{@item_1.id}") do
+      expect(page).to have_content("$750")
+    end
+    expect(page).to have_content("Total: $750")
 
+    visit orders_new_path
+    fill_in :name, with: @user.name
+    fill_in :address, with: @user.address
+    fill_in :city, with: @user.city
+    fill_in :state, with: @user.state
+    fill_in :zip, with: @user.zip
+    click_on "Create Order"
+    order = Order.last
+    visit "/profile/orders/#{order.id}"
+    within("#item-#{@item_1.id}") do
+      expect(page).to have_content("$750")
+    end
+    expect(page).to have_content("Grand Total: $750")
   end
 
-  it "If a merchant offers multiple discounts, the greater discount will be applied to my car: different minimum item quantity, different percentage" do
+  it "If a merchant offers multiple discounts, the greater discount will be applied to my cart: different minimum item quantity, different percentage" do
+    @discount_4 = @merchant_1.discounts.create(percentage: 20, minimum_item_quantity: 15)
+    # discount_1 => 1500
+    # discount_4 => 1600
+    cart = Cart.new({"#{@item_1.id}" => 20})
+    allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
+    visit cart_path
+    within("#cart-item-#{@item_1.id}") do
+      expect(page).to have_content("$750")
+    end
+    expect(page).to have_content("Total: $750")
 
+    visit orders_new_path
+    fill_in :name, with: @user.name
+    fill_in :address, with: @user.address
+    fill_in :city, with: @user.city
+    fill_in :state, with: @user.state
+    fill_in :zip, with: @user.zip
+    click_on "Create Order"
+    order = Order.last
+    visit "/profile/orders/#{order.id}"
+    within("#item-#{@item_1.id}") do
+      expect(page).to have_content("$750")
+    end
+    expect(page).to have_content("Grand Total: $750")
   end
 end
