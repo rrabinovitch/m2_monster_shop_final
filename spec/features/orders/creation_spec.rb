@@ -1,3 +1,4 @@
+require 'rails_helper'
 # When I fill out all information on the new order page
 # And click on 'Create Order'
 # An order is created and saved in the database
@@ -85,6 +86,8 @@ RSpec.describe("Order Creation") do
         expect(page).to have_content("1")
         expect(page).to have_content("$2")
       end
+      # save_and_open_page
+      # binding.pry
 
       within "#grandtotal" do
         expect(page).to have_content("Total: $142")
