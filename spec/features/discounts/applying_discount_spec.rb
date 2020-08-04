@@ -13,7 +13,7 @@ RSpec.describe "As a regular user" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
 
-  it "When an item in my cart meets the minimum quantity required for a discount, the discounted total appearas on my cart page." do
+  it "When an item in my cart meets the minimum quantity required for a discount, the discounted total appears on my cart page." do
     cart = Cart.new({"#{@item_1.id}" => 5})
     allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
     visit cart_path
