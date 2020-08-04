@@ -7,7 +7,15 @@ class ItemOrder <ApplicationRecord
   enum status: [:unfulfilled, :fulfilled]
 
   def subtotal
-    price * quantity
+    if item.merchant.discounts.empty?
+      price * quantity
+    else
+      if quantity >= item.merchant.discounts.first.minimum_item_quantity
+        (price * quantity) * ((100 - item.merchant.discounts.first.percentage.to_f)/100)
+      else
+        price * quantity
+      end
+    end
   end
 
   def fulfill
