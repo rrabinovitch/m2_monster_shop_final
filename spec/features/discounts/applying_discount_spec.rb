@@ -3,13 +3,16 @@ require 'rails_helper'
 RSpec.describe "As a regular user" do
   before :each do
     @user = create(:user)
-    @merchant = create(:merchant)
-    @item_1 = create(:item, merchant: @merchant)
-    @item_2 = create(:item, merchant: @merchant)
-    @item_3 = create(:item, merchant: @merchant)
-    @item_4 = create(:item, merchant: @merchant)
-    @item_5 = create(:item, merchant: @merchant)
-    @discount = @merchant.discounts.create(percentage: 25, minimum_item_quantity: 5)
+    @merchant_1 = create(:merchant)
+    @merchant_2 = create(:merchant)
+    @item_1 = create(:item, merchant: @merchant_1)
+    @item_2 = create(:item, merchant: @merchant_1)
+    @item_3 = create(:item, merchant: @merchant_1)
+    @item_4 = create(:item, merchant: @merchant_1)
+    @item_5 = create(:item, merchant: @merchant_1)
+    @item_5 = create(:item, merchant: @merchant_1)
+    @item_6 = create(:item, merchant: @merchant_2)
+    @discount = @merchant_1.discounts.create(percentage: 25, minimum_item_quantity: 5)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
   end
 
@@ -57,6 +60,19 @@ RSpec.describe "As a regular user" do
       expect(page).to have_content("$100")
     end
     expect(page).to have_content("Total: $500")
+  end
+
+  it "Discounts will only apply to the items from a merchant that offer a discount." do
+    cart = Cart.new({"#{@item_1.id}" => 5, "#{@item_6.id}" => 5,})
+    allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
+    visit cart_path
+    within("#cart-item-#{@item_1.id}") do
+      expect(page).to have_content("$375")
+    end
+    within("#cart-item-#{@item_6.id}") do
+      expect(page).to have_content("$500")
+    end
+    expect(page).to have_content("Total: $875")
   end
 
   it "After I've placed an order to which a discount has been applied, the discount is reflected on that order show page." do
