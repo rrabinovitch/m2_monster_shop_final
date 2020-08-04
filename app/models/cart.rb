@@ -30,7 +30,6 @@ class Cart
   def subtotal(item)
     item.price * @contents[item.id.to_s]
   end
-  end
 
   def total
     @contents.sum do |item_id,quantity|
