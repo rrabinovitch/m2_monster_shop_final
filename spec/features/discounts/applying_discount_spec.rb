@@ -17,7 +17,6 @@ RSpec.describe "As a regular user" do
     cart = Cart.new({"#{@item_1.id}" => 5})
     allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
     visit cart_path
-    save_and_open_page
     within("#cart-item-#{@item_1.id}") do
       expect(page).to have_content("$375")
     end
