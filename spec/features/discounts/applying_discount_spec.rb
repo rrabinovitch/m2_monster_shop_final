@@ -63,7 +63,7 @@ RSpec.describe "As a regular user" do
   end
 
   it "Discounts will only apply to the items from a merchant that offer a discount." do
-    cart = Cart.new({"#{@item_1.id}" => 5, "#{@item_6.id}" => 5,})
+    cart = Cart.new({"#{@item_1.id}" => 5, "#{@item_6.id}" => 5})
     allow_any_instance_of(ApplicationController).to receive(:cart).and_return(cart)
     visit cart_path
     within("#cart-item-#{@item_1.id}") do
