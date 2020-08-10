@@ -3,7 +3,7 @@ class Merchant::OrdersController < ApplicationController
   helper_method :current_merchant
 
   def show
-    @order = Order.find(params[:order_id])
+    @order = Order.find(params[:id])
   end
 
   private

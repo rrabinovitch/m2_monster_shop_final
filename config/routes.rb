@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   namespace :merchant do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
-    get "/orders/:order_id", to: "orders#show"
+    resources :orders, only: [:show]
     resources :items, except: [:show]
     match "/items/:item_id/toggle_active", :to => "items#toggle_active", :as => 'merchant_item_active', :via => :patch
     resources :discounts, except: [:show]
