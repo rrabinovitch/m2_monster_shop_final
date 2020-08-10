@@ -5,7 +5,7 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def update
-    merchant = Merchant.find(params[:merchant_id])
+    merchant = Merchant.find(params[:id])
     merchant.change_status
     merchant.change_active_status
     if merchant.enabled?
@@ -17,6 +17,6 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = Merchant.find(params[:id])
   end
 end

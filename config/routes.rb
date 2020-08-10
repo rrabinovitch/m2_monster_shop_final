@@ -61,12 +61,14 @@ Rails.application.routes.draw do
   namespace :admin do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
-    get "/users", to: "users#index"
-    get "/users/:id", to: "users#show"
+    resources :users, only: [:index, :show]
+    # get "/users", to: "users#index"
+    # get "/users/:id", to: "users#show"
     patch "/orders/:id", to: "orders#update"
-    get "/merchants", to: "merchants#index"
-    patch "/merchants/:merchant_id", to: "merchants#update"
-    get "/merchants/:merchant_id", to: "merchants#show"
+    resources :merchants, only: [:index, :update, :show]
+    # get "/merchants", to: "merchants#index"
+    # patch "/merchants/:merchant_id", to: "merchants#update"
+    # get "/merchants/:merchant_id", to: "merchants#show"
   end
 
   namespace :merchant do
