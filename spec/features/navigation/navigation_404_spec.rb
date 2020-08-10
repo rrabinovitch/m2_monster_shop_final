@@ -20,7 +20,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit "/admin"
         expect(page).to have_content(@error_404)
 
-        visit admin_dashboard_path
+        visit admin_dashboard_index_path
         expect(page).to have_content(@error_404)
       end
 
@@ -54,7 +54,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit "/admin"
         expect(page).to have_content(@error_404)
 
-        visit admin_dashboard_path
+        visit admin_dashboard_index_path
         expect(page).to have_content(@error_404)
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit "/admin"
         expect(page).to have_content(@error_404)
 
-        visit admin_dashboard_path
+        visit admin_dashboard_index_path
         expect(page).to have_content(@error_404)
       end
     end
