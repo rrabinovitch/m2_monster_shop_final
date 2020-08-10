@@ -22,7 +22,7 @@ RSpec.describe "Merchant Order Show Page Spec" do
     @merchant_employee = create(:user, role: 1, merchant: @merchant1)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
-    visit merchant_dashboard_path
+    visit merchant_dashboard_index_path
     click_link(@order.id, href: "/merchant/orders/#{@order.id}")
   end
 

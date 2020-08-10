@@ -12,7 +12,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit "/merchant"
         expect(page).to have_content(@error_404)
 
-        visit merchant_dashboard_path
+        visit merchant_dashboard_index_path
         expect(page).to have_content(@error_404)
       end
 
@@ -46,7 +46,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit "/merchant"
         expect(page).to have_content(@error_404)
 
-        visit merchant_dashboard_path
+        visit merchant_dashboard_index_path
         expect(page).to have_content(@error_404)
       end
 
@@ -97,7 +97,7 @@ RSpec.describe "Navigation 404 Spec" do
         visit "/merchant"
         expect(page).to have_content(@error_404)
 
-        visit merchant_dashboard_path
+        visit merchant_dashboard_index_path
         expect(page).to have_content(@error_404)
       end
 

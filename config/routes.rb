@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   end
 
   namespace :merchant do
-    get "/dashboard", to: "dashboard#index"
+    resources :dashboard, only: [:index]
     get "/", to: "dashboard#index"
     resources :orders, only: [:show]
     resources :items, except: [:show]

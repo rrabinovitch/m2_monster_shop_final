@@ -7,7 +7,7 @@ RSpec.describe "As a merchant employee" do
     @discount_1 = @merchant.discounts.create(percentage: 25, minimum_item_quantity: 10)
     @discount_1 = @merchant.discounts.create(percentage: 30, minimum_item_quantity: 15)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_employee)
-    visit merchant_dashboard_path
+    visit merchant_dashboard_index_path
   end
 
   it "When I visit my merchant dashboard, I see a link to view the discounts associated with my shop." do
