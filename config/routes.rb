@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: "welcome#index"
 
-  resources :merchants
+  resources :merchants do
+    resources :items, only: [:index, :new, :create]
+  end
   # get "/merchants", to: "merchants#index"
   # get "/merchants/new", to: "merchants#new"
   # get "/merchants/:id", to: "merchants#show"
@@ -12,14 +14,15 @@ Rails.application.routes.draw do
   # patch "/merchants/:id", to: "merchants#update"
   # delete "/merchants/:id", to: "merchants#destroy"
 
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
-  get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
-  post "/merchants/:merchant_id/items", to: "items#create"
-  delete "/items/:id", to: "items#destroy"
+  resources :items, only: [:index, :show, :edit, :update, :destroy]
+  # get "/items", to: "items#index"
+  # get "/items/:id", to: "items#show"
+  # get "/items/:id/edit", to: "items#edit"
+  # patch "/items/:id", to: "items#update"
+  # get "/merchants/:merchant_id/items", to: "items#index"
+  # get "/merchants/:merchant_id/items/new", to: "items#new"
+  # post "/merchants/:merchant_id/items", to: "items#create"
+  # delete "/items/:id", to: "items#destroy"
 
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
