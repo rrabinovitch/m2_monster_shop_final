@@ -42,10 +42,11 @@ Rails.application.routes.draw do
   patch "/cart/:item_id", to: "cart#remove_single_item"
   put "/cart/:item_id", to: "cart#add_single_item"
 
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
-  patch "/orders/:id", to: "orders#update"
+  resources :orders, except: [:edit, :destroy, :index]
+  # get "/orders/new", to: "orders#new"
+  # post "/orders", to: "orders#create"
+  # get "/orders/:id", to: "orders#show"
+  # patch "/orders/:id", to: "orders#update"
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
