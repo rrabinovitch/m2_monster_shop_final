@@ -1,11 +1,11 @@
 class Profile::OrdersController < ApplicationController
 
   def show
-    @order = Order.find(params[:order_id])
+    @order = Order.find(params[:id])
   end
 
   def update
-    order = Order.find(params[:order_id])
+    order = Order.find(params[:id])
     order.cancel
     order.save
     flash[:cancelled] = "The order is now cancelled"

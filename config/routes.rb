@@ -84,9 +84,10 @@ Rails.application.routes.draw do
   end
 
   namespace :profile do
-    get "/orders", to: "orders#index"
-    get "/orders/:order_id", to: "orders#show"
-    patch "/orders/:order_id", to: "orders#update"
+    resources :orders, only: [:index, :show, :update]
+    # get "/orders", to: "orders#index"
+    # get "/orders/:order_id", to: "orders#show"
+    # patch "/orders/:order_id", to: "orders#update"
 
     patch "/password", to: "passwords#update"
     get "/password/edit", to: "passwords#edit"
