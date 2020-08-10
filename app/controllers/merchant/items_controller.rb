@@ -10,7 +10,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
   end
 
   def create
@@ -28,7 +28,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
     @item.update(item_params)
     if @item.save
       flash[:success] = "Item has been updated"
@@ -53,7 +53,7 @@ class Merchant::ItemsController < ApplicationController
   end
 
   def destroy
-    item = Item.find(params[:item_id])
+    item = Item.find(params[:id])
     Review.where(item_id: item.id).destroy_all
     item.destroy
     flash[:success] = "#{item.name} has been deleted."

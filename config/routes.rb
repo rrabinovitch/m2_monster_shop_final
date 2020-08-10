@@ -44,13 +44,8 @@ Rails.application.routes.draw do
     get "/dashboard", to: "dashboard#index"
     get "/", to: "dashboard#index"
     get "/orders/:order_id", to: "orders#show"
-    get "/items", to: "items#index"
+    resources :items, except: [:show]
     match "/items/:item_id/toggle_active", :to => "items#toggle_active", :as => 'merchant_item_active', :via => :patch
-    get "/items/new", to: "items#new"
-    delete "/items/:item_id", to: "items#destroy"
-    post "/items", to: "items#create"
-    get "/items/:item_id/edit", to: "items#edit"
-    patch "/items/:item_id", to: "items#update"
     resources :discounts, except: [:show]
   end
 
