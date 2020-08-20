@@ -1,14 +1,159 @@
-# Monster Shop Extensions - Bulk Discount
+# Monster Shop
+Monster Shop is a ficticious e-commerce platform that authorizes different capabilities based on user type (regular, merchant employee, and admin). This extenson is built on a [group project](https://github.com/ajtran303/monster_shop_2005) of the same name, executed the week prior, and serves as the Module 2 final project for Turing School of Software & Design's Back-End Program.
 
-## Heroku site: https://mysterious-taiga-08229.herokuapp.com/
+## [Heroku site](https://mysterious-taiga-08229.herokuapp.com/)
+#### Seeded users
 * regular user email: regular@email.com, password: "regular"
 * merchant employee email: bike_employee@email.com, password: "employee"
 
-## Instructions
+## Implementation
+This project was built with `ruby 2.5.3` and `Rails 5.1.7`.
+Use your favorite environment managers to sort that out!
+#### Set up:
+```bash
+$ git clone git@github.com:rrabinovitch/m2_monster_shop_final.git
+$ cd m2_monster_shop_final
+$ bundle install
+$ rake db:{drop,create,migrate,seed}
+# run tests
+$ bundle exec rspec
+# explore the app on your local server
+$ rails s
+```
+### In your browser, go to: `localhost:3000`
+Now you're ready to rock and shop! Register as a new user, shop, and checkout!
+### Adding different user roles in the command line
+Certain features of the Monster Shop site require logging in as an `admin` or `merchant_employee`.
+Create those users in the Rails Console:
+#### In your terminal, run: `$ rails c`
+```ruby
+# create an admin
+irb > User.create(name: "Admin", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "janedoe@email.com", password: "password", password_confirmation: "password", role: 2)
+# create an employee for Meg's shop
+irb > User.create(name: "Meg's employee", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "meg1@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 1)
+# create employees for Brians's shop
+irb > User.create(name: "Brian's employee 1", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "brian1@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 2)
+irb > User.create(name: "Brian's employee 2", address: "123 Palm St", city: "Chicago", state: "IL", zip: 60623, email: "brian2@email.com", password: "password", password_confirmation: "password", role: 1, merchant_id: 2)
+```
+The keyboard command to exit `irb` is `ctrl + c`
+### Log in as an admin or employees:
+admin - janedoe@email.com - password
 
-* Fork this repository or use your existing project.
-* Clone your fork if you have forked.
-* When you are finished, push your code to your fork. (if you have forked)
+meg1 (merchant employee) - meg1@email.com - password
+
+brian1 (merchant employee) - brian1@email.com - password
+
+brian2 (merchant employee) - brian2@email.com - password
+
+Log in as the appropriate user to use the feature described in a particular story.
+
+## Background and Description
+
+"Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
+
+This project offered our team a chance to implement and strengthen the knowledge and skills we've acquired so far this quarter (including MVC structure and conventions, routing, restful conventions, testing using RSpec and Capybara, etc.); and in particular, this was a chance to deepen our comfort with ActiveRecord calls, implement namespacing, authentication, and authorization for the first time.
+
+The schema design that describes the database resources involved in this project and their relationships with each other can be found [here](https://github.com/ajtran303/monster_shop_2005/blob/readme/erd.pdf).
+
+## Learning Goals
+
+### Rails
+* Create routes for namespaced routes
+* Implement partials to break a page into reusable components
+* Use Sessions to store information about a user and implement login/logout functionality
+* Use filters (e.g. `before_action`) in a Rails controller
+* Limit functionality to authorized users
+* Use BCrypt to hash user passwords before storing in the database
+
+### ActiveRecord
+* Use built-in ActiveRecord methods to join multiple tables of data, calculate statistics and build collections of data grouped by one or more attributes
+
+### Databases
+* Design and diagram a Database Schema
+* Write raw SQL queries (as a debugging tool for AR)
+
+## Requirements
+
+- must use Rails 5.1.x
+- must use PostgreSQL
+- must use 'bcrypt' for authentication
+- all controller and model code must be tested via feature tests and model tests, respectively
+- must use good GitHub branching, team code reviews via GitHub comments, and use of a project planning tool like github projects
+- must include a thorough README to describe their project
+
+## Permitted
+
+- use FactoryBot to speed up your test development
+- use "rails generators" to speed up your app development
+
+## Not Permitted
+
+- do not use JavaScript for pagination or sorting controls
+
+## Permission
+
+- if there is a specific gem you'd like to use in the project, please get permission from your instructors first
+
+## User Roles
+
+1. Visitor - this type of user is anonymously browsing our site and is not logged in
+2. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
+3. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
+4. Admin User - a registered user who has "superuser" access to all areas of the application; user is logged in to perform their work
+
+User authentication and the authorization for different user roles to access different views and actions was developed using `bcrypt` and namespacing. For example, this controller is responsible for the actions that allow for the rendering of an admin user's dashboard. `:require_authorized_user` restricts access by regular users and merchant employees, and the `Admin::DashboardController` namespacing allows for the view to be accessed via an admin-specific path.
+```ruby
+class Admin::DashboardController < ApplicationController
+  before_action :require_authorized_user
+
+  def index
+    @orders = Order.all
+  end
+
+  private
+
+  def unauthorized_user?
+    current_user.nil? || current_user.regular? || current_user.merchant_employee?
+  end
+end
+```
+An admin user's dashboard is rendered like this, when accessed by an admin user:
+![admin dashboard](https://user-images.githubusercontent.com/62635544/88979822-a63e4600-d27f-11ea-950e-05c93711ee08.png)
+But when an unauthorized user tries to access this admin-specific path, a 404 error message is displayed:
+![404 error message view](https://user-images.githubusercontent.com/62635544/88979690-69724f00-d27f-11ea-8428-87ed0b95523b.png)
+
+## Order Status
+
+1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
+2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
+3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
+4. 'cancelled' - only 'pending' and 'packaged' orders can be cancelled
+
+Enums were used for not only the user role attribute/column, but also to assign order status values. This allowed for use of methods that are made available via the implementation of enums. The following snippet demonstrates the use of an enum method within the presentation conditional logic found in the admin view of the orders index (AKA the admin dashboard):
+```html
+<h1>All Orders in System</h1>
+  <% @orders.sort_by_status.each do |order| %>
+    <section id="order-<%=order.id%>">
+      <h3>Order #<%= order.id %></h3>
+      <p>Customer: <%= link_to "#{order.user.name}", "/admin/users/#{order.user.id}" %></p>
+      <p>Order placed on: <%= order.created_at %></p>
+      <p>Order status: <%= order.status %></p>
+      <% if order.packaged? %>
+        <%= button_to "Ship", "admin/#{order.id}", method: :patch %>
+      <% end %>
+    </section>
+  <% end %>
+```
+A user's view of their placed orders, displaying each order's status based on the enum value assigned to each order's status attribute:
+![order status](https://user-images.githubusercontent.com/62635544/88979800-9d4d7480-d27f-11ea-96b5-3c0dfe2e9178.png)
+
+
+
+
+
+
+
+
 
 ## Bulk Discount
 
@@ -34,63 +179,9 @@ Merchants add bulk discount rates for all of their inventory. These apply automa
 - Software Testing
 
 
-
----
-
-# Additional Extensions
-
-##  Users have multiple addresses
-
-#### General Goal
-
-Users will have more than one address associated with their profile. Each address will have a nickname like "home" or "work". Users will choose an address when checking out.
-
-#### Completion Criteria
-
-1. When a user registers they will still provide an address, this will become their first address entry in the database and nicknamed "home".
-1. Users need full CRUD ability for addresses from their Profile page.
-1. An address cannot be deleted or changed if it's been used in a "shipped" order.
-1. When a user checks out on the cart show page, they will have the ability to choose one of their addresses where they'd like the order shipped.
-1. If a user deletes all of their addresses, they cannot check out and see an error telling them they need to add an address first. This should link to a page where they add an address.
-1. If an order is still pending, the user can change to which address they want their items shipped.
-
-#### Implementation Guidelines
-
-1. Existing tests should still pass. Since you will need to make major changes to your database schema, you will probably break **many** tests. It's recommended that you focus on the completion criteria described above before going back and refactoring your code so that your existing tests still work.
-1. Every order show page should display the chosen shipping address.
-1. Statistics related to city/state should still work as before.
-
----
-
-## Merchant To-Do List
-
-#### General Goals
-
-Merchant dashboards will display a to-do list of tasks that need their attention.
-
-#### Completion Criteria
-
-1. Merchants should be shown a list of items which are using a placeholder image and encouraged to find an appropriate image instead; each item is a link to that item's edit form.
-1. Merchants should see a statistic about unfulfilled items and the revenue impact. eg, "You have 5 unfulfilled orders worth $752.86"
-1. Next to each order on their dashboard, Merchants should see a warning if an item quantity on that order exceeds their current inventory count.
-1. If several orders exist for an item, and their summed quantity exceeds the Merchant's inventory for that item, a warning message is shown.
-
-#### Implementation Guidelines
-
-1. Make sure you are testing for all happy path and sad path scenarios.
-
 #### Mod 2 Learning Goals reflected:
 
 - MVC and Rails development
 - Database relationships and migrations
 - ActiveRecord
 - Software Testing
-
-# Rubric
-
-| | **Feature Completeness**                                                                                                   | **Rails** | **ActiveRecord** | **Testing and Debugging**                                                                                                                                                                                               |
-| --- | ---------------------------------------------------------------------------------------------------------------------------| --- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **4: Exceptional**  | One or more additional extension features complete.                                                                        | Students implement strategies not discussed in class to effectively organize code and adhere to MVC. | Highly effective and efficient use of ActiveRecord beyond what we've taught in class. Even `.each` calls will not cause additional database lookups. | Very clear Test Driven Development. Test files are extremely well organized and nested. Students utilize `before :each` blocks. 100% coverage for features and models                                                   |
-| **3: Passing** | Bulk discount feature 100% complete, including most sad paths and edge cases                                               | Students use the principles of MVC to effectively organize code. Students can defend any of their design decisions. | ActiveRecord is used in a clear and effective way to read/write data using no Ruby to process data. | 100% coverage for models. 98% coverage for features. Tests are well written and meaningful. All preexisting tests still pass. TDD Process is clear throughout commits. Sad paths and edge cases are covered in testing. |
-| **2: Passing with Concerns** | One to two of the completion criteria for Bulk Discount feature is not complete or fails to handle a big sad path or edge case     | Students utilize MVC to organize code, but cannot defend some of their design decisions. Or some functionality is not limited to the appropriately authorized users. | Ruby is used to process data that could use ActiveRecord instead. | Feature test coverage between 90% and 98%, or model test coverage below 100%, or tests are not meaningfully written or have an unclear objective. Missing sad path or edge case testing.                                | 
-| **1: Failing** | More than two of the completion criteria for Bulk Discount feature is not complete or fails to handle a sad path or edge case| Students do not effectively organize code using MVC. Or students do not authorize users. | Ruby is used to process data more often than ActiveRecord | Below 90% coverage for either features or models. TDD was not used.                                                                                                                                                     |
