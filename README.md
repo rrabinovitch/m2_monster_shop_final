@@ -67,7 +67,9 @@ Log in as the appropriate user to use the feature described in a particular stor
 * Design and diagram a Database Schema
 * Write raw SQL queries (as a debugging tool for AR)
 
-## User Roles
+
+## Design Notes
+### User Roles
 
 1. Visitor - this type of user is anonymously browsing our site and is not logged in
 2. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
@@ -95,7 +97,7 @@ An admin user's dashboard is rendered like this, when accessed by an admin user:
 But when an unauthorized user tries to access this admin-specific path, a 404 error message is displayed:
 ![404 error message view](https://user-images.githubusercontent.com/62635544/88979690-69724f00-d27f-11ea-8428-87ed0b95523b.png)
 
-## Order Status
+### Order Status
 
 1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
 2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
@@ -119,23 +121,3 @@ Enums were used for not only the user role attribute/column, but also to assign 
 ```
 A user's view of their placed orders, displaying each order's status based on the enum value assigned to each order's status attribute:
 ![order status](https://user-images.githubusercontent.com/62635544/88979800-9d4d7480-d27f-11ea-96b5-3c0dfe2e9178.png)
-
-
-
-
-
-
-
-
-#### Mod 2 Learning Goals reflected:
-- Database relationships and migrations
-- Advanced ActiveRecord
-- Software Testing
-
-
-#### Mod 2 Learning Goals reflected:
-
-- MVC and Rails development
-- Database relationships and migrations
-- ActiveRecord
-- Software Testing
