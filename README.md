@@ -1,15 +1,18 @@
 # Monster Shop
-Monster Shop is a ficticious e-commerce platform that authorizes different capabilities based on user type (regular, merchant employee, and admin). This extenson is built on a [group project](https://github.com/ajtran303/monster_shop_2005) of the same name, executed the week prior, and serves as the Module 2 final project for Turing School of Software & Design's Back-End Program.
+"Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
+
+This extenson was built off of a [group project](https://github.com/ajtran303/monster_shop_2005) of the same name, executed the week prior, and serves as the Module 2 final project for Turing School of Software & Design's Back-End Program. The extension implements a feature for merchant employees to set bulk discount rates for all of their inventory. Merchant employees have full CRUD functionality on bulk discounts. A discount is automatically applied when the quantity of a single item in a user's cart meets the minimum item quantity for accessing a discount. An order total takes into account any applied discounts on both the cart page and the order show page after an order has been checked out. If a merchant has multiple bulk discounts in the system, the discount that offers the best deal is ultimately applied.
+
+This project offered a chance to implement and strengthen the knowledge and skills my original team and I have acquired so far this quarter (including MVC structure and conventions, routing, restful conventions, testing using RSpec and Capybara, etc.); and in particular, this was a chance to deepen our comfort with ActiveRecord calls, implement namespacing, authentication, and authorization for the first time.
 
 ## [Heroku site](https://mysterious-taiga-08229.herokuapp.com/)
-#### Seeded users
+### Seeded users
 * regular user email: regular@email.com, password: "regular"
 * merchant employee email: bike_employee@email.com, password: "employee"
 
 ## Implementation
-This project was built with `ruby 2.5.3` and `Rails 5.1.7`.
-Use your favorite environment managers to sort that out!
-#### Set up:
+Built with `ruby 2.5.3` and `Rails 5.1.7`
+### Set up:
 ```bash
 $ git clone git@github.com:rrabinovitch/m2_monster_shop_final.git
 $ cd m2_monster_shop_final
@@ -20,7 +23,7 @@ $ bundle exec rspec
 # explore the app on your local server
 $ rails s
 ```
-### In your browser, go to: `localhost:3000`
+### In your browser, visit: `localhost:3000`
 Now you're ready to rock and shop! Register as a new user, shop, and checkout!
 ### Adding different user roles in the command line
 Certain features of the Monster Shop site require logging in as an `admin` or `merchant_employee`.
@@ -47,14 +50,6 @@ brian2 (merchant employee) - brian2@email.com - password
 
 Log in as the appropriate user to use the feature described in a particular story.
 
-## Background and Description
-
-"Monster Shop" is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
-
-This project offered our team a chance to implement and strengthen the knowledge and skills we've acquired so far this quarter (including MVC structure and conventions, routing, restful conventions, testing using RSpec and Capybara, etc.); and in particular, this was a chance to deepen our comfort with ActiveRecord calls, implement namespacing, authentication, and authorization for the first time.
-
-The schema design that describes the database resources involved in this project and their relationships with each other can be found [here](https://github.com/ajtran303/monster_shop_2005/blob/readme/erd.pdf).
-
 ## Learning Goals
 
 ### Rails
@@ -71,28 +66,6 @@ The schema design that describes the database resources involved in this project
 ### Databases
 * Design and diagram a Database Schema
 * Write raw SQL queries (as a debugging tool for AR)
-
-## Requirements
-
-- must use Rails 5.1.x
-- must use PostgreSQL
-- must use 'bcrypt' for authentication
-- all controller and model code must be tested via feature tests and model tests, respectively
-- must use good GitHub branching, team code reviews via GitHub comments, and use of a project planning tool like github projects
-- must include a thorough README to describe their project
-
-## Permitted
-
-- use FactoryBot to speed up your test development
-- use "rails generators" to speed up your app development
-
-## Not Permitted
-
-- do not use JavaScript for pagination or sorting controls
-
-## Permission
-
-- if there is a specific gem you'd like to use in the project, please get permission from your instructors first
 
 ## User Roles
 
@@ -153,25 +126,6 @@ A user's view of their placed orders, displaying each order's status based on th
 
 
 
-
-
-## Bulk Discount
-
-#### General Goals
-
-Merchants add bulk discount rates for all of their inventory. These apply automatically in the shopping cart, and adjust the order_items price upon checkout.
-
-#### Completion Criteria
-
-1. Merchants need full CRUD functionality on bulk discounts, and will be accessed a link on the merchant's dashboard.
-1. You will implement a percentage based discount:
-   - 5% discount on 20 or more items
-1. A merchant can have multiple bulk discounts in the system.
-1. When a user adds enough value or quantity of a single item to their cart, the bulk discount will automatically show up on the cart page.
-1. A bulk discount from one merchant will only affect items from that merchant in the cart.
-1. A bulk discount will only apply to items which exceed the minimum quantity specified in the bulk discount. (eg, a 5% off 5 items or more does not activate if a user is buying 1 quantity of 5 different items; if they raise the quantity of one item to 5, then the bulk discount is only applied to that one item, not all of the others as well)
-1. When there is a conflict between two discounts, the greater of the two will be applied.
-1. Final discounted prices should appear on the orders show page.
 
 #### Mod 2 Learning Goals reflected:
 - Database relationships and migrations
