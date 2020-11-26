@@ -70,7 +70,6 @@ Log in as the appropriate user to use the feature described in a particular stor
 
 ## Design Notes
 ### User Roles
-
 1. Visitor - this type of user is anonymously browsing our site and is not logged in
 2. Regular User - this user is registered and logged in to the application while performing their work; can place items in a cart and create an order
 3. Merchant Employee - this user works for a merchant. They can fulfill orders on behalf of their merchant. They also have the same permissions as a regular user (adding items to a cart and checking out)
@@ -98,7 +97,6 @@ But when an unauthorized user tries to access this admin-specific path, a 404 er
 ![404 error message view](https://user-images.githubusercontent.com/62635544/88979690-69724f00-d27f-11ea-8428-87ed0b95523b.png)
 
 ### Order Status
-
 1. 'pending' means a user has placed items in a cart and "checked out" to create an order, merchants may or may not have fulfilled any items yet
 2. 'packaged' means all merchants have fulfilled their items for the order, and has been packaged and ready to ship
 3. 'shipped' means an admin has 'shipped' a package and can no longer be cancelled by a user
