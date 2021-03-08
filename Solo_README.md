@@ -1,4 +1,5 @@
 # Monster Shop Extensions - Bulk Discount
+test
 
 ## Heroku site: https://mysterious-taiga-08229.herokuapp.com/
 * regular user email: regular@email.com, password: "regular"
